@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp"
+    android:background="@color/bpTransparent">
+
+    <EditText
+        android:id="@+id/passenger_name"
+        android:hint="Passenger Name"
+        style="@style/Gsrtc_Button_whiteInput"
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <Spinner
+            android:id="@+id/gender"
+            android:hint="Gender"
+            style="@style/Gsrtc_Button_whiteInput"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:entries="@array/gender_array"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/age"
+            android:hint="Age"
+            style="@style/Gsrtc_Button_whiteInput"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:inputType="numberSigned"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

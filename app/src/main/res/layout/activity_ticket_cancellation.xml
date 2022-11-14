@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background_img"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="10dp"
+    android:weightSum="1"
+    tools:context="com.gsrtc.mobileweb.ui.activities.ticket_cancellation.TicketCancellationActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/header_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:fontFamily="@font/gotham"
+                android:layout_marginBottom="10dp"
+                android:text="Cancel Ticket"/>
+            <View
+                android:id="@+id/second"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/top"
+                android:layout_marginBottom="15dp"
+                android:background="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/txtpnr"
+                    android:text="PNR No."
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white" />
+                <EditText
+                    android:id="@+id/pnr"
+                    android:theme="@style/EditTextStyle"
+                    android:singleLine="true"
+                    android:textColorHint="@color/hint"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="PNR No"/>
+                <TextView
+                    android:id="@+id/txtemail"
+                    android:text="Email ID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"/>
+                <EditText
+                    android:id="@+id/email"
+                    android:theme="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:inputType="textEmailAddress"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColorHint="@color/hint"
+                    android:textColor="@color/white"
+                    android:hint="Email"/>
+                <TextView
+                    android:id="@+id/txtmobile"
+                    android:text="Mobile No"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"/>
+                <EditText
+                    android:id="@+id/phone"
+                    android:theme="@style/EditTextStyle"
+                    android:inputType="phone"
+                    android:singleLine="true"
+                    android:maxLength="13"
+                    android:textColorHint="@color/hint"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mobile No"/>
+                <TextView
+                    android:id="@+id/txtpass"
+                    android:text="Txn Password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"/>
+                <EditText
+                    android:id="@+id/text_password"
+                    android:theme="@style/EditTextStyle"
+                    android:inputType="textPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColorHint="@color/hint"
+                    android:textColor="@color/white"
+                    android:hint="Transaction Password"/>
+                <TextView
+                    android:text="Reference Number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+                <EditText
+                    android:id="@+id/wsRefNo"
+                    android:theme="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:id="@+id/submitBtn"
+       android:background="@drawable/btn_shape"
+        android:textColor="@color/naviy"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_marginBottom="10dp"
+        android:textStyle="bold"/>
+</LinearLayout>

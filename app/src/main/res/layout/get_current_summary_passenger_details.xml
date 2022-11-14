@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="#9b2424"
+    tools:context="com.gsrtc.mobileweb.ui.activities.current_booking_native.Summary_Passenger_DetailsActivity"
+    android:id="@+id/rootView">
+
+    <LinearLayout
+        android:id="@+id/search_results_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/loading_gif"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/loading"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollViewPassengerSummary"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Passenger Details"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:textStyle="bold"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_margin="10dp"
+                android:background="@color/radial_gray_light"/>
+
+            <ListView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/orange"/>
+            <EditText
+                android:id="@+id/email"
+                android:hint="Email"
+                style="@style/Gsrtc_Button_whiteInput"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"
+                android:inputType="textEmailAddress"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/orange"/>
+            <EditText
+                android:id="@+id/phone"
+                android:hint="Phone"
+                style="@style/Gsrtc_Button_whiteInput"
+                android:layout_marginBottom="20dp"
+                android:inputType="phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="10"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Summary Details"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:textStyle="bold"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_margin="10dp"
+                android:background="@color/radial_gray_light"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/tvSummaryDateHeading"
+                    android:layout_below="@id/booking_class"
+                    android:textStyle="bold"
+                    android:text="Date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tvSummaryDateValue"
+                    android:layout_below="@id/bus_route"
+                    android:textStyle="bold"
+                    android:text="GJ-18-Y-0017"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#ffffff"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/tvSummaryFromHeading"
+                    android:layout_below="@id/booking_class"
+                    android:textStyle="bold"
+                    android:text="From"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tvSummaryFromValue"
+                    android:layout_below="@id/bus_route"
+                    android:textStyle="bold"
+                    android:text="GJ-18-Y-0017"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#ffffff"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/tvSummaryToHeading"
+                    android:layout_below="@id/booking_class"
+                    android:textStyle="bold"
+                    android:text="To"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#ffffff"/>
+
+                <TextView
+                    android:id="@+id/tvSummaryToValue"
+                    android:layout_below="@id/bus_route"
+                    android:textStyle="bold"
+                    android:text="GJ-18-Y-0017"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#ffffff"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/tvSummaryServiceHeading"
+                    android:layout_below="@id/booking_class"
+                    android:textStyle="bold"
+                    android:text="Service"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tvSummaryServiceValue"
+                    android:layout_below="@id/bus_route"
+                    android:textStyle="bold"
+                    android:text="GJ-18-Y-0017"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#ffffff"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/tvSummaryNoOfSeatsHeading"
+                    android:layout_below="@id/booking_class"
+                    android:textStyle="bold"
+                    android:text="No.Seats"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tvSummaryNoOfSeatsValue"
+                    android:layout_below="@id/bus_route"
+                    android:textStyle="bold"
+                    android:text="GJ-18-Y-0017"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#ffffff"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <RadioGroup
+            android:id="@+id/radio"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            style="@style/Gsrtc_Button_whiteInput">
+
+            <RadioButton
+                android:id="@+id/net_banking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:checked="true"
+                android:text="HDFC"
+                android:visibility="visible" />
+
+            <RadioButton
+                android:id="@+id/cards"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Axis"
+                android:visibility="visible" />
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="10dp"
+            android:background="@color/radial_gray_light"/>
+
+        <Button
+            android:id="@+id/btnConfirmSummary"
+            android:text="CONFIRM BOOKING"
+            style="@style/Gsrtc_Button_orangeBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="@drawable/background_img"
+    android:id="@+id/container"
+    tools:context="com.gsrtc.mobileweb.ui.activities.current_booking_native.CurrentBookingHomeActivity">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:id="@+id/search_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:id="@+id/title_current"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:fontFamily="@font/gotham"
+                        android:text="Current Booking"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/title_current"
+                        android:id="@+id/second"
+                        android:layout_marginBottom="20dp"
+                        android:background="@color/white"/>
+
+                    <AutoCompleteTextView
+                        android:id="@+id/from_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/second"
+                        android:hint="From"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/location_img"
+                        android:textColorHint="@color/hint"
+                        android:theme="@style/EditTextStyle"
+                        android:textColor="@color/white"
+                        android:inputType="textEmailAddress"
+                        android:layout_marginBottom="25dp"/>
+
+                    <AutoCompleteTextView
+                        android:id="@+id/to_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="textEmailAddress"
+                        android:layout_below="@+id/from_location"
+                        android:hint="To"
+                        android:textColorHint="@color/hint"
+                        android:theme="@style/EditTextStyle"
+                        android:textColor="@color/white"
+                        android:drawableStart="@drawable/location_img"
+                        android:layout_marginBottom="25dp"
+                        android:drawablePadding="10dp"/>
+
+                    <ImageView
+                        android:id="@+id/swap"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_alignBottom="@+id/to_location"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="clip_vertical"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/swap"
+                       />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/to_location"
+                        android:weightSum="2"
+                        android:id="@+id/sum"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:id="@+id/onward_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Depature"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:textColor="@color/black"
+                            android:layout_marginBottom="25dp"
+                            android:layout_marginRight="6dp"
+                            android:drawableRight="@drawable/calendar"
+                            android:layout_weight="1"
+                            android:visibility="gone"/>
+                        <EditText
+                            android:id="@+id/return_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="RETURN"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:textColor="@color/black"
+                            android:drawableRight="@drawable/calendar"
+                            android:layout_marginBottom="25dp"
+                            android:layout_weight="1"
+                            android:visibility="gone"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="2"
+                        android:id="@+id/sum_three"
+                        android:layout_below="@+id/sum"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:id="@+id/adultCount"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="1"
+                            android:textColorHint="@color/hint"
+                            android:inputType="numberSigned"
+                            android:textColor="@color/white"
+                            android:theme="@style/EditTextStyle"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_weight="1"/>
+                        <EditText
+                            android:id="@+id/childrenCount"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Children"
+                            android:inputType="numberSigned"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/hint"
+                            android:theme="@style/EditTextStyle"
+                            android:layout_marginBottom="20dp"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+                    <Button
+                        android:id="@+id/search_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/sum_three"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="25dp"
+                      android:background="@drawable/btn_shape"
+                        android:text="SEARCH"/>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_footer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/copypolicytitle"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    android:text="Booking Policies : "/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/copypolicy"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="gone"
+                        android:text="* Seats are not assured for Current Booking Tickets."/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/copypolicy_two"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        android:layout_marginBottom="50dp"
+                        android:visibility="gone"
+                        android:text="* Cancellations are not allowed for Current Booking tickets "/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/copypolicy_2"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        android:text="Copyright 2022, GSRTC"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/loading_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="10dp">
+                  <!--  <ImageView
+                        android:id="@+id/loading_gif"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/loading"/> -->
+
+                    <TextView
+                        android:id="@+id/no_internet_text"
+                        android:visibility="gone"
+                        android:layout_marginTop="30dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="No Internet. Click to try Again"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:background="@drawable/serv_list_border"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/li_FromToPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:textColor="#000000"
+        android:text="FROM-TO"
+        android:textStyle="bold"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        style="@style/Gsrtc_listitem_route_details"
+        android:id="@+id/linearLayoutRouteDetails">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/li_RouteDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Route Details"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+            <TextView
+                android:id="@+id/li_RouteDetails_Expand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tripco_Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/booking_class"
+            android:text="TripCode  : "
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tripco_Text"
+            android:layout_below="@id/bus_route"
+            android:textStyle="bold"
+            android:text="GJ-18-Y-0017"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/bus_NO_Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/booking_class"
+            android:text="Bus No  : "
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/bus_NO_Text"
+            android:layout_below="@id/bus_route"
+            android:textStyle="bold"
+            android:text="GJ-18-Y-0017"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/departed_Heading"
+            android:layout_below="@id/booking_class"
+            android:textStyle="bold"
+            android:text="Departed  : "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/departed_Text"
+            android:layout_below="@id/bus_route"
+            android:textStyle="bold"
+            android:text="GJ-18-Y-0017"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/seatavailable_Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/booking_class"
+            android:text="Seats Available  : "
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/seatavailable_Heading_Text"
+            android:layout_below="@id/bus_route"
+            android:textStyle="bold"
+            android:text="GJ-18-Y-0017"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/seatavailable_Heading_Text_Star"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/bus_route"
+            android:text="*"
+            android:textColor="@color/bpDarker_red"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/bus_running_status"
+            android:layout_below="@id/booking_class"
+            android:textStyle="bold"
+            android:text="Vehicle Status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:layout_weight="1"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/bus_running_status_Text"
+            android:layout_below="@id/bus_route"
+            android:textStyle="bold"
+            android:text="OnTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="visible">
+        <TextView
+            android:id="@+id/conductor_mobile"
+            android:layout_below="@id/booking_class"
+            android:textStyle="bold"
+            android:text="Conductor Mobile  : "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/conductor_mobilenum"
+            android:layout_below="@id/bus_route"
+            android:textStyle="bold"
+            android:text="123245689"
+            android:textColor="@color/naviy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoLink="phone"
+            android:linksClickable="true"/>
+
+        <ImageView
+            android:id="@+id/call_icon"
+            android:layout_below="@id/bus_route"
+            android:textStyle="bold"
+            android:src="@drawable/call_icon"
+            android:tint="@color/bpRed"
+            android:layout_width="18dp"
+            android:layout_height="18dp"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="visible">
+        <TextView
+            android:id="@+id/adult"
+            android:layout_below="@id/booking_class"
+            android:textStyle="bold"
+            android:text="Adult Fare  : "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/adult_fare"
+            android:layout_below="@id/bus_route"
+            android:textStyle="bold"
+            android:text="47"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="visible">
+        <TextView
+            android:id="@+id/kms"
+            android:layout_below="@id/booking_class"
+            android:textStyle="bold"
+            android:text="KMs  :"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/kilo_meters"
+            android:layout_below="@id/bus_route"
+            android:textStyle="bold"
+            android:text="45km"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+    <!--<TextView
+        android:id="@+id/bus_running_status"
+        android:textStyle="bold"
+        android:text="On Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#008000"/>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/li_track_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginRight="100dp"
+            android:background="@drawable/view_in_map" />
+
+        <Button
+            android:id="@+id/li_book_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/black"
+            android:background="@drawable/search_input_btn_blue"
+            android:text="@string/Rs" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/bus_footer"
+        android:text="* Under OnRoute Booking seats are not assured. Its First Come First Serve Basis"
+        android:layout_width="wrap_content"
+        android:textColor="@color/naviy"
+        android:textStyle="italic"
+        android:textSize="12dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+    <TextView
+        android:id="@+id/bus_note"
+        android:text="* Click Mobile Number to know the bus location"
+        android:layout_width="wrap_content"
+        android:textColor="@color/naviy"
+        android:textStyle="italic"
+        android:textSize="12dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+</LinearLayout>

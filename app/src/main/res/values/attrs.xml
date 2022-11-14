@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AccordionWidget">
+        <attr name="accordion_heading" format="string"/>
+        <attr name="accordion_content" format="string"/>
+        <attr name="accordion_secondary_heading" format="string"/>
+        <attr name="accordion_layout" format="enum">
+            <enum name="travel_details" value="1" />
+            <enum name="route_details" value="2" />
+        </attr>
+        <attr name="accordion_expand_layout" format="reference"/>
+    </declare-styleable>
+</resources>

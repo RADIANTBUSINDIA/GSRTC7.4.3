@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background_img"
+    android:padding="12dp"
+    android:weightSum="1"
+    tools:context=".ui.activities.ticket_cancellation.Forgot_Txn_Pass">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/title_forgetpass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:fontFamily="@font/gotham"
+                android:textColor="@color/white"
+                android:layout_marginBottom="10dp"
+                android:text="Retrive Transaction Password"/>
+
+            <View
+                android:id="@+id/second"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/top"
+                android:layout_marginBottom="20dp"
+                android:background="@color/white" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/pnrtxt"
+                    android:text="PNR No"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/pnr"
+                    android:theme="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="PNR NO"
+                    android:textColorHint="@color/hint"
+                    android:textColor="@color/white"
+                    android:singleLine="true"
+                    android:layout_marginBottom="30dp"/>
+
+                <TextView
+                    android:id="@+id/forget_note"
+                    android:text="Note : Your Transaction password send to your Registered Mobile Number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="italic"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="20dp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+   <Button
+        android:id="@+id/txnpassBtn"
+        android:background="@drawable/btn_shape"
+        android:textColor="@color/naviy"
+        android:layout_marginTop="10dp"
+       android:layout_marginLeft="50dp"
+       android:layout_marginRight="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:layout_gravity="center"
+        android:text="Retrive Password"
+       android:visibility="visible"
+        android:textStyle="bold"/>
+</LinearLayout>

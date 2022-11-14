@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/progres"
+    android:background="@null"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:id="@+id/xRelLayTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/xIvLoaderRed"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/dot_img" />
+
+        <!--        <ImageView android:id="@+id/xIvLoaderBlue"-->
+        <!--            android:layout_width="80dp"-->
+        <!--            android:layout_height="80dp"-->
+        <!--            android:visibility="visible"-->
+        <!--            android:src="@drawable/gsrtc_loader_red"-->
+        <!--            android:layout_centerInParent="true"/>-->
+
+        <ImageView
+            android:id="@+id/xIvLoaderLogo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:backgroundTint="@color/bpWhite"
+            app:tint="@color/white"
+            android:src="@drawable/lang_logo" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/xTvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/xRelLayTop"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:textStyle="normal"
+        android:paddingTop="5dp"
+        android:text="Please wait Loading...."
+        android:textColor="@color/white"
+        android:textSize="18dp" />
+
+
+</LinearLayout>

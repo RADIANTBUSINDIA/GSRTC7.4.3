@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#9b2424</color>
+    <color name="colorPrimarynew">#ffcc00</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#9b2424</color>
+    <color name="blue">#0000FF</color>
+    <color name="yellow">#f8ff0f</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="orange">#ff6600</color>
+    <color name="yellowlight">#ffc400</color>
+    <color name="brown">#FF6600</color>
+    <color name="sort_tab_text">#ffa52e</color>
+    <color name="screenWhiteBackground">#ff5722</color>
+    <color name="homescreen">#ffffff</color>
+    <color name="olive">#808000</color>
+    <color name="naviy">#000080</color>
+    <color name="purple">#800080</color>
+    <color name="light_blue">#008aff</color>
+    <color name="hint"> #adadad</color>
+    <color name="greenLight"> #39c672</color>
+
+</resources>

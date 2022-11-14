@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="@drawable/background_img"
+    tools:context="com.gsrtc.mobileweb.ui.activities.booking_history.BookingHistoryActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/bpTransparent"
+            android:padding="10dp">
+            <TextView
+                android:id="@+id/title_book_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/gotham"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:text="Transaction History"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/title"
+                android:id="@+id/second"
+                android:layout_marginBottom="15dp"
+                android:background="@color/white"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/email_txt"
+                    android:text="Email ID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"/>
+                <EditText
+                    android:id="@+id/email"
+                    android:hint="Email ID"
+                    android:theme="@style/EditTextStyle"
+                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/mail"
+                    android:textColor="@color/white"
+                    android:drawablePadding="10dp"
+                    android:textColorHint="@color/hint"/>
+                <TextView
+                    android:id="@+id/date_txt"
+                    android:text="Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="10dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/from_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="From Date"
+                        android:focusable="false"
+                        android:textColorHint="@color/hint"
+                        android:focusableInTouchMode="false"
+                        android:theme="@style/EditTextStyle"
+                        android:textColor="@color/white"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginRight="6dp"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/date_img"
+                        android:layout_weight="1"/>
+                    <EditText
+                        android:id="@+id/to_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="To Date"
+                        android:focusable="false"
+                        android:textColorHint="@color/hint"
+                        android:focusableInTouchMode="false"
+                        android:theme="@style/EditTextStyle"
+                        android:textColor="@color/white"
+                        android:drawableStart="@drawable/date_img"
+                        android:layout_marginBottom="20dp"
+                        android:drawablePadding="10dp"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/status_txt"
+                    android:text="Status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"/>
+                <Spinner
+                    android:id="@+id/status"
+                    android:hint="Success"
+                    android:theme="@style/AppTheme.spinnerDropDownItemStyle"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:entries="@array/transaction_history_status"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/submitBtn"
+                android:textColor="@color/naviy"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_shape"
+                android:text="Submit"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

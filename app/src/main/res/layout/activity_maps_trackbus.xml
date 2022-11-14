@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_img"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/login_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bus Location Map View"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:background="@color/white"
+            android:fontFamily="@font/gotham"
+            android:textColor="@color/blue"/>
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginBottom="60dp"
+            map:mapType="normal"
+            tools:context=".MapsActivity" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp"
+        android:paddingLeft="20dp"
+        android:layout_alignParentBottom="true"
+        android:paddingRight="20dp">
+        <Button
+            android:id="@+id/homebtn"
+            android:background="@drawable/btn_shape"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Home"
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textColor="@color/naviy" />
+
+        <Button
+            android:id="@+id/backbtn"
+            android:background="@drawable/btn_shape"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Back"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textColor="@color/naviy" />
+    </LinearLayout>
+</RelativeLayout>
+
+

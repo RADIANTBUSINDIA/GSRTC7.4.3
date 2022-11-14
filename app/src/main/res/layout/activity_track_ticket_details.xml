@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_img"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/header_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" TICKET DETAILS"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:fontFamily="@font/gotham"
+        android:padding="8dp"/>
+    <View
+        android:id="@+id/second"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/top"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/print_sms_recycler_view"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <Button
+            android:id="@+id/resend_sms"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Send SMS"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:background="@drawable/sms"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="right"/>
+    </LinearLayout>
+
+
+</LinearLayout>

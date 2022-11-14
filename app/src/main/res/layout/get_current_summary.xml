@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="@drawable/background_img"
+    tools:context="com.gsrtc.mobileweb.ui.activities.current_booking_native.GetCurrentSummaryActivity"
+    android:id="@+id/rootView">
+
+    <LinearLayout
+        android:id="@+id/search_results_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+       
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:id="@+id/scrollViewPassengerSummary">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Passenger Details"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:fontFamily="@font/gotham"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/white"/>
+
+                <ListView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"/>
+
+                <EditText
+                    android:id="@+id/edt_passenger_name"
+                    android:hint="Passenger Name"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="@color/hint"
+                    android:theme="@style/EditTextStyle"
+                    android:textColor="@color/white"
+                    android:drawableStart="@drawable/profile"
+                    android:drawablePadding="10dp"
+                    android:inputType="textEmailAddress"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/edtEmail"
+                    android:hint="Email"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="@color/hint"
+                    android:theme="@style/EditTextStyle"
+                    android:textColor="@color/white"
+                    android:drawableStart="@drawable/mail"
+                    android:drawablePadding="10dp"
+                    android:inputType="textEmailAddress"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/edtMobileNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Mobile Number"
+                    android:textColorHint="@color/hint"
+                    android:theme="@style/EditTextStyle"
+                    android:textColor="@color/white"
+                    android:drawableStart="@drawable/cell"
+                    android:drawablePadding="10dp"
+                    android:inputType="phone"
+                    android:maxLength="13" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/sub_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Summary Details"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/gotham"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/white"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:id="@+id/tvSummaryDateHeading"
+                        android:layout_below="@id/booking_class"
+                        android:text="Date  : "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white" />
+                    <!--android:layout_weight="1"-->
+
+                    <TextView
+                        android:id="@+id/tvSummaryDateValue"
+                        android:layout_below="@id/bus_route"
+                        android:textStyle="bold"
+                        android:text="GJ-18-Y-0017"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"/>
+                    <!--android:layout_weight="1"-->
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:id="@+id/tvSummaryFromHeading"
+                        android:layout_below="@id/booking_class"
+                        android:text="From  : "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white" />
+                    <!--android:layout_weight="1"-->
+
+                    <TextView
+                        android:id="@+id/tvSummaryFromValue"
+                        android:layout_below="@id/bus_route"
+                        android:textStyle="bold"
+                        android:text="GJ-18-Y-0017"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"/>
+                    <!--android:layout_weight="1"-->
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:id="@+id/tvSummaryToHeading"
+                        android:layout_below="@id/booking_class"
+                        android:text="To    : "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"/>
+                    <!--android:layout_weight="1"-->
+
+                    <TextView
+                        android:id="@+id/tvSummaryToValue"
+                        android:layout_below="@id/bus_route"
+                        android:textStyle="bold"
+                        android:text="GJ-18-Y-0017"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"/>
+                    <!--android:layout_weight="1"-->
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:id="@+id/tvSummaryServiceHeading"
+                        android:layout_below="@id/booking_class"
+                        android:text="Service : "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white" />
+                    <!--android:layout_weight="1"-->
+
+                    <TextView
+                        android:id="@+id/tvSummaryServiceValue"
+                        android:layout_below="@id/bus_route"
+                        android:textStyle="bold"
+                        android:text="GJ-18-Y-0017"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"/>
+                    <!--android:layout_weight="1"-->
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:id="@+id/tvSummaryNoOfSeatsHeading"
+                        android:layout_below="@id/booking_class"
+                        android:text="No.Seats  : "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white" />
+                    <!--android:layout_weight="1"-->
+
+                    <TextView
+                        android:id="@+id/tvSummaryNoOfSeatsValue"
+                        android:layout_below="@id/bus_route"
+                        android:textStyle="bold"
+                        android:text="GJ-18-Y-0017"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"/>
+                    <!--android:layout_weight="1"-->
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/radio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/paytm_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Credit/Debit Card,UPI and NetBanking"
+                    android:layout_marginLeft="10dp"
+                    android:textAllCaps="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:visibility="visible"
+                    android:textSize="12dp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+                <RadioButton
+                    android:id="@+id/paytm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:drawableStart="@drawable/icici"
+                    android:text="ICICI"
+                    android:textStyle="bold"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:visibility="visible"
+                    android:clickable="true"
+                    android:buttonTint="@color/white"
+                    android:checked="false"/>
+
+                <TextView
+                    android:id="@+id/phonepe_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="PhonrPe"
+                    android:textAllCaps="true"
+                    android:layout_marginLeft="10dp"
+                    android:visibility="gone"
+                    android:textStyle="bold"/>
+                <RadioButton
+                    android:id="@+id/phonepe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:checked="false"
+                    android:textSize="20dp"
+                    android:textColor="@color/naviy"
+                    android:text="PhonePe"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/aggrepay_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="UPI/BHARAT QR Payments"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:visibility="gone"
+                    android:textAllCaps="true"
+                    android:textSize="12dp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+                <RadioButton
+                    android:id="@+id/aggrepay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:checked="false"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/agree_pay"
+                    android:text="Aggrepay"
+                    android:buttonTint="@color/white"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/pay_gov_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Credit/Debit Card and NetBanking"
+                    android:layout_marginLeft="10dp"
+                    android:textAllCaps="true"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:textSize="12dp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+                <RadioButton
+                    android:id="@+id/paygov"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:checked="false"
+                    android:textSize="20dp"
+                    android:drawableStart="@drawable/pay_gov"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/white"
+                    android:text="PayGov"
+                    android:buttonTint="@color/white"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:id="@+id/btnConfirmSummary"
+        android:text="MAKE PAYMENT"
+        android:background="@drawable/btn_shape"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

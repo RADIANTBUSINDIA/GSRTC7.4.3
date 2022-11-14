@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="com.gsrtc.mobileweb.ui.activities.advance_booking.SeatSelectionActivity">
+    <LinearLayout
+        android:id="@+id/seat_categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:src="@drawable/layout_img"/>
+        <!--        <TextView-->
+        <!--            android:id="@+id/booked"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center_vertical"-->
+        <!--            android:layout_marginRight="6dp"-->
+        <!--            android:text="Booked"/>-->
+        <!--        <ImageView-->
+        <!--            android:layout_width="20dp"-->
+        <!--            android:layout_height="20dp"-->
+        <!--            android:layout_margin="10dp"-->
+        <!--            android:src="@drawable/selected_seat"/>-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/selectedseat"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center_vertical"-->
+        <!--            android:layout_marginRight="6dp"-->
+        <!--            android:text="Selected"/>-->
+        <!--        <ImageView-->
+        <!--            android:layout_width="20dp"-->
+        <!--            android:layout_margin="10dp"-->
+        <!--            android:layout_height="20dp"-->
+        <!--            android:src="@drawable/available_seat_new"/>-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/available"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center_vertical"-->
+        <!--            android:text="Available"/>-->
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/seat_categories2"
+        android:layout_width="match_parent"
+        android:paddingLeft="20dp"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ladies_seat"/>
+        <TextView
+            android:id="@+id/ladiesseat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="6dp"
+            android:text="Available Ladies Seat"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_margin="10dp"
+            android:layout_height="20dp"
+            android:src="@drawable/booked_ladies_seat"/>
+        <TextView
+            android:id="@+id/ladies_booked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Booked Ladies Seat"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/advance_booking_list_border"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="left">
+            <TextView
+                android:id="@+id/classservice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Class :  "
+                android:textSize="12dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/classserv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AC SLEEPER"
+                android:textStyle="bold"
+                android:textColor="@color/blue"
+                android:textSize="12dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right">
+                <TextView
+                    android:id="@+id/tripco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TripCode :  "
+                    android:textSize="12dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/trip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SURAHE1045612"
+                    android:textStyle="bold"
+                    android:textColor="@color/blue"
+                    android:textSize="12dp" />
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/covid_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/bpRed"
+            android:textSize="12dp"
+            android:layout_marginTop="5dp"
+            android:text=" "/>
+
+    </LinearLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="0dp"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:visibility="visible"
+                android:layout_margin="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="0dp"
+                android:background="@drawable/advance_booking_list_border"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+            <LinearLayout
+                android:id="@+id/search_results_error"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Could not fetch data ,please try again"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/loading_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="10dp">
+                <!--  <ImageView
+                      android:id="@+id/loading_gif"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:src="@drawable/loading"/>  -->
+                <TextView
+                    android:id="@+id/no_internet_text"
+                    android:visibility="gone"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="No Internet. Click to try Again"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

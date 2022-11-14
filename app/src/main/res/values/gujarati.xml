@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    Return Booking	રીટર્ન બુકિંગ
+
+    /** Select Language **/
+    <string name="lan_text">જી.એસ.આર.ટી.સી. સાથે ગુજરાતની પહોંચ હેરિટેજ અને હૂંફ આતિથ્યનો આનંદ માણો</string>
+    <string name="lan_welcome">જીએસઆરટીસીમાં આપનું સ્વાગત છે</string>
+    <string name="lan_gujarati">ગુજરાતી</string>
+    <string name="lan_english">અંગ્રેજી</string>
+    <string name="lan_selct_lang">તમારી ભાષા પસંદ કરો</string>
+
+    /**drawer menu **/
+
+    <string name="drwr_home">હોમ પેજ</string>
+    <string name="drwr_bkng_policy">બુકિંગ નીતિ</string>
+    <string name="drwr_advance">એડવાન્સ બુકિંગ</string>
+    <string name="drwr_current">વર્તમાન ટિકિટ</string>
+    <string name="drwr_cancel">ટિકિટ રદ</string>
+    <string name="drwr_track">મારી બસ ટ્રેક કરો</string>
+    <string name="drwr_viewbook">બુકિંગ જુઓ</string>
+    <string name="drwr_retrivepass">પુન પ્રાપ્ત ટ્રાન્સ પાસવર્ડ</string>
+    <string name="drwr_viewsms">જુઓ / એસએમએસ ટિકિટ</string>
+    <string name="drwr_feedback">પ્રતિસાદ અને સૂચનો</string>
+    <string name="drwr_helpsprt">સહાય અને સપોર્ટ</string>
+    <string name="drwr_pre_post">પૂર્વ અથવા મુલતવી (વેબલિંક)</string>
+
+    /**Home Screen **/
+    <string name="hm_gsrtc">જીએસઆરટીસી</string>
+    <string name="hm_advance_booking">એડવાન્સ બુકિંગ</string>
+    <string name="hm_cancel_ticket">ટિકિટ રદ કરો </string>
+    <string name="hm_current_ticket">વર્તમાન ટિકિટ</string>
+    <string name="hm_track_my_bus">મારી બસ ટ્રેક કરો</string>
+
+    /**Book search**/
+    <string name="bk_advance_booking">એડવાન્સ બુકિંગ</string>
+    <string name="bk_from_place">કયા સ્થળેથી</string>
+    <string name="bk_to_place">કયા સ્થળ પર જવાનું</string>
+    <string name="bk_onward_date">જવાની તારીખ</string>
+    <string name="bk_return_date">પરત ફરવાની તારીખ</string>
+    <string name="bk_adults">પુખ્ત</string>
+    <string name="bk_child">બાળકો</string>
+    <string name="bk_search">શોધો</string>
+    <string name="bk_policy">જીએસઆરટીસી જાહેરાત</string>
+    <string name="bk_recent_search">તમારી તાજેતરની શોધ : </string>
+    <string name="bk_single_lady">એક મહિલા</string>
+    <string name="bk_policyone">* એક્સપ્રેસ,ગુર્જરનાગરી અને નોન એસી સ્લીપર કમ સીટર પર 8% ડિસ્કાઉન્ટ.   * વોલ્વો, વોલ્વો સ્લીપર, એસી સ્લીપર, એસી સીટર બુકિંગમાં તમામ ઇ એન્ડ એમ બુકિંગમાં 10% ડિસ્કાઉન્ટ.    * કોઈપણ ટિકિટ પર એક ટિકિટ દીઠ સિંગલ ડિસ્કાઉન્ટ લાગુ થશે. એટલે કે જેની છૂટ વધારે છે.    Toll Free Number: 1800 233 666666 / 07922835000</string>
+    <string name="bk_policytwo">* વોલ્વો, વોલ્વો સ્લીપર, એસી સ્લીપર, એસી સીટર બુકિંગમાં તમામ ઇ એન્ડ એમ બુકિંગમાં 10% ડિસ્કાઉન્ટ</string>
+    <string name="bk_policythree">* કોઈપણ ટિકિટ પર એક ટિકિટ દીઠ સિંગલ ડિસ્કાઉન્ટ લાગુ થશે. એટલે કે જેની છૂટ વધારે છે</string>
+
+    /** service availability **/
+    <string name="serv_dep_time">પ્રસ્થાન સમય</string>
+    <string name="serv_class">વર્ગ</string>
+    <string name="serv_price">કિંમત</string>
+
+    /** service availability **/
+    <string name="seat_booked">બુક થયેલ</string>
+    <string name="seat_selected">પસંદ કરેલ</string>
+    <string name="seat_available">ઉપલબ્ધ</string>
+    <string name="seat_ladies">મહિલા બેઠક</string>
+    <string name="seat_class">વર્ગ : </string>
+    <string name="seat_tripco">ટ્રિપ કોડ : </string>
+
+
+    /** passenger info  **/
+    <string name="pass_pass_details">મુસાફર ની વિગતો</string>
+    <string name="pass_pass_name">મુસાફર નુ નામ </string>
+    <string name="pass_gender">પુરુષ / સ્ત્રી</string>
+    <string name="pass_age">ઉંમર</string>
+    <string name="pass_email">ઇમેઇલ</string>
+    <string name="pass_phone">ફોન</string>
+    <string name="pass_cnfm_btn">બુકિંગની પુષ્ટિ કરો</string>
+
+    /** fare summary **/
+    <string name="fare_fare_details">ભાડા ની વિગતો</string>
+    <string name="fare_travel_details">પ્રવાસ ની વિગતો</string>
+    <string name="fare_on_tkt_fare">આગળની ટિકિટનુ ભાડું</string>
+    <string name="fare_return_ticket">રીટર્ન ટિકિટ</string>
+    <string name="fare_rtn_tkt_fare">રીટર્ન ટિકિટ ભાડું</string>
+    <string name="fare_onward_ticket">આગળ ની ટિકિટ</string>
+    <string name="fare_from">કયા સ્થળેથી</string>
+    <string name="fare_to">	કયા સ્થળ પર જવાનું</string>
+    <string name="fare_journey">પ્રવાસ તારીખ</string>
+    <string name="fare_tripco">	ટ્રિપ કોડ</string>
+    <string name="fare_cls_service">સેવાનો વર્ગ</string>
+    <string name="fare_boarding">બોર્ડિંગ પોઇન્ટ </string>
+    <string name="fare_departure">પ્રસ્થાન સમય</string>
+    <string name="fare_no_seats">બેઠકોની સંખ્યા</string>
+    <string name="fare_seat_no">બેઠક નંબર</string>
+    <string name="fare_psname">	મુસાફર નુ નામ</string>
+
+    <string name="fare_basicfare">મૂળ ભાડુ</string>
+    <string name="fare_resv_fee">આરક્ષણ ફી</string>
+    <string name="fare_acc_ins_charges">અકસ્માત વીમા ખર્ચ</string>
+    <string name="fare_toll_fee">ટોલ ફી</string>
+    <string name="fare_toll_fee_rajs">ટોલ ફી રાજસ્થાન</string>
+    <string name="fare_other_levies">અન્ય કર</string>
+    <string name="fare_gst">જી.એસ.ટી.</string>
+    <string name="fare_concession">	રાહત</string>
+    <string name="fare_discounts">છૂટ</string>
+    <string name="fare_tot_fare">કુલ ભાડું</string>
+    <string name="fare_credit_debit">ક્રેડિટ અને ડેબિટ કાર્ડ</string>
+    <string name="fare_net_banking">નેટ બેન્કિંગ</string>
+    <string name="fare_mak_paybtn">	ચુકવણી કરો</string>
+
+    /**obrefv page **/
+    <string name="ob_make_pay">ચુકવણી કરો</string>
+    <string name="ob_text_up">કૃપા કરી આ જીએસઆરટીસી ઓબી સંદર્ભ નંબરની નોંધ લેશો : </string>
+    <string name="ob_text_down">આ વ્યવહારથી સંબંધિત તમામ સંદેશાવ્યવહાર માટે આ સંદર્ભ નંબર આવશ્યક છે</string>
+    <string name="ob_btn_cnfrm">ચાલુ રાખો</string>
+
+    /**Ticket confirm page **/
+    <string name="adcnfm_header">તમારું બુકિંગ નિશ્ચિત થયેલ છે</string>
+    <string name="adcnfm_total_fare">કુલ ભાડું  : </string>
+    <string name="adcnfm_pnrno">પી.એન.આર : </string>
+    <string name="adrtn_jrny">પરત પ્રવાસ </string>
+    <string name="adcnfm_journey">પ્રવાસ તારીખ : </string>
+    <string name="adcnfm_depart_time">પ્રસ્થાન સમય : </string>
+    <string name="adcnfm_seats">બેઠકો : </string>
+    <string name="adcnfm_btn">થઈ ગયું </string>
+    <string name="adcnfm_serv_cls">સેવા વર્ગ : </string>
+    <string name="adcnfm_inr">રૂપિયા </string>
+
+    /**current booking search**/
+
+    <string name="crnt_current_tkt">વર્તમાન ટિકિટ</string>
+    <string name="crnt_from">કયા સ્થળેથી</string>
+    <string name="crnt_to">કયા સ્થળ પર જવાનું</string>
+    <string name="crnt_adults">પુખ્ત</string>
+    <string name="crnt_child">બાળકો</string>
+    <string name="crnt_searc_btn">શોધો</string>
+    <string name="crnt_policy_title">બુકિંગ નીતિઓ :</string>
+    <string name="crnt_policy">વર્તમાન બુકિંગ મોડ હેઠળ બુક કરાવેલ ટિકિટ માટે સીટોની ખાતરી આપવામાં આવતી નથી અને વર્તમાન બુકિંગ ટિકિટ માટે રદ કરવાની મંજૂરી નથી	વર્તમાન બુકિંગ મોડ હેઠળ બુક કરાવેલ ટિકિટ માટે  બેઠકોની ખાતરી આપવામાં આવતી નથી અને વર્તમાન ટિકિટ રદ કરી શકાતી નથી</string>
+
+    /**current booking service list**/
+
+    <string name="crtserv_route">માર્ગ વિગતો</string>
+    <string name="crtserv_busno">બસ નં   : </string>
+    <string name="crtserv_departed">રવાના થઈ   : </string>
+    <string name="crtserv_seats">ઉપલબ્ધ બેઠક   : </string>
+    <string name="crtserv_text">* વર્તમાન બુકિંગ હેઠળ  બેઠકોની ખાતરી આપવામાં આવતી નથી</string>
+    <string name="crtserv_book">નોંધ કરો \u20B9</string>
+    <string name="crtserv_adult_fare">પુખ્ત ભાડું  :</string>
+    <string name="crtserv_kms">કિલોમીટર  : </string>
+
+
+    /**current booking service list**/
+
+    <string name="crtpas_pass_dtls">મુસાફર ની વિગતો</string>
+    <string name="crtpas_pass_name">મુસાફર નુ નામ</string>
+    <string name="crtpas_email">ઇમેઇલ</string>
+    <string name="crtpas_pahone">ફોન</string>
+    <string name="crtpas_summary">સારાંશ વિગતવાર</string>
+    <string name="crtpas_date">તારીખ  :</string>
+    <string name="crtpas_from">કયા સ્થળેથી  :</string>
+    <string name="crtpas_to">કયા સ્થળ પર જવાનું  :</string>
+    <string name="crtpas_service">સર્વિસ  :</string>
+    <string name="crtpas_no_seats">બેઠકોની સંખ્યા  :</string>
+    <string name="crtpas_credit_debit">ક્રેડિટ અને ડેબિટ કાર્ડ</string>
+    <string name="crtpas_netbank">નેટ બેન્કિંગ</string>
+    <string name="crtpas_pay">ચુકવણી કરો</string>
+
+    /** current booking obrefv page **/
+    <string name="crtob_make_pay">ચુકવણી કરો</string>
+    <string name="crtob_text_up">કૃપા કરી આ જીએસઆરટીસી ઓબી સંદર્ભ નંબરની નોંધ લેશો : </string>
+    <string name="crtob_text_down">આ વ્યવહારથી સંબંધિત તમામ સંદેશાવ્યવહાર માટે આ સંદર્ભ નંબર આવશ્યક છે</string>
+    <string name="crtob_btn_cnfrm">ચાલુ રાખો</string>
+
+    /** current booking Ticket confirm page **/
+
+    /**cancel ticket **/
+    <string name="can_can_tkt">ટિકિટ રદ કરો</string>
+    <string name="can_pnrno">પી.એન.આર.નં</string>
+    <string name="can_email">ઇમેઇલ આઈડી</string>
+    <string name="can_mobile">મોબાઈલ નં</string>
+    <string name="can_password">ટ્રાન્ઝેક્શન પાસવર્ડ</string>
+    <string name="can_submit">સબમિટ કરો</string>
+
+    /**track my bus**/
+    <string name="track_title">મારી બસ ટ્રેક કરો</string>
+    <string name="track_trackbus">બસ ટ્રેક કરો</string>
+    <string name="track_vehicle_route">માર્ગ પર ના વાહનો</string>
+
+    /**track my bus option**/
+
+    <string name="trackopt_trackmy_bus">મારી બસ ટ્રેક કરો</string>
+    <string name="trackopt_pnrno">પી.એન.આર.નં</string>
+    <string name="trackopt_vehicno">વાહન નંબર[GJ-18-XZ-XXXX]</string>
+    <string name="trackopt_tripco">ટ્રિપ કોડ</string>
+    <string name="trackopt_submit">સબમિટ કરો</string>
+    <string name="trackopt_or">અથવા</string>
+
+    Result after Submit Button
+
+    <string name="trackopt_vehicleno">વાહન નંબર</string>
+    <string name="trackopt_route_name">માર્ગનું નામ</string>
+    <string name="trackopt_depart_dt_time">પ્રસ્થાન તારીખ સમય</string>
+    <string name="trackopt_last_bus_stn">છેલ્લું બસ સ્ટેશન</string>
+    <string name="trackopt_last_arrv_dttime">છેલ્લો આગમન તારીખનો સમય</string>
+    <string name="trackopt_status">સ્થિતિ</string>
+    <string name="trackopt_next_locat">આગલું સ્થાન</string>
+    <string name="trackopt_eta">અપેક્ષિત આગમનનો સમય</string>
+    <string name="trackopt_data_text">** જીએસઆરટીસી જીપીએસ સિસ્ટમ દ્વારા પ્રદાન કરાયેલ મહિતી</string>
+    <string name="trackopt_viewmap">નકશામાં જુઓ</string>
+
+    /**track my bus vehicle on routes**/
+
+    <string name="trvehic_header">રૂટ પર જીએસઆરટીસી વાહનો (રાઉન્ડ ટ્રિપ્સ)</string>
+    <string name="trvehic_sub_header">છેલ્લા 4 કલાકમાં જનરેટ થયેલ ટ્રિપશીટ</string>
+    <string name="trvehic_source">સ્રોત</string>
+    <string name="trvehic_dest">મંજિલ</string>
+    <string name="trvehic_search">શોધો</string>
+    <string name="trvehic_note">નોંધ : પરિણામમાં થોડીવાર લાગી શકે છે.</string>
+    <string name="trvehic_pls_loading">મહેરબાની કરીને રાહ જુઓ લોડ થઇ રહ્યું છે ...</string>
+
+    By clicking Route on map following message comes:
+
+    <string name="trvehic_bust_dtls">બસની વિગતો</string>
+    <string name="trvehic_tripco">ટ્રિપ કોડ</string>
+    <string name="trvehic_org_depart">મૂળ / પ્રસ્થાન સમય</string>
+    <string name="trvehic_dest_ariv">લક્ષ્યસ્થાન / આગમન સમય</string>
+    <string name="trvehic_con_mobile">કંડક્ટર મોબાઈલ</string>
+    <string name="trvehic_vehic_no">વાહન નંબર</string>
+
+    /**Trasaction History**/
+    <string name="transhis_title">વ્યવહારનો ઇતિહાસ</string>
+    <string name="transhis_enter_email">ઇમેઇલ આઈડી દાખલ કરો</string>
+    <string name="transhis_email">ઇમેઇલ આઈડી</string>
+    <string name="transhis_date">તારીખ</string>
+    <string name="transhis_fromdate">તારીખથી</string>
+    <string name="transhis_todate">તારીખ સુધી</string>
+    <string name="transhis_status">સ્થિતિ</string>
+    <string name="transhis_success">સફળ</string>
+    <string name="transhis_fail">નિષ્ફળ</string>
+    <string name="transhis_submit">સબમિટ કરો</string>
+
+    /**Trasaction History final**/
+    <string name="viewhis_bkhistry">વઇતિહાસ બુકિંગ</string>
+    <string name="viewhis_to">માટે</string>
+    <string name="viewhis_booked_on">બુક કરાવ્યું</string>
+    <string name="viewhis_journey">પ્રવાસ તારીખ</string>
+    <string name="viewhis_pnr">ી.એન.આર.નં.</string>
+    <string name="viewhis_ref">રેફ. ના.</string>
+    <string name="viewhis_mobile">મોબાઈલ નં</string>
+    <string name="viewhis_inr">રૂપિયા</string>
+
+    /**Retrive Transaction Password**/
+
+    <string name="rtvtrpas_title">ટ્રાન્ઝેક્શન પાસવર્ડ ફરીથી મેળવો</string>
+    <string name="rtvtrpas_pnr">ટ્પી.એન.આર. નં.</string>
+    <string name="rtvtrpas_enter_pnr">ટ્પી.એન.આર. નંબર દાખલ કરો</string>
+    <string name="rtvtrpas_note">ટ્નોંધ: તમારો ટ્રાંઝેક્શન પાસવર્ડ તમારા રજિસ્ટર્ડ મોબાઇલ પર મોકલાયો છે</string>
+    <string name="rtvtrpas_retrv_pass">પાસવર્ડ ફરીથી મેળવો</string>
+
+    /**Help and Support**/
+
+    <string name="hlp_sprt_title">સહાય અને આધાર</string>
+    <string name="hlp_sprt_hlpnum">	હેલ્પલાઈન નંબર</string>
+    <string name="hlp_sprt_rfnd_cmplnt">રિફંડ ફરિયાદ</string>
+    <string name="hlp_sprt_click">અહીં ક્લિક કરો</string>
+
+    /**Feedback**/
+
+    <string name="feed_feedback">પ્રતિસાદ</string>
+    <string name="feed_issue">મુદ્દો</string>
+    <string name="feed_suggestion">સૂચનો</string>
+    <string name="feed_descrie_issue">મુદ્દો અથવા સૂચનનું વર્ણન કરો</string>
+    <string name="feed_enter_email">ઇમેઇલ આઈડી દાખલ કરો</string>
+    <string name="feed_enter_mobile">મોબાઇલ નંબર દાખલ કરો</string>
+    <string name="feed_submit">	સબમિટ કરો</string>
+
+    /** View/SMS Ticket**/
+
+    <string name="vwsms_title">જુઓ / એસએમએસ ટિકિટ</string>
+    <string name="vwsms_email">ઇમેઇલ આઈડી</string>
+    <string name="vwsms_enter_email">ઇમેઇલ આઈડી દાખલ કરો</string>
+    <string name="vwsms_or">અથવા</string>
+    <string name="vwsms_mobile">મોબાઈલ નં</string>
+    <string name="vwsms_enter_mobile">મોબાઈલ નં</string>
+    <string name="vwsms_submit">સબમિટ કરો</string>
+
+    <string name="genter_pnr">પી.એન.આર. નંબર દાખલ કરો</string>
+
+    /**Cancellation Summarry**/
+
+    <string name="cnlsum_title">રદ સારાંશ</string>
+    <string name="cnlsum_pnr">પી.એન.આર. નં.</string>
+    <string name="cnlsum_from">કયાથી</string>
+    <string name="cnlsum_to">કયા સુધી</string>
+    <string name="cnlsum_journey">પ્રવાસ તારીખ</string>
+    <string name="cnlsum_tripco">ટ્રિપ કોડ</string>
+    <string name="cnlsum_cls_srv">સેવાનો વર્ગ</string>
+    <string name="cnlsum_cncl_percent">રદ કરવાની ટકાવારી</string>
+    <string name="cnlsum_lumpsum">ઊચક રકમ</string>
+    <string name="cnlsum_refund_amt">પરત કરવાની રકમ</string>
+    <string name="cnlsum_submit">સબમિટ કરો</string>
+
+    /**partial Cancellation Summarry**/
+
+    <string name="prtlcnlsum_title">રદ સારાંશ</string>
+    <string name="prtlcnlsum_pnr">પી.એન.આર. નં.</string>
+    <string name="prtlcnlsum_from">કયાથી</string>
+    <string name="prtlcnlsum_to">કયા સુધી</string>
+    <string name="prtlcnlsum_journey">પ્રવાસ તારીખ</string>
+    <string name="prtlcnlsum_tripco">ટ્રિપ કોડ</string>
+    <string name="prtlcnlsum_cls_serv">સેવાનો વર્ગ</string>
+
+    <string name="prtlcnlsum_orgnl_trans">અસલ વ્યવહાર (રૂપિયામાં)</string>
+    <string name="prtlcnlsum_basic_fare">મૂળ ભાડુ</string>
+    <string name="prtlcnlsum_resv_fee">આરક્ષણ ફી</string>
+    <string name="prtlcnlsum_acc_ins">અકસ્માત વીમા ખર્ચ</string>
+    <string name="prtlcnlsum_toolfee">ટોલ ફી</string>
+    <string name="prtlcnlsum_toolfeerjs">ટોલ ફી રાજસ્થાન</string>
+    <string name="prtlcnlsum_other_levi">અન્ય કર</string>
+    <string name="prtlcnlsum_gst">જી.એસ.ટી.</string>
+    <string name="prtlcnlsum_lescns">રાહત બાદ</string>
+    <string name="prtlcnlsum_lesdiscnt">છૂટ બાદ</string>
+    <string name="prtlcnlsum_les_cnclfee">રદ કરવાની ફી બાદ</string>
+    <string name="prtlcnlsum_totalamt">કુલ રકમ</string>
+
+    <string name="prtlcnlsum_tobe_refund">પરત આપવું (રૂપિયામાં)</string>
+    <string name="prtlcnlsum_basic_farep">મૂળ ભાડુ</string>
+    <string name="prtlcnlsum_resv_feep">આરક્ષણ ફી</string>
+    <string name="prtlcnlsum_acc_insp">અકસ્માત વીમા ખર્ચ</string>
+    <string name="prtlcnlsum_toolfeep">ટોલ ફી</string>
+    <string name="prtlcnlsum_toolfeerjsp">ટોલ ફી રાજસ્થાન</string>
+    <string name="prtlcnlsum_other_levip">અન્ય કર</string>
+    <string name="prtlcnlsum_gstp">જી.એસ.ટી.</string>
+    <string name="prtlcnlsum_lescnsp">રાહત બાદ</string>
+    <string name="prtlcnlsum_lesdiscntp">છૂટ બાદ</string>
+    <string name="prtlcnlsum_les_cnclfeep">રદ કરવાની ફી બાદ</string>
+    <string name="prtlcnlsum_les_cnclpercntp">રદ કરવાની ટકાવારી</string>
+    <string name="prtlcnlsum_les_lumpsump">ઊચક રકમ</string>
+    <string name="prtlcnlsum_les_rfndamntp">પરત કરવાની રકમ</string>
+
+    <string name="prtlcnlsum_remaingpassp">બાકી મુસાફરો(્રવાસ ચાલુ રાખે છે)</string>
+    <string name="prtlcnlsum_jrnycntinuep">પ્રવાસ ચાલુ રાખે છે</string>
+    <string name="prtlcnlsum_passnamep">મુસાફર નામ</string>
+    <string name="prtlcnlsum_seatno">બેઠક નં</string>
+    <string name="prtlcnlsum_cnrm_btn">રદ કરવાની પુષ્ટિ કરો</string>
+
+    /**sms details screen**/
+    <string name="smsdet_title">ટિકિટની  વિગતો </string>
+    <string name="smsdet_pnr">પી.એન.આર. નં.  :-</string>
+    <string name="smsdet_journey">પ્રવાસ તારીખ  :-</string>
+    <string name="smsdet_from">કયા સ્થળેથી  :-</string>
+    <string name="smsdet_toplace">કયા સ્થળ પર જવાનું  :-</string>
+    <string name="smsdet_tripco">ટ્રિપ કોડ  :-</string>
+    <string name="smsdet_amount">રકમ  :-</string>
+
+    /**track my bus vehicle on routes**/
+
+    Cancellation Summarry	રદ સારાંશ
+    PNR No.	પી.એન.આર. નં.
+    From	કયાથી
+    To	કયા સુધી
+    Journey Date	પ્રવાસ તારીખ
+    Trip Code	ટ્રિપ કોડ
+
+
+    <string name="prtlcnlsum_submit">સબમિટ કરો</string>
+
+    /**confirm final screen**/
+
+    <string name="cnfmfnl_title">જીએસઆરટીસીમાં આપનું સ્વાગત છે</string>
+    <string name="cnfmfnl_msg">ટિકિટ રદ કરવામાં આવી છે.\n રકમ 7 કાર્યકારી દિવસની અંદર તમારા ખાતામાં પરત કરવામાં આવશે.</string>
+    <string name="cnfmfnl_mainmenu">મુખ્ય મેનૂ</string>
+
+    <string name="gIteneries">કરેલ બુકિંગની માહીતી</string>
+    <string name="gTime_Table">સમયપત્રક</string>
+    <string name="gShow_More">વધારે જુઓ...</string>
+    <string name="gShow_Less">ઓછું જુઓ</string>
+    <string name="gReschedule_Ticket">રીશીડ્યુલ ટિકિટ</string>
+    <string name="gRefund_status">રિફંડની સ્થિતિ</string>
+    <string name="gHire_A_Bus">બસ ભાડે </string>
+    <string name="gNear_By_Location">નજીકનુ સ્થળ</string>
+    <string name="gBus_Pass">બસ પાસ</string>
+    <string name="gTrack_Bus">ટ્રેક બસ</string>
+    <string name="gBack">પાછળ </string>
+    <string name="gRoute_Live_Info">વર્તમાન રૂટની માહિતી</string>
+    <string name="gPickup_Name">બેસવાના સ્થળનું નામ</string>
+    <string name="gTime">સમય</string>
+    <string name="gDay">દિવસ</string>
+    <string name="gClass_of_Service">દસેવાનો વર્ગ  :-</string>
+    <string name="gtrack_ticket">ટ્રેક ટિકિટ</string>
+
+    <string name="gcrnt_policy_one">* ટઓનરાઉટ બુકિંગ ટિકિટ માટે બેઠકોની ખાતરી નથી.</string>
+    <string name="gcrnt_policy_two">* ઓનરાઉટ બુકિંગ ટિકિટ માટે રદ કરવાની મંજૂરી નથી.</string>
+    <string name="gcrnt_policy_title"> બુકિંગ નીતિઓ</string>
+    <string name="gTicket_details"> ટિકિટ વિગતો</string>
+    <string name="gTrack_Ticket_details"> ટિકિટ વિગતો વિગતો</string>
+    <string name="gpnr_no">પી.એન.આર. નં</string>
+    <string name="gtrack_bus">ટ્રેક બસ</string>
+
+</resources>

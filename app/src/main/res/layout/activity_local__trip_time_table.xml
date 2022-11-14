@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background_img"
+    android:id="@+id/rootView">
+
+    <RelativeLayout
+        android:id="@+id/xRellayTop"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:id="@+id/header_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AHMEDABAD KRISHNANAGAR STAND  to  ADIPUR 06/04/2017"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:gravity="center"
+            android:padding="2dp"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_margin="3dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_calender"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:scrollbars="horizontal"
+            android:orientation="horizontal">
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/advance_booking_list_border">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white">
+            <TextView
+                android:id="@+id/onRouteBook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="OnRoute Booking"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:background="@color/bpBlue"
+                android:textSize="15dp"
+                android:layout_margin="2dp"
+                android:textColor="@color/bpRed"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:id="@+id/onroute_list"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:background="@drawable/advance_booking_list_border"
+                android:paddingBottom="2dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/search_results_onroute_view"
+                    android:visibility="gone"
+                    android:background="@drawable/advance_booking_list_border"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/advBook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Advance Booking"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:textSize="15dp"
+                android:background="@color/bpBlue"
+                android:layout_margin="2dp"
+                android:textColor="@color/bpRed"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:id="@+id/adv_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/advance_booking_list_border">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/search_results_recycler_view"
+                    android:visibility="visible"
+                    android:background="@drawable/advance_booking_list_border"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
+                <LinearLayout
+                    android:id="@+id/search_results_loading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:background="@drawable/advance_booking_list_border"
+                    android:orientation="vertical">
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

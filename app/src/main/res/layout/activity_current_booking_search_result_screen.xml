@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background_img"
+    android:id="@+id/rootView"
+    tools:context="com.gsrtc.mobileweb.ui.activities.current_booking_native.CurrentBookingSearchResultActivity">
+    <TextView
+        android:id="@+id/header_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Service Details"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="5dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/title_current"
+        android:id="@+id/second"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="5dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/one_way_round_trip"
+            android:background="@drawable/advance_booking_list_border"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/dep_time_btn"
+                android:background="@color/colorPrimary"
+                android:layout_margin="1dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:text="Dep Time"/>
+            <View
+                android:layout_width="1dp"
+                android:background="#dddddd"
+                android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/class_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_margin="1dp"
+                android:background="@android:color/transparent"
+                android:text="Class"
+                android:textAllCaps="false"
+                android:textColor="#ffa52e" />
+
+            <View
+                android:layout_width="1dp"
+                android:background="#dddddd"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/price_btn"
+                android:background="@android:color/transparent"
+                android:layout_margin="1dp"
+                android:textAllCaps="false"
+                android:textColor="#ffa52e"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:text="Price"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/search_results_recycler_view"
+                android:visibility="gone"
+                android:layout_margin="2dp"
+                android:background="@drawable/advance_booking_list_border"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+            <LinearLayout
+                android:id="@+id/search_results_loading"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>

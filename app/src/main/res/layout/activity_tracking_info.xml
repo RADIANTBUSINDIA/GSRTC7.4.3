@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/header_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tracking Information"
+            android:textColor="@color/white"
+            android:background="@color/blue"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding="8dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/track_data_recycler_view"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:id="@+id/more_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textAllCaps="false"
+            android:text="Route Live Info"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:visibility="visible"
+            android:layout_gravity="center"
+            android:textColor="@color/naviy" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/moreinfo_title"
+            android:visibility="gone"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/txtvehino"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:gravity="start"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="left"
+                android:text="Pickup Point Name"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/txtrotename"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:text="Schedule Time"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/black"
+                android:gravity="start"/>
+            <TextView
+                android:id="@+id/txtdeparture"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:text="Day"
+                android:textStyle="bold"
+                android:layout_gravity="right"
+                android:textColor="@color/black"
+                android:gravity="start"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/track_more_view"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+    <Button
+        android:id="@+id/mapbtn"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_margin="15dp"
+        android:textAllCaps="false"
+        android:background="@drawable/view_in_map"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:textColor="@color/white" />
+
+</LinearLayout>
+

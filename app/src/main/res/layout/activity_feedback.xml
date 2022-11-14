@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_img"
+    android:orientation="vertical"
+    tools:context="com.gsrtc.mobileweb.ui.activities.track_mybus_native.TrackMyBusSearchActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/title_feedback"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Feedback"
+                android:textSize="20dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/gotham"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/top"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white"
+                tools:ignore="DuplicateIds" />
+
+            <RadioGroup
+                android:id="@+id/radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/feedback_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/white"
+                    android:text="Issue"
+                    android:textColor="@color/white"
+                    android:visibility="visible"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <RadioButton
+                    android:id="@+id/feedback_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:buttonTint="@color/white"
+                    android:text="Suggestions"
+                    android:textColor="@color/white"
+                    android:visibility="visible"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+
+            </RadioGroup>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/feedback"
+                    style="@style/Gsrtc_EditText_naviy_Border"
+                    android:layout_width="fill_parent"
+                    android:layout_height="100dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:ems="6"
+                    android:gravity="top"
+                    android:hint="Describe the issue or suggestion"
+                    android:padding="@dimen/padding_for_editbox"
+                    android:textColor="#000000"
+                    android:textColorHint="#999999"
+                    android:textSize="16dp" />
+                <TextView
+                    android:id="@+id/emailtxt"
+                    android:text="Email ID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"/>
+
+                <EditText
+                    android:id="@+id/feedback_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/mail"
+                    android:hint="Email id"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/hint"
+                    android:textSize="16sp"
+                    android:theme="@style/EditTextStyle"
+                    tools:ignore="TouchTargetSizeCheck" />
+                <TextView
+                    android:id="@+id/mbltxt"
+                    android:text="Mobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"/>
+
+                <EditText
+                    android:id="@+id/feedback_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/cell"
+                    android:hint="Enter mobile number"
+                    android:inputType="phone"
+                    android:maxLength="13"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/hint"
+                    android:textSize="16sp"
+                    android:theme="@style/EditTextStyle"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </LinearLayout>
+
+            <Button
+            android:id="@+id/sendmail"
+            android:background="@drawable/btn_shape"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:text="Submit"
+            android:textColor="@color/naviy" />
+
+        </LinearLayout>
+</LinearLayout>

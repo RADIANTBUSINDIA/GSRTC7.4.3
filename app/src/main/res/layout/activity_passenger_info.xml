@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="@drawable/background_img"
+    tools:context="com.gsrtc.mobileweb.ui.activities.advance_booking.PassengerInfoActivity">
+
+    <ScrollView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/passinfo_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Passenger Details"
+                android:textColor="@color/white"
+                android:fontFamily="@font/gotham"
+                android:textSize="18dp"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:textStyle="bold"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bpTransparent">
+
+                <EditText
+                    android:id="@+id/passenger_name_one"
+                    android:hint="Passenger Name"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/hint"
+                    android:inputType="textEmailAddress"
+                    android:theme="@style/EditTextStyle"
+                    android:drawableStart="@drawable/profile"
+                    android:drawablePadding="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <Spinner
+                        android:id="@+id/gender_one"
+                        android:hint="Gender"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="0dp"
+                        android:theme="@style/AppTheme.spinnerDropDownItemStyle"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        android:textAlignment="center"
+                        android:entries="@array/gender_array"
+                        android:layout_height="wrap_content"
+                        tools:ignore="RtlCompat" />
+                    <Spinner
+                        android:id="@+id/gender_lady_one"
+                        android:hint="Gender"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="0dp"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        android:textAlignment="center"
+                        android:theme="@style/AppTheme.spinnerDropDownItemStyle"
+                        android:entries="@array/lady_gender_array"
+                        android:layout_height="wrap_content"
+                        tools:ignore="RtlCompat" />
+
+                    <EditText
+                        android:id="@+id/age_one"
+                        android:hint="Age"
+                        android:layout_marginBottom="0dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/hint"
+                        android:theme="@style/EditTextStyle"
+                        android:layout_weight="1"
+                        android:inputType="numberSigned"
+                        android:visibility="gone"
+                        android:maxLength="3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bpTransparent">
+
+                <EditText
+                    android:id="@+id/passenger_name_two"
+                    android:hint="Passenger Name"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/hint"
+                    android:drawableStart="@drawable/profile"
+                    android:drawablePadding="10dp"
+                    android:theme="@style/EditTextStyle"
+                    android:layout_marginBottom="5dp"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <Spinner
+                        android:id="@+id/gender_two"
+                        android:hint="Gender"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="0dp"
+                        android:layout_width="match_parent"
+                        android:theme="@style/AppTheme.spinnerDropDownItemStyle"
+                        android:visibility="gone"
+                        android:textAlignment="center"
+                        android:entries="@array/gender_array"
+                        android:layout_height="wrap_content"
+                        tools:ignore="RtlCompat" />
+                    <EditText
+                        android:id="@+id/age_two"
+                        android:hint="Age"
+                        android:layout_marginBottom="0dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/hint"
+                        android:theme="@style/EditTextStyle"
+                        android:layout_weight="1"
+                        android:inputType="numberSigned"
+                        android:visibility="gone"
+                        android:maxLength="3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bpTransparent">
+
+                <EditText
+                    android:id="@+id/passenger_name_three"
+                    android:hint="Passenger Name"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/hint"
+                    android:drawableStart="@drawable/profile"
+                    android:drawablePadding="10dp"
+                    android:theme="@style/EditTextStyle"
+                    android:layout_marginBottom="5dp"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <Spinner
+                        android:id="@+id/gender_three"
+                        android:hint="Gender"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="0dp"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        android:theme="@style/AppTheme.spinnerDropDownItemStyle"
+                        android:textAlignment="center"
+                        android:entries="@array/gender_array"
+                        android:layout_height="wrap_content"
+                        tools:ignore="RtlCompat" />
+                    <EditText
+                        android:id="@+id/age_three"
+                        android:hint="Age"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/hint"
+                        android:theme="@style/EditTextStyle"                        android:layout_marginBottom="0dp"
+                        android:layout_weight="1"
+                        android:inputType="numberSigned"
+                        android:visibility="gone"
+                        android:maxLength="3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bpTransparent">
+
+                <EditText
+                    android:id="@+id/passenger_name_four"
+                    android:hint="Passenger Name"
+                    android:inputType="textEmailAddress"
+                    android:drawableStart="@drawable/profile"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/hint"
+                    android:theme="@style/EditTextStyle"
+                    android:visibility="gone"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <Spinner
+                        android:id="@+id/gender_four"
+                        android:hint="Gender"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="0dp"
+                        android:layout_width="match_parent"
+                        android:theme="@style/AppTheme.spinnerDropDownItemStyle"
+                        android:visibility="gone"
+                        android:textAlignment="center"
+                        android:entries="@array/gender_array"
+                        android:layout_height="wrap_content"
+                        tools:ignore="RtlCompat" />
+                    <EditText
+                        android:id="@+id/age_four"
+                        android:hint="Age"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/hint"
+                        android:theme="@style/EditTextStyle"
+                        android:inputType="numberSigned"
+                        android:visibility="gone"
+                        android:maxLength="3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bpTransparent">
+
+                <EditText
+                    android:id="@+id/passenger_name_five"
+                    android:hint="Passenger Name"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/hint"
+                    android:drawableStart="@drawable/profile"
+                    android:drawablePadding="10dp"
+                    android:theme="@style/EditTextStyle"
+                    android:layout_marginBottom="5dp"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <Spinner
+                        android:id="@+id/gender_five"
+                        android:hint="Gender"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="0dp"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        android:textAlignment="center"
+                        android:theme="@style/AppTheme.spinnerDropDownItemStyle"
+                        android:entries="@array/gender_array"
+                        android:layout_height="wrap_content"
+                        tools:ignore="RtlCompat" />
+                    <EditText
+                        android:id="@+id/age_five"
+                        android:hint="Age"
+                        android:layout_marginBottom="0dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/hint"
+                        android:theme="@style/EditTextStyle"
+                        android:layout_weight="1"
+                        android:inputType="numberSigned"
+                        android:visibility="gone"
+                        android:maxLength="3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bpTransparent">
+
+                <EditText
+                    android:id="@+id/passenger_name_six"
+                    android:hint="Passenger Name"
+                    android:inputType="textEmailAddress"
+                    android:layout_marginBottom="5dp"
+                    android:drawableStart="@drawable/profile"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/hint"
+                    android:theme="@style/EditTextStyle"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <Spinner
+                        android:id="@+id/gender_six"
+                        android:hint="Gender"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="0dp"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        android:textAlignment="center"
+                        android:theme="@style/AppTheme.spinnerDropDownItemStyle"
+                        android:entries="@array/gender_array"
+                        android:layout_height="wrap_content"
+                        tools:ignore="RtlCompat" />
+                    <EditText
+                        android:id="@+id/age_six"
+                        android:hint="Age"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="1"
+                        android:inputType="numberSigned"
+                        android:visibility="gone"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/hint"
+                        android:theme="@style/EditTextStyle"
+                        android:maxLength="3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/email"
+                android:hint="Email"
+                android:textColor="@color/white"
+                android:textColorHint="@color/hint"
+                android:theme="@style/EditTextStyle"
+                android:drawableStart="@drawable/mail"
+                android:drawablePadding="10dp"
+                android:layout_width="match_parent"
+                android:inputType="textEmailAddress"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/phone"
+                android:hint="Phone"
+                android:layout_marginBottom="10dp"
+                android:inputType="phone"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/cell"
+                android:maxLength="13"
+                android:textColor="@color/white"
+                android:textColorHint="@color/hint"
+                android:theme="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:id="@+id/confirm_btn"
+        android:text="CONFIRM BOOKING"
+        android:background="@drawable/btn_shape"
+        android:textColor="@color/naviy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"/>
+</LinearLayout>

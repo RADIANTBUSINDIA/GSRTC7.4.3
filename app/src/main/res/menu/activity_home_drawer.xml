@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/menu_home"
+            android:title="Home" />
+
+        <item
+            android:id="@+id/nav_terms_and_conditions"
+            android:icon="@drawable/menu_policy"
+            android:title="Booking Policy" />
+        <item
+            android:id="@+id/advance_booking_btn"
+            android:icon="@drawable/menu_advance"
+            android:title="Advance Booking" />
+        <item
+            android:id="@+id/nav_current_booking"
+            android:icon="@drawable/menu_current"
+            android:title="Current Booking" />
+        <item
+            android:id="@+id/nav_ticket_cancellation"
+            android:icon="@drawable/menu_tic_cancel"
+            android:title="Ticket Cancellation" />
+        <item
+            android:id="@+id/nav_view_booking"
+            android:icon="@drawable/menu_view_booking"
+            android:title="View Booking" />
+        <item
+            android:id="@+id/nav_track_my_bus"
+            android:icon="@drawable/menu_track_bus"
+            android:title="Track My Bus" />
+        <item
+            android:id="@+id/nav_forgot_transpass"
+            android:icon="@drawable/menu_password"
+            android:title="Retrive Txn Password" />
+        <item
+            android:id="@+id/nav_printsms"
+            android:icon="@drawable/menu_view_sms"
+            android:title="View/Sms Ticket" />
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@drawable/menu_feedback"
+            android:title="Feedback &amp; Suggestions" />
+        <item
+            android:id="@+id/nav_help_and_support"
+            android:icon="@drawable/menu_support"
+            android:title="Help &amp; Support" />
+
+        <item
+            android:id="@+id/nav_div_depot_info"
+            android:icon="@drawable/menu_division"
+            android:title="Divisions Contact" />
+        <item
+            android:id="@+id/nav_weblink"
+            android:icon="@drawable/menu_share"
+            android:title="Share App"
+            android:visible="false"/>
+
+    </group>
+</menu>

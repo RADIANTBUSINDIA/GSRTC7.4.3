@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="250dp"
+    android:layout_height="100dp"
+    android:background="@drawable/border"
+    android:layout_marginRight="10dp"
+    android:padding="5dp"
+    android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/xTvSource"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="AHMEDABAD GEETA MANDIR - "
+                android:textColor="@color/white"
+                android:gravity="left"
+                android:textStyle="normal"
+                android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/xTvDest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/xTvSource"
+        android:gravity="left"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_for_content"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_above="@+id/xTvBook"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/white">
+
+    </View>
+
+        <TextView
+            android:id="@+id/xTvBook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:paddingRight="10dp"
+            android:text="BOOK"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
+
+</RelativeLayout>

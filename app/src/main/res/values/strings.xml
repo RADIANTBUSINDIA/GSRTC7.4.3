@@ -1,0 +1,136 @@
+<resources>
+    <string name="app_name">GSRTC</string>
+    <string name="dicount_policy">* 1% discount on All Classes for all E &amp; M Booking transactions from 11th June 2022 onwards.  * GSRTC facilitates discounts of 10% on return journey and 5% for group booking (>= 4 Seats) for tickets booked before 6 hours prior to departure of service from the origin place.   * At any instance Single Discount will be applicable per ticket i.e. whichever discount is higher.</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="progress_msg"><li style="color:#9b2424"><b>Tripcode  : </b></li></string>
+
+    <string name="action_settings">Settings</string>
+    <string name="Rs">Book \u20B9 1045.00</string>
+    <string name="li_book_rupee">BOOK</string>
+    <string name="track_one"><li style="color:#9b2424"><b>Tripcode  : </b></li></string>
+
+    <string name="track_two"><li style="color:#9b2424"><b>Origin / Dept.Time  : </b></li></string>
+    <string name="track_three"><li style="color:#9b2424"><b>Destinition / Arrival Time  : </b></li></string>
+
+    <string name="track_four"><li style="color:#9b2424"><b>Conductor Mobile  : </b></li></string>
+
+    <string name="track_five"><li style="color:#9b2424"><b>Vehicle Number  : </b></li></string>
+    <string name="booking_policy">
+
+        <![CDATA[
+
+         	<center><b>Terms and Conditions for Online & Mobile Booking</b></center>
+         	<ul>
+
+<li>To book an Advance Seat under Online or Mobile booking, distance between selected origin & destination should be 50% or more for Premium services like VOLVO, AC Luxury, AC Sleeper and 20% or more for other class of services</li>
+<br>
+<li style="color:#303F9F"><b>Child Fare Criteria: </b></li>
+<br>
+<li>A child of not more than five years of age shall not be reckoned</li>
+<li>A child of not more than twelve years of age shall be reckoned as one-half.</li>
+
+<br>
+
+<li style="color:#303F9F"><b>Reservation Charges: </b></li>
+<br>
+<li>From 16-01-2014 GSRTC had reduced reservation charges for Luxury, Sleeper, AC and Volvo services.</li>
+<li>Reservation Charges for online & mobile booking is Rs. 5/-.</li>
+<li>Reservation Charges are not applicable for Tickets booked under Current Booking Mode.</li>
+<br>
+
+<li>Services will be available for 60 days advance booking. Trip sheet will be prepared before 30 minutes of departure time. </li>
+<li>Passengers are allowed to book the tickets till the preparation of the trip sheet.</li>
+<li>Passengers are allowed to do Current Booking Transactions after the printing of the Trip Sheets and Seats are not assured for Tickets booked under Current Booking Mode with no extra reservation charges.</li>
+<br>
+
+<li style="color:#303F9F"><b>Cancellation Charges: </b></li>
+<br>
+<li>0-1 Day cancellation charges 25 % of basic fare.</li>
+<li>2-5 Days cancellation charges 20 % of basic fare.</li>
+<li>6-60 Days cancellation charges 15 % of basic fare.</li>
+<li>No Refunds are applicable for Current Booking Transactions.</li>
+<li>No cancellation will be allowed (Advance Booking / Current Booking) after departure of bus from original place.</li>
+<li>Refund will be processed within 7 to 21 working days.</li>
+<br>
+<li style="color:#303F9F"><b>Pre or Post Pone/ Reschedule of Ticket:</b></li>
+	<br>
+<li>Rescheduling of valid Journey tickets can be modified for Pre or Post date of Journey, i.e. prior to 24 Hours of the schedule departure of the service.</li>
+<li>Pre or Post pone of the Journey can be done for SAME or HIGHER Class of services only. ( Pre & Post ponement of services from HIGHER to LOWER class of service is not applicable) with no extra charges.</li>
+<li>In case of Passenger opt for higher class of Service than difference amount need to be paid</li>
+<li>Only once Pre or Post ponement are allowed to perform on a valid Ticket</li>
+<li>Partial PRE or Partial Post for valid Journey ticket is not allowed</li>
+<li>"NO CANCELLATIONS" allow in reschedule tickets means pre and postponed tickets.</li>
+ <br>
+
+<li style="color:#303F9F"><b>Stop Booking Timings: </b></li>
+<br>
+<li>Everyday Online and Mobile Booking will be stopped for day end process for half an hour between 23:50 to 00:20.</li>
+<li>Sorry for the inconvenience.</li>
+<br>
+
+<li style="color:#303F9F"><b>For Print Ticket or Re-send SMS: </b></li>
+<br>
+<li>In case of Print or SMS not received at the time of booking , Please use "Print / SMS Ticket" link at home page.</li>
+<li>Or call to Toll free number (1800 233 666666 / 07922835000) to provide the duplicate of SMS / Email.</li>
+<br>
+<li style="color:#303F9F"><b>Discounts: </b></li>
+<br>
+<li>GSRTC facilitates discounts of 10% on return journey and 5% for group booking (>= 4 Seats) for tickets booked before 6 hours prior to departure of service from the origin place.</li>
+<li>8% discount on Express, Gurjarnagri & Non AC Sleeper & Seaters. 10% discount on Volvo & AC Sleeper & Seaters booking for all e & M Booking transactions (from 01/07/2019 onwards).</li>
+<li>At any instance Single Discount will be applicable per ticket i.e. whichever discount is higher.</li>
+<br>
+<li style="color:#303F9F"><b>E-Ticket General Instructions: </b></li>
+<br>
+<li>Maximum 6 Seats can be booked in a Ticket.</li>
+<li>If E-ticket is not generated and payment is deducted from user’s account. User should validate his/her transactions in “View E-Ticket Booking History”.</li>
+<li>If Ticket status is not confirmed then user should send his request by selecting the option of “Refund Compliant” available on Home Page of www.gsrtc.in.</li>
+<li>Request passengers to be Present at selected Pickup Points (Provided at the time of Booking) 15 minutes prior to departure of the service.</li>
+<li>Please go through the last five characters of service / trip code.</li>
+<li>SLP15 represents sleeper service and birth nos.</li>
+<li>SLP30 represents seating service and seat nos.</li>
+<li>1925SRTRJTSLP30 Means Seating Service.</li>
+<li>1925SRTRJTSLP15 Means Sleeper Service.</li>
+<br>
+<li style="color:#303F9F"><b>E-Ticket Refund Complaint Link: </b></li>
+<br>
+<li>Compliant on Home Page Pravasi Online Compliant With PNR no Reason for Refund.</li>
+<li>GSRTC Toll Free No.: 1800 233 666 666 / 07922835000</li>
+<br>
+<li style="color:#303F9F"><b>Instructions to Avoid Fail Transaction: </b></li>
+<br>
+<li>It has been advised to E-Ticket Users to take care of following measures/points at the time of booking to avoid failure transaction</li>
+<li>User should never press either forward or Back buttons during the transaction.</li>
+<li>User should never refresh the page during the transaction.</li>
+<li>Please ensure the reliable Internet Connectivity during entire transaction.</li>
+<li>Ensure whole transaction should be completed within 15 minutes otherwise Seat might have got released.</li>
+<li>For any FAILURE Transactions during E & M Booking (Amount debited from the bank account but Ticket not generated), Refund will be processed within 7 to 10 working days</li>
+<br>
+ </ul>
+         ]]>
+
+     </string>
+    <string-array name="num_of_passengers">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="lady_gender_array">
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="transaction_history_status">
+        <item>Success</item>
+        <item>Failed</item>
+    </string-array>
+
+</resources>

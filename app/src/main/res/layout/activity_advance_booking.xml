@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="@drawable/background_img"
+    android:id="@+id/container">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Advance Booking"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/gotham"
+                    android:gravity="center"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/white"/>
+
+
+                <LinearLayout
+                    android:id="@+id/cardTop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:id="@+id/second"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:background="@drawable/border"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/single_trip"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/gotham"
+                            android:textColor="@color/black"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_shape"
+                            android:text="Single Trip"
+                            android:textSize="18dp" />
+
+
+                        <TextView
+                            android:id="@+id/round_trip"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/gotham"
+                            android:gravity="center"
+                            android:text="Round Trips"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/search_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/from"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="left"
+                            android:paddingBottom="5dp"
+                            android:text="From"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/from_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_below="@+id/from"
+                            android:layout_centerHorizontal="true"
+                            android:drawablePadding="5dp"
+                            android:drawableStart="@drawable/location_img"
+                            android:hint="From"
+                            android:inputType="textEmailAddress"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/hint"
+                            android:textSize="16dp"
+                            android:theme="@style/EditTextStyle"
+                            tools:ignore="SpeakableTextPresentCheck" />
+
+                        <TextView
+                            android:id="@+id/to"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/from_location"
+                            android:gravity="left"
+                            android:paddingBottom="5dp"
+                            android:text="To"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/to_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_below="@+id/to"
+                            android:drawableStart="@drawable/location_img"
+                            android:drawablePadding="5dp"
+                            android:hint="To"
+                            android:inputType="textEmailAddress"
+                            android:textSize="16dp"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/hint"
+                            android:theme="@style/EditTextStyle"
+                            tools:ignore="SpeakableTextPresentCheck" />
+
+                        <TextView
+                            android:id="@+id/date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/to_location"
+                            android:gravity="left"
+                            android:paddingBottom="5dp"
+                            android:text="Date"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/swap"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignBottom="@+id/to_location"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="clip_vertical"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="35dp"
+                            android:src="@drawable/swap"
+                            tools:ignore="MissingPrefix" />
+
+                        <LinearLayout
+                            android:id="@+id/sum"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/date"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <EditText
+                                android:id="@+id/onward_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_weight="1"
+                                android:theme="@style/EditTextStyle"
+                                android:drawableStart="@drawable/date_img"
+                                android:drawablePadding="10dp"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:hint="Depature"
+                                android:textColorHint="@color/hint"
+                                android:textColor="@color/white" />
+
+                            <EditText
+                                android:id="@+id/return_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:theme="@style/EditTextStyle"
+                                android:drawableStart="@drawable/date_img"
+                                android:drawablePadding="10dp"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:hint="Return"
+                                android:textColorHint="@color/hint"
+                                android:textColor="@color/white"
+                                android:visibility="gone"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            android:id="@+id/Count_text"
+                            android:layout_below="@+id/sum">
+
+
+                            <TextView
+                                android:id="@+id/passenger"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:paddingBottom="5dp"
+                                android:layout_weight="1"
+                                android:text="Adult(s)"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:textSize="14dp" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingBottom="5dp"
+                                android:text="Child"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:textSize="14dp" />
+
+
+                        </LinearLayout>
+
+
+
+
+                        <LinearLayout
+                            android:id="@+id/sum_three"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/Count_text"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <EditText
+                                android:id="@+id/adultCount"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="1"
+                                android:hint="Adults"
+                                android:inputType="numberSigned"
+                                android:text="1"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/hint"
+                                android:theme="@style/EditTextStyle" />
+
+                            <EditText
+                                android:id="@+id/childrenCount"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:hint="Child"
+                                android:inputType="numberSigned"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/hint"
+                                android:theme="@style/EditTextStyle" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/multi_select"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sum_three"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:orientation="horizontal"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp">
+
+                            <RadioGroup
+                                android:id="@+id/radio"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerHorizontal="true"
+                                android:paddingTop="10dp"
+                                android:weightSum="3"
+                                android:paddingBottom="10dp"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/single_lady"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:checked="false"
+                                    android:textSize="13dp"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/white"
+                                    android:text="Single Lady"
+                                    android:buttonTint="@color/white"
+                                    android:textStyle="bold"
+                                    android:visibility="visible" />
+
+                                <RadioButton
+                                    android:id="@+id/divyang"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:checked="false"
+                                    android:textSize="13dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:textColor="@color/white"
+                                    android:text="Divyang"
+                                    android:layout_weight="1"
+                                    android:buttonTint="@color/white"
+                                    android:textStyle="bold"
+                                    android:clickable="true"
+                                    android:visibility="visible" />
+
+
+                                <RadioButton
+                                    android:id="@+id/div_helper"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="2dp"
+                                    android:checked="false"
+                                    android:textSize="13dp"
+                                    android:textColor="@color/white"
+                                    android:text="Divyang with Helper"
+                                    android:buttonTint="@color/white"
+                                    android:textStyle="bold"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:visibility="visible" />
+
+                            </RadioGroup>
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/search_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/multi_select"
+                            android:background="@drawable/btn_shape"
+                            android:text="SEARCH"
+                            android:textSize="18dp" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/layout_footer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/recent_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="normal"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone"
+                        android:text="Your Recent Searches : "/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/last_Search"
+                            android:layout_width="wrap_content"
+                            android:layout_height="100dp"
+                            android:visibility="gone"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/copytitle"
+                        android:textColor="@color/blue"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone"
+                        android:text="GSRTC Announcement : "/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/policyone"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:ellipsize="marquee"
+                        android:fadingEdge="horizontal"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:padding="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="visible"
+                        android:text="* 1% discount on All Classes for all E &amp; M Booking transactions from 11th June 2022 onwards.  * GSRTC facilitates discounts of 10% on return journey and 5% for group booking (>= 4 Seats) for tickets booked before 6 hours prior to departure of service from the origin place.   * At any instance Single Discount will be applicable per ticket i.e. whichever discount is higher."
+                        android:singleLine="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/policytwo"
+                        android:textColor="@color/bpRed"
+                        android:textSize="14sp"
+                        android:textStyle="italic"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="gone"
+                        android:text="* 10% discount on Volvo, AC Sleeper, AC Seater booking for all E &amp; M Booking transactions."/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/policythree"
+                        android:textColor="@color/bpRed"
+                        android:textSize="14sp"
+                        android:textStyle="italic"
+                        android:layout_marginBottom="50dp"
+                        android:visibility="gone"
+                        android:text="* At any instance Single Discount will be applicable per ticket i.e. whichever discount is higher."/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/copyright"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="visible"
+                        android:text="Copyright 2022, GSRTC"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/loading_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/no_internet_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:text="No Internet. Click to try Again"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        android:visibility="gone" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

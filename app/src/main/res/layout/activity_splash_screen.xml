@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/splash_new"
+    android:orientation="vertical"
+    android:id="@+id/container">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/textlang"
+        android:layout_margin="8dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_margin="0dp">
+
+        <ImageView
+            android:id="@+id/xIvLogo"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="25dp"
+            android:src="@drawable/splash" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GSRTC"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_marginBottom="25dp"
+            android:textColor="@color/naviy"/>
+
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="જીએસઆરટીસીમાં આપનું સ્વાગત છે"
+            android:layout_marginBottom="5dp"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:gravity="center"
+            android:textColor="@color/white"/>
+
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome to GSRTC"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:fontFamily="@font/gotham"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="8dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_margin="15dp">
+
+        <Button
+            android:id="@+id/button_gujarati"
+            android:layout_width="250dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_shape"
+            android:gravity="center"
+            android:text="ગુજરાતી - Gujarati"
+            android:fontFamily="@font/gotham"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+            android:textSize="15dp"
+            android:visibility="visible"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/button_eng"
+            android:layout_width="250dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_shape"
+            android:gravity="center"
+            android:fontFamily="@font/gotham"
+            android:text="English - અંગ્રેજી"
+            android:visibility="visible"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+            android:textSize="15dp" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="5dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_margin="2dp">
+
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="ગુજરાતી - Gujarati"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="17dp"
+            android:visibility="invisible"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+
+            android:layout_width="250dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="English - અંગ્રેજી"
+            android:visibility="invisible"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="17dp"
+            android:layout_marginBottom="20dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Steering Miles with Smiles"
+        android:textStyle="italic"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="22dp"
+        android:fontFamily="@font/gotham"
+        app:srcCompat="@drawable/splash" />
+
+</LinearLayout>
+

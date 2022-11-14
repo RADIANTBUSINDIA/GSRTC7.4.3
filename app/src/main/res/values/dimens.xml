@@ -1,0 +1,33 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin_one">12dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin_one">12dp</dimen>
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="height_for_top_bar_home">55dip</dimen>
+    <dimen name="padding_for_home_menu">15dip</dimen>
+    <dimen name="margin_left_for_bottom_menu">10dip</dimen>
+    <dimen name="margin_top_for_text_bottom_menu">5dip</dimen>
+    <dimen name="text_size_bottom_menu">12dip</dimen>
+    <dimen name="width_for_offer_button">70dip</dimen>
+    <dimen name="text_size_for_offer">13dip</dimen>
+    <dimen name="text_size_for_date">15dip</dimen>
+    <dimen name="text_size_for_city">13dip</dimen>
+    <dimen name="image_width">80dip</dimen>
+    <dimen name="image_height">70dip</dimen>
+    <dimen name="padding_for_editbox">7dip</dimen>
+    <dimen name="width_for_image">40dip</dimen>
+    <dimen name="height_for_dist_view">7dip</dimen>
+    <dimen name="text_size_for_content">15dip</dimen>
+    <dimen name="design_navigation_icon_padding" tools:override="true">10dp</dimen>
+
+    <!-- Custom Dialog -->
+    <dimen name="custom_dia_wd">311dip</dimen>
+    <dimen name="custom_dia_ht">160dip</dimen>
+    <dimen name="prg_dia_wd_ht">60dip</dimen>
+
+</resources>

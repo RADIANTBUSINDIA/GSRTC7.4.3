@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_img"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context="com.gsrtc.mobileweb.ui.activities.track_mybus_native.TrackMyBusSearchActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/header_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Track My Bus"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/white"/>
+
+            <View
+                android:id="@+id/second"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/top"
+                android:layout_marginBottom="15dp"
+                android:background="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/from"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left"
+                    android:paddingBottom="5dp"
+                    android:text="PNR.No"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/PnrNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:theme="@style/EditTextStyle"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/hint"
+                    android:hint="PNR No  [GXXXXXXX]"
+                    android:singleLine="true"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/txt_or"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="3dp"
+                    android:gravity="center_horizontal"
+                    android:text="Or"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left"
+                    android:paddingBottom="5dp"
+                    android:text="Vehicle No"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/VehicleNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:theme="@style/EditTextStyle"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/hint"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    android:text="GJ-"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/txt_or_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="3dp"
+                    android:gravity="center_horizontal"
+                    android:text="Or"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:textStyle="bold"/>
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left"
+                    android:paddingBottom="5dp"
+                    android:text="TripCode"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/tripcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="TripCode"
+                    android:theme="@style/EditTextStyle"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/hint"
+                    android:singleLine="true"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="15sp" />
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/submit"
+              android:background="@drawable/btn_shape"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:text="Submit"
+                android:textStyle="bold"
+                android:textColor="@color/naviy" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/history_search_results_recycler_view"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <Button
+                android:id="@+id/mapbtn"
+                style="@style/Gsrtc_Button_orangeBtn"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:textAllCaps="false"
+                android:text="VIEW in MAP"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
+

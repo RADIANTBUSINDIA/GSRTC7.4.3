@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/xLinLayHomescrn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/light_blue" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_weight="1.20"
+            android:id="@+id/originalLayout"
+            android:layout_marginRight="3dp"
+            android:layout_marginLeft="3dp"
+            android:orientation="vertical"
+            tools:ignore="UnknownId"
+            android:visibility="visible">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutAdvanceBooking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:id="@+id/imageViewBusIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/advancebooking_icon"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/textViewBusIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Advance Booking"
+                        android:textStyle="normal"
+                        android:textSize="12dp"
+                        android:gravity="center"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:id="@+id/linearLayoutCancelTicket">
+
+                    <ImageView
+                        android:id="@+id/imageCancelTicket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:src="@drawable/cancelticket_icon" />
+
+                    <TextView
+                        android:id="@+id/textViewCancelTicket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=" Cancellation "
+                        android:textStyle="normal"
+                        android:textSize="12dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:id="@+id/linearLayoutItineries">
+
+                    <ImageView
+                        android:id="@+id/imageViewItineries"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/itineries_icon"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/textViewItineries"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=" Itineraries "
+                        android:textSize="12dp"
+                        android:gravity="center"
+                        android:textStyle="normal"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:id="@+id/linearLayoutCurrentBooking">
+
+                    <ImageView
+                        android:id="@+id/imageViewCurrentBooking"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:src="@drawable/currentbooking_icon" />
+
+                    <TextView
+                        android:id="@+id/textViewCurrentBooking"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Current Booking"
+                        android:textSize="12dp"
+                        android:textStyle="normal"
+                        android:textColor="@color/white" />
+                    <!--</LinearLayout>-->
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:id="@+id/linearLayoutTrackMyBus">
+
+                    <ImageView
+                        android:id="@+id/imageViewTrackMyBus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:src="@drawable/trackmybus_icon" />
+
+                    <TextView
+                        android:id="@+id/textViewTrackMyBus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=" Track Bus "
+                        android:textSize="12dp"
+                        android:gravity="center"
+                        android:textStyle="normal"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:id="@+id/linearLayoutTimeTable">
+
+                    <ImageView
+                        android:id="@+id/imageViewTimeTable"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:src="@drawable/timetable_icon" />
+
+                    <TextView
+                        android:id="@+id/textViewTimeTable"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Time Table"
+                        android:textSize="12dp"
+                        android:textStyle="normal"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/more_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/app_more_icon_small"
+            android:textSize="14dp"
+            android:textStyle="normal"
+            android:gravity="center"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/textshow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Show More..."
+            android:textSize="12dp"
+            android:textStyle="normal"
+            android:gravity="center"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/showmoreLayout"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_weight="1.20"
+            android:layout_marginRight="3dp"
+            android:layout_marginLeft="3dp"
+            android:orientation="vertical"
+            tools:ignore="UnknownId"
+            android:background="@drawable/bg_maroon_normal_orange_pressed"
+            android:visibility="invisible">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutResheduleTicket"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/imageViewResheduleTicket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/rescheduleticket_icon"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/textViewResheduleTicket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Reschedule Ticket"
+                        android:textStyle="normal"
+                        android:textSize="12dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="10dp"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:id="@+id/linearLayoutRefundStatus">
+
+
+                    <ImageView
+                        android:id="@+id/imageViewRefundStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:src="@drawable/refundstatus_icon" />
+
+                    <TextView
+                        android:id="@+id/textViewRefundStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Refund Status"
+                        android:textStyle="normal"
+                        android:textSize="12dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="10dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:id="@+id/linearLayoutHireBus"
+                    android:layout_marginRight="10dp">
+
+                    <ImageView
+                        android:id="@+id/imageViewHireBus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:src="@drawable/hire_a_bus_icon" />
+
+                    <TextView
+                        android:id="@+id/textViewHireBus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Hire a Bus"
+                        android:textSize="12dp"
+                        android:textStyle="normal"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="10dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    android:id="@+id/linearLayoutLinkBooking">
+
+                    <ImageView
+                        android:id="@+id/imageViewLinkBooking"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:src="@drawable/nearbyplaces_icon" />
+
+                    <TextView
+                        android:id="@+id/textViewLinkBooking"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="NearBy Location"
+                        android:textSize="12dp"
+                        android:textStyle="normal"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="10dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    android:id="@+id/linearLayoutTrackTicket">
+
+                    <ImageView
+                        android:id="@+id/imageViewE-Wallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/track_ticket_icon"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/textViewTrack_ticket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Track Ticket"
+                        android:textSize="12dp"
+                        android:gravity="center"
+                        android:textStyle="normal"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="10dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:id="@+id/linearLayoutBusPass">
+
+                    <ImageView
+                        android:id="@+id/imageViewBusPass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:src="@drawable/buspass_icon" />
+
+                    <TextView
+                        android:id="@+id/textViewBusPass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bus Pass"
+                        android:textSize="12dp"
+                        android:gravity="center"
+                        android:textStyle="normal"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="10dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_weight="2.50"
+            android:layout_marginRight="3dp"
+            android:layout_marginLeft="3dp"
+            android:orientation="vertical"
+            tools:ignore="UnknownId"
+            android:visibility="invisible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp">
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/cxbv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:src="@drawable/linkservice_icon" />
+
+                    <TextView
+                        android:id="@+id/fgfdhh"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Link Booking"
+                        android:textSize="12dp"
+                        android:textStyle="normal"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/bgadjtj"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:src="@drawable/buspass_icon" />
+
+                    <TextView
+                        android:id="@+id/dfhhhADH"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bus Pass"
+                        android:textSize="12dp"
+                        android:gravity="center"
+                        android:textStyle="normal"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp">
+
+                    <ImageView
+                        android:id="@+id/dhdeh"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:src="@drawable/hire_a_bus_icon" />
+
+                    <TextView
+                        android:id="@+id/dfhdefh"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Hire Bus"
+                        android:textSize="12dp"
+                        android:textStyle="normal"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
