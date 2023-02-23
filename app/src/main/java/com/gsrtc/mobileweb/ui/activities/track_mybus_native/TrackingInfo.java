@@ -431,8 +431,8 @@ public class TrackingInfo extends BaseNavigationDrawerActivity {
 
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-            Request.addProperty("APIUserName", "infinium");
-            Request.addProperty("APIPassword", "Infinium1234");
+            Request.addProperty("APIUserName", "Amnex");
+            Request.addProperty("APIPassword", "AmnEx@2023!!#");
             Request.addProperty("VehicleNo", vehicleNo );
             Calendar c = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

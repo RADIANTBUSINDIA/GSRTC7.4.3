@@ -18,10 +18,12 @@
         tools:ignore="UnusedAttribute"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".ui.activities.web_Linking.TrackRunningService"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.payment_gateway.AggreepayGatewayCurrent"
             android:exported="true"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activities.payment_gateway.PaytmPaymentGatewayCurrent"
             android:exported="true"
@@ -309,13 +311,13 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

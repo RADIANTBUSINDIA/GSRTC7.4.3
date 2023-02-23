@@ -27,8 +27,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 android:weightSum="4">
 
@@ -36,8 +36,8 @@
                     android:id="@+id/linearLayoutAdvanceBooking"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -52,13 +52,13 @@
                         android:id="@+id/textViewBusIcon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/gotham"
                         android:layout_gravity="center"
+                        android:fontFamily="@font/gotham"
                         android:gravity="center"
                         android:text="Booking"
                         android:textColor="@color/naviy"
                         android:textSize="11dp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
                 </LinearLayout>
 
 
@@ -66,8 +66,8 @@
                     android:id="@+id/linearLayoutCancelTicket"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:visibility="visible">
@@ -83,8 +83,8 @@
                         android:id="@+id/textViewCancelTicket"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/gotham"
                         android:layout_gravity="center"
+                        android:fontFamily="@font/gotham"
                         android:gravity="center"
                         android:text="Cancellation"
                         android:textColor="@color/naviy"
@@ -97,8 +97,8 @@
                     android:id="@+id/linearLayoutItineries"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:visibility="visible">
@@ -114,8 +114,8 @@
                         android:id="@+id/textViewItineries"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/gotham"
                         android:layout_gravity="center"
+                        android:fontFamily="@font/gotham"
                         android:gravity="center"
                         android:text="Itineraries"
                         android:textColor="@color/naviy"
@@ -128,8 +128,8 @@
                     android:id="@+id/linearLayoutTrackMyBus"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:visibility="visible">
@@ -145,8 +145,8 @@
                         android:id="@+id/textViewTrackMyBus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/gotham"
                         android:layout_gravity="center"
+                        android:fontFamily="@font/gotham"
                         android:gravity="center"
                         android:text="Track Bus"
                         android:textColor="@color/naviy"
@@ -428,6 +428,51 @@
 
             </LinearLayout>
 
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linearLayoutTrackRunning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:paddingLeft="5dp"
+                app:cardCornerRadius="20dp"
+                app:contentPadding="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:src="@drawable/bus_map" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/gotham"
+                        android:paddingLeft="10dp"
+                        android:text="Live Bus Running Status"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="12dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
         <!---  </androidx.cardview.widget.CardView> -->

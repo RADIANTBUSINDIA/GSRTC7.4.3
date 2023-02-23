@@ -104,7 +104,9 @@ public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSele
                                 selectedSeats.remove(seat1.getSeatNo());
                             } else {      //The seat is selected
                                 if (selectedSeats.size() <= searchParams.getNumOfPassengers()) {
-                                    if (class_layout_id.equalsIgnoreCase("64") || class_layout_id.equalsIgnoreCase("188") || class_layout_id.equalsIgnoreCase("191")) {
+                                    if (class_layout_id.equalsIgnoreCase("64") ||
+                                            class_layout_id.equalsIgnoreCase("188") ||
+                                            class_layout_id.equalsIgnoreCase("191")) {
                                         ((ImageView) view).setImageResource(R.drawable.selected_sleeper);
                                     } else {
                                         ((ImageView) view).setImageResource(R.drawable.selected_seat);
@@ -124,7 +126,9 @@ public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSele
 
     public void setSeatImage(ImageView view, Seat seat) {
 
-        if (class_layout_id.equalsIgnoreCase("64") || class_layout_id.equalsIgnoreCase("188") || class_layout_id.equalsIgnoreCase("191")) {
+        if (class_layout_id.equalsIgnoreCase("64") ||
+                class_layout_id.equalsIgnoreCase("188") ||
+                class_layout_id.equalsIgnoreCase("191")) {
 
             if (serviceSeatDetails.getBookedLadiesSeats().contains(seat.getSeatNo())) {
                 view.setImageResource(R.drawable.booked_ladies_sleeper);

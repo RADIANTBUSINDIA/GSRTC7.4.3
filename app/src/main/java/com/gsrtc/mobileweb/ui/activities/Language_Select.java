@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -122,6 +123,14 @@ public class Language_Select extends AppCompatActivity implements View.OnClickLi
                     // you can request to start the update again.
                     unregisterInstallStateUpdListener();
                 }
+                if (resultCode == RESULT_CANCELED) { //RESULT_OK / RESULT_CANCELED / RESULT_IN_APP_UPDATE_FAILED
+//                    L.d("Update flow failed! Result code: " + resultCode);
+                    // If the update is cancelled or fails,
+                    // you can request to start the update again.
+                    Toast.makeText(this, "Please Install The New Version to Continue !!", Toast.LENGTH_SHORT).show();
+                    checkForAppUpdate();
+                }
+
                 break;
         }
     }
@@ -155,7 +164,7 @@ public class Language_Select extends AppCompatActivity implements View.OnClickLi
         appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
                 // Request the update.
-                if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
 
                     // Before starting an update, register a listener for updates.
                     appUpdateManager.registerListener(installStateUpdatedListener);
@@ -187,7 +196,7 @@ public class Language_Select extends AppCompatActivity implements View.OnClickLi
         try {
             appUpdateManager.startUpdateFlowForResult(
                     appUpdateInfo,
-                    AppUpdateType.FLEXIBLE,
+                    AppUpdateType.IMMEDIATE,
                     // The current activity making the update request.
                     this,
                     // Include a request code to later monitor this update request.

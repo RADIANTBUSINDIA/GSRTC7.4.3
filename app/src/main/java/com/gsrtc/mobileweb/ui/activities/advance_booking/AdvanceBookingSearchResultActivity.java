@@ -461,8 +461,8 @@ public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActi
 
                 CustomisedProgressDialog.STOP_CUST_DIA();
 
-
-// Filtering based On Current Time
+                busServiceList.clear();
+                // Filtering based On Current Time
                 for(int i =0;i<serviceList.size();i++){
 
                     String storeddate = serviceList.get(i).getJourneyDate();

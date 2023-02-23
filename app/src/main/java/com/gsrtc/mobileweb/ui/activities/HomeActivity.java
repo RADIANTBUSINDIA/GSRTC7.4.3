@@ -38,6 +38,7 @@ import com.gsrtc.mobileweb.ui.activities.view_booking.TrackTicketHistory;
 import com.gsrtc.mobileweb.ui.activities.web_Linking.BusPassLink;
 import com.gsrtc.mobileweb.ui.activities.web_Linking.HireBusLink;
 import com.gsrtc.mobileweb.ui.activities.web_Linking.RefundStatus;
+import com.gsrtc.mobileweb.ui.activities.web_Linking.TrackRunningService;
 import com.gsrtc.mobileweb.ui.adapters.ViewPagerAdapter;
 import com.gsrtc.mobileweb.utils.ActivityUtil;
 import com.gsrtc.mobileweb.utils.CustomVolleyRequest;
@@ -304,6 +305,16 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
                 startActivity(i);
             }
         });
+        vHolder.runningStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(HomeActivity.this, TrackRunningService.class);
+                Bundle data = new Bundle();
+                data.putString("textlang", textlang);
+                i.putExtras(data);
+                startActivity(i);
+            }
+        });
 
     }
 
@@ -313,7 +324,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         private LinearLayout mLinearLayoutTrackMyBus, mLinearLayoutCurrentBooking;
         private LinearLayout mLinearLayoutIteneries, mLinearLayoutTimeTable;
         private LinearLayout mLinearLayoutResheduleTicket, mLinearLayoutRefundStatus,mLinearLayoutTrackTicket, mLinearLayoutLinkBooking,
-                mLinearLayoutBusPass, mLinearLayoutHireBus;
+                mLinearLayoutBusPass, mLinearLayoutHireBus,runningStatus;
 
         private TextView ad_booking,cr_booking,can_ticket,trackbus,track_ticket,rescdule_tkt,bus_pass,near_location,refund_status,hire_bus,show_more,show_less,time_table,iteneries;
 
@@ -332,6 +343,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
             mLinearLayoutLinkBooking = (LinearLayout)findViewById(R.id.linearLayoutLinkBooking);
             mLinearLayoutBusPass = (LinearLayout)findViewById(R.id.linearLayoutBusPass);
             mLinearLayoutHireBus = (LinearLayout)findViewById(R.id.linearLayoutHireBus);
+            runningStatus = (LinearLayout)findViewById(R.id.linearLayoutTrackRunning);
 
             ad_booking = (TextView)findViewById(R.id.textViewBusIcon);
             cr_booking = (TextView)findViewById(R.id.textViewCurrentBooking);

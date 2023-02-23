@@ -3,19 +3,39 @@ package com.gsrtc.mobileweb.ui.activities.advance_booking;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.ArraySet;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.gsrtc.mobileweb.R;
 import com.gsrtc.mobileweb.models.AddBlockSeatsResponse;
 import com.gsrtc.mobileweb.models.BusService;
@@ -23,6 +43,7 @@ import com.gsrtc.mobileweb.models.SearchParams;
 import com.gsrtc.mobileweb.models.Seat;
 import com.gsrtc.mobileweb.models.SeatRow;
 import com.gsrtc.mobileweb.models.ServiceSeatDetails;
+import com.gsrtc.mobileweb.models.TripSheetData;
 import com.gsrtc.mobileweb.ui.activities.base.BaseNavigationDrawerActivity;
 import com.gsrtc.mobileweb.ui.adapters.SeatSelectionAdapter;
 import com.gsrtc.mobileweb.utils.ActivityUtil;
@@ -30,6 +51,10 @@ import com.gsrtc.mobileweb.utils.AppConstants;
 import com.gsrtc.mobileweb.utils.SoapClientUtil;
 import com.gsrtc.mobileweb.utils.customdialog.CustomisedProgressDialog;
 import com.gsrtc.mobileweb.utils.net.AdvanceBookingNetworkUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
 
@@ -51,6 +76,8 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
     ProgressDialog seatBlockingProgressDialog;
 
     boolean layoutFetched = false, serviceSeatDetailsFetched = false;
+
+    private ArrayList<TripSheetData> mArrLsttripsheetdata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +105,7 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
 
             fetchLayoutObject(busService);
             fetchServiceSeatDetails(busService, searchParams);
+            getTripSheetDetails();
 
             textlang = searchParams.getTextlanguage().trim();
             if (textlang.equalsIgnoreCase("gujarati")) {
@@ -107,15 +135,120 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
 
     public void setupSeatView(List<SeatRow> seatRows, ServiceSeatDetails serviceSeatDetails, String layout_id, String srv_class_id) {
         seatSelectionAdapter = new SeatSelectionAdapter(this, seatRows, serviceSeatDetails, searchParams, layout_id, srv_class_id) {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void allSeatsSelected(ArrayList<Seat> selectedSeats) {
+
+                if (searchParams.getAdultFemaleCount()==1){
+                    getNearBySeatAndGender(selectedSeats,class_layout_id);
+                }
                 getReferenceNumber(busService, selectedSeats, searchParams);
+
+
             }
         };
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         holder.recyclerView.setLayoutManager(layoutManager);
         holder.recyclerView.setAdapter(seatSelectionAdapter);
         seatSelectionAdapter.notifyDataSetChanged();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void getNearBySeatAndGender(ArrayList<Seat> selectedSeats, String class_layout_id) {
+
+
+        ArrayList<int []> berth = new ArrayList<>();
+        if(class_layout_id.equalsIgnoreCase("143")){
+            for (int i=0;i<seatRows.size();i++){
+                List<Seat> seats = Arrays.asList(seatRows.get(i).getSeatss());
+                int[] sns =new int[2];
+                for (int m=0;m<2;m++){
+                    sns[m]=seats.get(m+4).getSeatNo();
+                }
+                berth.add(sns);
+            }
+            System.out.println(berth);
+            Set<String> seatsAndGenderToAllow = new ArraySet<String>();
+
+            for (int i=0;i<berth.size();i++){
+
+                int []a = berth.get(i);
+                for (int num:a){
+                    for (int k=0;k<selectedSeats.size();k++){
+                        if (selectedSeats.get(k).getSeatNo()==num){
+                            String selSeat =selectedSeats.get(k).getSeatNo().toString();
+                            System.out.println(selSeat+" ::SELECTED ROW  ::"+Arrays.toString(a));
+                            for (int bookedSeat:a){
+                                if (bookedSeat!=selectedSeats.get(k).getSeatNo()){
+                                    if (mArrLsttripsheetdata.size()>0){
+                                        for (int h =0 ;h<mArrLsttripsheetdata.size();h++){
+                                            if (bookedSeat==Integer.parseInt(mArrLsttripsheetdata.get(h).getSeatno())){
+                                                String seatno = mArrLsttripsheetdata.get(h).getSeatno();
+                                                String gender = mArrLsttripsheetdata.get(h).getGender();
+                                                if (gender.equalsIgnoreCase("M")){
+                                                    Toast.makeText(this, "Sorry You cannot book the seat !!..\n Nearby seat is booked by Male Passenger!", Toast.LENGTH_SHORT).show();
+                                                    Intent in = new Intent(this,AdvanceBookingSearchActivity.class);
+                                                    in.putExtra("textlang","english");
+                                                    startActivity(in);
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                    System.out.println(selSeat+" ::NEARBY SEAT  ::"+bookedSeat);
+                                    seatsAndGenderToAllow.add(selSeat+" ::NEARBY SEAT  ::"+bookedSeat);
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+            System.out.println(seatsAndGenderToAllow);
+        }else if (class_layout_id.equalsIgnoreCase("64") || class_layout_id.equalsIgnoreCase("188") ||
+                class_layout_id.equalsIgnoreCase("191")|| class_layout_id.equalsIgnoreCase("169"))  {
+            for (Seat ss :selectedSeats){
+                if(ss.getSeatNo()>3){
+                    if ((ss.getSeatNo()%3)==1){
+                        System.out.println("SEL SEAT "+ss.getSeatNo()+" ::NEARBY SEAT "+String.valueOf(ss.getSeatNo()+1));
+
+                        for (int h =0 ;h<mArrLsttripsheetdata.size();h++){
+                            if ((ss.getSeatNo()+1)==Integer.parseInt(mArrLsttripsheetdata.get(h).getSeatno())){
+                                String seatno = mArrLsttripsheetdata.get(h).getSeatno();
+                                String gender = mArrLsttripsheetdata.get(h).getGender();
+                                if (gender.equalsIgnoreCase("M")){
+                                    Toast.makeText(this, "Sorry You cannot book the seat !!..\n Nearby seat is booked by Male Passenger!", Toast.LENGTH_SHORT).show();
+                                    Intent in = new Intent(this,AdvanceBookingSearchActivity.class);
+                                    in.putExtra("textlang","english");
+                                    startActivity(in);
+                                }
+                            }
+                        }
+
+
+
+                    }else if ((ss.getSeatNo()%3)==2){
+                        System.out.println("SEL SEAT "+ss.getSeatNo()+" ::NEARBY SEAT "+String.valueOf(ss.getSeatNo()-1));
+
+                        for (int h =0 ;h<mArrLsttripsheetdata.size();h++){
+                            if ((ss.getSeatNo()-1)==Integer.parseInt(mArrLsttripsheetdata.get(h).getSeatno())){
+                                String seatno = mArrLsttripsheetdata.get(h).getSeatno();
+                                String gender = mArrLsttripsheetdata.get(h).getGender();
+                                if (gender.equalsIgnoreCase("M")){
+                                    Toast.makeText(this, "Sorry You cannot book the seat !!..\n Nearby seat is booked by Male Passenger!", Toast.LENGTH_SHORT).show();
+                                    Intent in = new Intent(this,AdvanceBookingSearchActivity.class);
+                                    in.putExtra("textlang","english");
+                                    startActivity(in);
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+            }
+        }
+
     }
 
     public void fetchLayoutObject(BusService busService) {
@@ -245,4 +378,121 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
             loadingLayout = activity.findViewById(R.id.loading_layout);
         }
     }
+
+    private void getTripSheetDetails() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        String url = "https://www.gsrtc.in/GSRTCOPRSETM/webserver/tripSheetData";
+        final String[] ResultStatus = new String[1];
+        mArrLsttripsheetdata = new ArrayList<>();
+
+
+        String jdate = convertDate(busService.getJourneyDate());
+
+        JSONObject postparams = new JSONObject();
+        try {
+            postparams.put("date",jdate);
+            postparams.put("conductormobileno", "0");
+            postparams.put("vehicleno","0");
+            postparams.put("tripcode", busService.getTripCode());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                url, postparams,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("TAG", response.toString());
+
+                        try {
+                            ResultStatus[0] = response.getString("status");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        if (ResultStatus[0].equalsIgnoreCase("success")) {
+
+                            try {
+                                JSONArray subArray = response.getJSONArray("result");
+                                for (int i = 0; i < subArray.length(); i++) {
+
+                                    TripSheetData tripSheetData = new TripSheetData();
+
+
+                                        tripSheetData.setSeatno(subArray.getJSONObject(i).getString("seatno"));
+                                        tripSheetData.setPhoneno(subArray.getJSONObject(i).getString("phoneno"));
+                                        tripSheetData.setPassengername(subArray.getJSONObject(i).getString("passengername"));
+                                        tripSheetData.setFromplaceid(subArray.getJSONObject(i).getString("fromplaceid"));
+                                        tripSheetData.setFrompickupid(subArray.getJSONObject(i).getString("frompickupid"));
+                                        tripSheetData.setToplaceid(subArray.getJSONObject(i).getString("toplaceid"));
+                                        tripSheetData.setLayoutName(subArray.getJSONObject(i).getString("layoutName"));
+                                        tripSheetData.setMaxSeats(subArray.getJSONObject(i).getString("maxSeats"));
+                                        tripSheetData.setCondutorSeats(subArray.getJSONObject(i).getString("condutorSeats"));
+                                        tripSheetData.setBookedSeats(subArray.getJSONObject(i).getString("bookedSeats"));
+                                        tripSheetData.setPnrno(subArray.getJSONObject(i).getString("pnrno"));
+                                        tripSheetData.setTicket(subArray.getJSONObject(i).getString("ticket"));
+                                        tripSheetData.setAge(subArray.getJSONObject(i).getString("age"));
+                                        tripSheetData.setAdultorchild(subArray.getJSONObject(i).getString("adultorchild"));
+                                        tripSheetData.setGender(subArray.getJSONObject(i).getString("gender"));
+                                        tripSheetData.setTotal(subArray.getJSONObject(i).getString("total"));
+                                        tripSheetData.setPassengercategoryId(subArray.getJSONObject(i).getString("passengercategoryId"));
+                                        tripSheetData.setPickuptime(subArray.getJSONObject(i).getString("pickuptime"));
+                                        tripSheetData.setCollectFare(subArray.getJSONObject(i).getString("coll"));
+                                        tripSheetData.setIssuCounter(subArray.getJSONObject(i).getString("issuingCounter"));
+                                        tripSheetData.setOthers(subArray.getJSONObject(i).getString("others"));
+
+                                    mArrLsttripsheetdata.add(tripSheetData);
+
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        } else {
+
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("TAG", "Error: " + error.getMessage());
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                String cred = String.format("%s:%s", "oprsEtm", "Oprs@Etm");
+                String auth = "Basic " + Base64.encodeToString(cred.getBytes(), Base64.DEFAULT);
+                headers.put("Authorization", auth);
+
+                return headers;
+            }
+        };
+// Adding request to request queue
+        requestQueue.add(jsonObjReq);
+    }
+
+    public String convertDate(String time) {
+        String inputPattern = "dd/MM/yyyy";
+        String outputPattern = "yyyy-MM-dd";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
 }

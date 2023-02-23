@@ -112,8 +112,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         LatLng gujarat = new LatLng(lat, lon);
-        mMap.addMarker(new MarkerOptions().position(gujarat).title("Current Bus Location").icon(BitmapDescriptorFactory
-                .defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        mMap.addMarker(new MarkerOptions().position(gujarat).title("Current Bus Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_map)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(gujarat));
         mMap.animateCamera(CameraUpdateFactory.zoomIn());
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 1000, null);

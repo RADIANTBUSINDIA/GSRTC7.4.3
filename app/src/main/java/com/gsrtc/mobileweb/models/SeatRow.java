@@ -17,6 +17,15 @@ public class SeatRow {
     String status;
     Seat[] seats = new Seat[SEAT_ROW_COUNT];
 
+
+    public Seat[] getSeatss() {
+        return seats;
+    }
+
+    public void setSeatss(Seat[] seats) {
+        this.seats = seats;
+    }
+
     public Seat getSeat(int position){
         if(position<1 || position > SEAT_ROW_COUNT){
             Log.v("Seat Out of Bound", "Seat position has to be between 1 and 6");
