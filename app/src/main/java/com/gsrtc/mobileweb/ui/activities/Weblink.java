@@ -34,7 +34,7 @@ public class Weblink extends AppCompatActivity {
         // Configure the client to use when opening URLs
         myWebView.setWebViewClient(new MyBrowser());
         // Load the initial URL
-        myWebView.loadUrl("https://gsrtc.in/GSRTCOnline/prePonePostPoneTicket.do");
+        myWebView.loadUrl("https://gsrtc.in/OPRSOnline/prePonePostPoneTicket.do");
     }
 
     private class MyBrowser extends WebViewClient {

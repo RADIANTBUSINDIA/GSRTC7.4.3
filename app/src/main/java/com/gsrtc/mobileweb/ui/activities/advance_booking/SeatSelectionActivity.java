@@ -105,7 +105,7 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
 
             fetchLayoutObject(busService);
             fetchServiceSeatDetails(busService, searchParams);
-            getTripSheetDetails();
+           // getTripSheetDetails();
 
             textlang = searchParams.getTextlanguage().trim();
             if (textlang.equalsIgnoreCase("gujarati")) {
@@ -140,7 +140,7 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
             public void allSeatsSelected(ArrayList<Seat> selectedSeats) {
 
                 if (searchParams.getAdultFemaleCount()==1){
-                    getNearBySeatAndGender(selectedSeats,class_layout_id);
+                   // getNearBySeatAndGender(selectedSeats,class_layout_id);
                 }
                 getReferenceNumber(busService, selectedSeats, searchParams);
 

@@ -9,9 +9,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -19,30 +16,20 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 import com.gsrtc.mobileweb.R;
 import com.gsrtc.mobileweb.models.Booking;
 import com.gsrtc.mobileweb.models.ConfirmAdvSeatBookingAndroidResponse;
 import com.gsrtc.mobileweb.models.ConfirmRtnSeatBookingAndroidResponse;
 import com.gsrtc.mobileweb.ui.activities.HomeActivity;
 import com.gsrtc.mobileweb.ui.activities.advance_booking.BillDeskFailtrans;
-import com.gsrtc.mobileweb.ui.activities.advance_booking.FareDetailsActivity;
 import com.gsrtc.mobileweb.utils.AppConstants;
 import com.gsrtc.mobileweb.utils.customdialog.CustomisedProgressDialog;
 import com.gsrtc.mobileweb.utils.net.AdvanceBookingNetworkUtil;
 import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 import com.paytm.pgsdk.TransactionManager;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class PaytmPaymentGateway extends AppCompatActivity {
 
@@ -271,20 +258,35 @@ public class PaytmPaymentGateway extends AppCompatActivity {
 
                             } else {
 
-                                failedTicket();
-                                Toast.makeText(PaytmPaymentGateway.this, txnerrorDescription, Toast.LENGTH_SHORT).show();
+                                try{
+                                    checkTransaction();
+                                }catch(Exception ex){
+                                    txnerrorDescription = "Payment Not Completed";
+                                    Toast.makeText(PaytmPaymentGateway.this, txnerrorDescription, Toast.LENGTH_SHORT).show();
+                                    failedTicket();
+                                }
 
                             }
                         } else {
 
-                            failedTicket();
-                            Toast.makeText(PaytmPaymentGateway.this, txnerrorDescription, Toast.LENGTH_SHORT).show();
+                            try{
+                                checkTransaction();
+                            }catch(Exception ex){
+                                txnerrorDescription = "Payment Not Completed";
+                                Toast.makeText(PaytmPaymentGateway.this, txnerrorDescription, Toast.LENGTH_SHORT).show();
+                                failedTicket();
+                            }
 
                         }
                     } else {
-                        txnerrorDescription = "Payment Not Completed";
-                        Toast.makeText(PaytmPaymentGateway.this, txnerrorDescription, Toast.LENGTH_SHORT).show();
-                        failedTicket();
+
+                        try{
+                            checkTransaction();
+                        }catch(Exception ex){
+                            txnerrorDescription = "Payment Not Completed";
+                            Toast.makeText(PaytmPaymentGateway.this, txnerrorDescription, Toast.LENGTH_SHORT).show();
+                            failedTicket();
+                        }
 
                     }
 
@@ -293,36 +295,37 @@ public class PaytmPaymentGateway extends AppCompatActivity {
                 @Override
                 public void networkNotAvailable() {
 
+                    Log.e("PG ","NO NETWORK");
                 }
 
                 @Override
                 public void onErrorProceed(String s) {
-
+                    Log.e("PG ","NO NETWORK");
                 }
 
                 @Override
                 public void clientAuthenticationFailed(String s) {
-
+                    Log.e("PG ","NO NETWORK");
                 }
 
                 @Override
                 public void someUIErrorOccurred(String s) {
-
+                    Log.e("PG ","clientAuthenticationFailed");
                 }
 
                 @Override
                 public void onErrorLoadingWebPage(int i, String s, String s1) {
-
+                    Log.e("PG ","onErrorLoadingWebPage");
                 }
 
                 @Override
                 public void onBackPressedCancelTransaction() {
-
+                    Log.e("PG ","onBackPressedCancelTransaction");
                 }
 
                 @Override
                 public void onTransactionCancel(String s, Bundle bundle) {
-
+                    Log.e("PG ","onTransactionCancel");
                 }
             });
 
@@ -335,6 +338,88 @@ public class PaytmPaymentGateway extends AppCompatActivity {
 
     }
 
+    public void checkTransaction(){
+
+        String URL_STATUS = PaytmConstants.PG_TXN_CHECK_URL + rtcRefNo ;
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_STATUS, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String value = response.toString();
+                System.out.println(value);
+                Log.d("VOLLEY", response);
+                if (!response.isEmpty()) {
+
+                    String[] split = value.split(",");
+                    if (split[0].equalsIgnoreCase("TXN_SUCCESS")) {
+                        txntransactionStatus = split[0];
+                        txnorderId = split[5];       //bundle.getString("ORDERID");
+                        txnmerchantID = split[10];            //bundle.getString("MID");
+                        txntxnId = split[3];              //bundle.getString("TXNID");
+                        txngatewayAmount = split[6];            //bundle.getString("TXNAMOUNT");
+                        txnpaymentMode = split[11];               //bundle.getString("PAYMENTMODE");
+                        txncurrencyName = "INR";              //bundle.getString("CURRENCY");
+                        txntransactionDate = split[13];           //bundle.getString("TXNDATE");
+                        txnsuccessFlag = split[1];              //bundle.getString("RESPCODE");
+                        txnerrorDescription = split[2];            //bundle.getString("RESPMSG");
+                        txnmessageType = split[2];              //bundle.getString("RESPMSG");
+                        txnbankTransactionNo = split[4];           //bundle.getString("BANKTXNID");
+                        txnhash = "";                         //bundle.getString("CHECKSUMHASH");
+
+                        Log.d("Response PAYMENTSUCCES", txntransactionStatus + "||" + txnorderId + "||" + txnmerchantID + "||" + txntxnId
+                                + "||" + txngatewayAmount + "||" + txnpaymentMode + "||" + txncurrencyName + "||" + txntransactionDate + "||" + txnerrorDescription + "||" + txnbankTransactionNo);
+
+                        gatewayMoreInfo = value.toString();
+                        gatewayStatus = txntransactionStatus;
+                        bookingTransactionID = txntxnId;
+
+
+                        if (txnorderId.equalsIgnoreCase(rtcRefNo)) {
+
+                            confirmTicket();
+
+                        } else {
+                            txnerrorDescription = "Payment Not Completed";
+                            failedTicket();
+                            Toast.makeText(PaytmPaymentGateway.this, txnerrorDescription, Toast.LENGTH_SHORT).show();
+                        }
+
+                    } else {
+                        txnerrorDescription = "Payment Not Completed";
+                        Toast.makeText(PaytmPaymentGateway.this, txnerrorDescription, Toast.LENGTH_SHORT).show();
+                        failedTicket();
+                    }
+                }else{
+                    txnerrorDescription = "Payment Not Completed";
+                    Toast.makeText(PaytmPaymentGateway.this, txnerrorDescription, Toast.LENGTH_SHORT).show();
+                    failedTicket();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                txnerrorDescription = "Payment Not Completed";
+                Toast.makeText(PaytmPaymentGateway.this, txnerrorDescription, Toast.LENGTH_SHORT).show();
+                failedTicket();
+
+
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+        };
+
+        requestQueue.add(stringRequest);
+
+
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -379,7 +464,9 @@ public class PaytmPaymentGateway extends AppCompatActivity {
             if (onwardBooking.getSearchParams().getDivyangBooking().equalsIgnoreCase("Divyang with Helper")) {
 
                 if (divyangBooking != null) {
-                    AdvanceBookingNetworkUtil.ConfirmDivyangRtnSeatBookingAndroid(onwardBooking, divyangBooking, txntransactionStatus, txnsuccessFlag, txntxnId, txnbankTransactionNo, bookingTransactionID, txngatewayAmount, txnpaymentMode, gatewayMoreInfo, txntransactionDate, isCard, new AdvanceBookingNetworkUtil.ConfirmDivyangRtnSeatBookingAndroidCallback() {
+                    AdvanceBookingNetworkUtil.ConfirmDivyangRtnSeatBookingAndroid(onwardBooking, divyangBooking,
+                            txntransactionStatus, txnsuccessFlag, txntxnId, txnbankTransactionNo, bookingTransactionID, txngatewayAmount, txnpaymentMode, gatewayMoreInfo,
+                            txntransactionDate, isCard, new AdvanceBookingNetworkUtil.ConfirmDivyangRtnSeatBookingAndroidCallback() {
                         @Override
                         public void onSuccess(ConfirmRtnSeatBookingAndroidResponse response) {
                             if (response != null) {

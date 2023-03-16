@@ -40,15 +40,15 @@ public class BusPassLink extends AppCompatActivity {
         // Load the initial URL
         if(pass_opt.equalsIgnoreCase("New Commuter Bus Pass"))
         {
-            myWebView.loadUrl("https://www.gsrtc.in/BUSPASS/preOnlinePassengerNewBusPassSystem.do?hiddenAction=PassengerNewBussPass");
+            myWebView.loadUrl("https://www.gsrtc.in/OPRSPass/preOnlinePassengerNewBusPassSystem.do?hiddenAction=PassengerNewBussPass");
 
         }else if(pass_opt.equalsIgnoreCase("Renewal Commuter Bus Pass")){
 
-            myWebView.loadUrl("https://www.gsrtc.in/BUSPASS/preOnlinePassengerNewBusPassSystem.do?hiddenAction=PassengerRenewalBussPass");
+            myWebView.loadUrl("https://www.gsrtc.in/OPRSPass/preOnlinePassengerNewBusPassSystem.do?hiddenAction=PassengerRenewalBussPass");
 
         }else if(pass_opt.equalsIgnoreCase("Application Status")){
 
-            myWebView.loadUrl("https://www.gsrtc.in/BUSPASS/preOnlinePassengerNewBusPassSystem.do?hiddenAction=PassengerApplicationStatus");
+            myWebView.loadUrl("https://www.gsrtc.in/OPRSPass/preOnlinePassengerNewBusPassSystem.do?hiddenAction=PassengerApplicationStatus");
 
         }else{
 

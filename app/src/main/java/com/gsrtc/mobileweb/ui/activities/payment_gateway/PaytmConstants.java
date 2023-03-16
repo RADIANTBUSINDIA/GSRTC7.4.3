@@ -10,6 +10,7 @@ public class PaytmConstants {
 
     public static final String PG_MERCHANT_ID = "GUJARA80844935267658";
     public static final String PG_TXNTOKEN_URL = "https://www.gsrtc.in/GSRTCPhonepe/manageMobilePayTmBookingProcess.do?PayTMOBRequest=";
+    public static final String PG_TXN_CHECK_URL = "https://www.gsrtc.in/GSRTCPhonepe/managePayTmBookingProcess.do?PayTMOBResponse=";
     public static final String PG_TRANSACTION_URL = "https://securegw.paytm.in/";
 
     /** STAGGING **/

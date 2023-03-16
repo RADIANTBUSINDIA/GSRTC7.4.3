@@ -35,7 +35,7 @@ public class HireBusLink extends AppCompatActivity {
         // Configure the client to use when opening URLs
         myWebView.setWebViewClient(new MyBrowser());
         // Load the initial URL
-        myWebView.loadUrl("https://www.gsrtc.in/CCOOnline");
+        myWebView.loadUrl("https://www.gsrtc.in/OPRSCCOOnline");
     }
 
     private class MyBrowser extends WebViewClient {

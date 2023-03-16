@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.gsrtc.mobileweb.R;
 import com.gsrtc.mobileweb.models.Booking;
 import com.gsrtc.mobileweb.models.ConfirmAdvSeatBookingAndroidResponse;
+import com.gsrtc.mobileweb.models.ConfirmRtnSeatBookingAndroidResponse;
 import com.gsrtc.mobileweb.models.GetTotalFareDetailsOfTicketResponse;
 import com.gsrtc.mobileweb.ui.activities.HomeActivity;
 import com.gsrtc.mobileweb.ui.activities.base.BaseNavigationDrawerActivity;
@@ -70,10 +71,17 @@ public class ReferenceNumberActivity extends BaseNavigationDrawerActivity {
         } else if (onwardBooking.getSearchParams().getDivyangBooking().equalsIgnoreCase("Divyang with Helper")) {
             insertDivyangDetails(onwardBooking);
             insertDivyangHelperDetails(divyangBooking);
+            // enable direct InsertButton
 
-            //PaymentGateway Button
-            nextbtnDiv.setVisibility(View.GONE);
-            nextbtn.setVisibility(View.VISIBLE);
+            if(totalFare.equalsIgnoreCase("0.0")){
+
+                nextbtnDiv.setVisibility(View.VISIBLE);
+                nextbtn.setVisibility(View.GONE);
+            }else{
+                //PaymentGateway Button
+                nextbtnDiv.setVisibility(View.GONE);
+                nextbtn.setVisibility(View.VISIBLE);
+            }
         }
 
         textlang = onwardBooking.getSearchParams().getTextlanguage().trim();
@@ -118,9 +126,10 @@ public class ReferenceNumberActivity extends BaseNavigationDrawerActivity {
             @Override
             public void onClick(View view) {
 
-                if(totalFare.equalsIgnoreCase("0.0")&&
-                onwardBooking.getSearchParams().getDivyangBooking().equalsIgnoreCase("Divyang")){
+                if(totalFare.equalsIgnoreCase("0.0")&&(onwardBooking.getSearchParams().getDivyangBooking().equalsIgnoreCase("Divyang")/*||
+                        onwardBooking.getSearchParams().getDivyangBooking().equalsIgnoreCase("Divyang with Helper")*/ )){
 
+                   // Toast.makeText(ReferenceNumberActivity.this, "April fool", Toast.LENGTH_SHORT).show();
                     confirmTicket();
                 }
 
@@ -376,7 +385,32 @@ public class ReferenceNumberActivity extends BaseNavigationDrawerActivity {
 
             if (onwardBooking.getSearchParams().getDivyangBooking().equalsIgnoreCase("Divyang with Helper")) {
 
-                Log.d("onwardBooking", "7");
+                if (divyangBooking != null) {
+                    AdvanceBookingNetworkUtil.ConfirmDivyangRtnSeatBookingAndroid(onwardBooking, divyangBooking,
+                            txntransactionStatus, txnsuccessFlag, txntxnId, txnbankTransactionNo, bookingTransactionID, txngatewayAmount, txnpaymentMode, gatewayMoreInfo,
+                            txntransactionDate, isCard, new AdvanceBookingNetworkUtil.ConfirmDivyangRtnSeatBookingAndroidCallback() {
+                                @Override
+                                public void onSuccess(ConfirmRtnSeatBookingAndroidResponse response) {
+                                    if (response != null) {
+                                        onwardBooking.setConfirmRtnSeatBookingAndroidResponse(response);
+                                        divyangBooking.setConfirmRtnSeatBookingAndroidResponse(response);
+                                        takeConfirmBack();
+
+                                    } else {
+
+                                        Log.d("5", "5");
+                                        takeBackWithError();
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    Log.d("6", "6");
+                                    takeBackWithError();
+                                }
+                            });
+                }
+
 
             } else if (onwardBooking.getSearchParams().getDivyangBooking().equalsIgnoreCase("Divyang")) {
 
@@ -403,8 +437,6 @@ public class ReferenceNumberActivity extends BaseNavigationDrawerActivity {
                         takeBackWithError();
                     }
                 });
-
-            } else {
 
             }
         }
