@@ -126,8 +126,8 @@ public class ReferenceNumberActivity extends BaseNavigationDrawerActivity {
             @Override
             public void onClick(View view) {
 
-                if(totalFare.equalsIgnoreCase("0.0")&&(onwardBooking.getSearchParams().getDivyangBooking().equalsIgnoreCase("Divyang")/*||
-                        onwardBooking.getSearchParams().getDivyangBooking().equalsIgnoreCase("Divyang with Helper")*/ )){
+                if(totalFare.equalsIgnoreCase("0.0")&&(onwardBooking.getSearchParams().getDivyangBooking().equalsIgnoreCase("Divyang")||
+                        onwardBooking.getSearchParams().getDivyangBooking().equalsIgnoreCase("Divyang with Helper") )){
 
                    // Toast.makeText(ReferenceNumberActivity.this, "April fool", Toast.LENGTH_SHORT).show();
                     confirmTicket();

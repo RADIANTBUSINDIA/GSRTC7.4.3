@@ -60,19 +60,11 @@ public class Language_Select extends AppCompatActivity implements View.OnClickLi
         checkForAppUpdate();
         gujarati =(Button)findViewById(R.id.button_gujarati);
         english =(Button)findViewById(R.id.button_eng);
-        text_view=(TextView) findViewById(R.id.text_view);
+
         gujarati.setOnClickListener(this);
         english.setOnClickListener(this);
 
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                gujarati.setVisibility(View.VISIBLE);
-                english.setVisibility(View.VISIBLE);
-                playInitialAnimations();
-            }
-        }, 500);
+
     }
 
     public void onClick(View v) {
@@ -94,21 +86,6 @@ public class Language_Select extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    public void playInitialAnimations(){
-        YoYo.with(Techniques.SlideInLeft)
-                .duration(500)
-                .repeat(1)
-                .playOn(findViewById(R.id.button_gujarati));
-        YoYo.with(Techniques.SlideInRight)
-                .duration(500)
-                .repeat(1)
-                .playOn(findViewById(R.id.button_eng));
-        YoYo.with(Techniques.SlideInLeft)
-                .duration(500)
-                .repeat(1)
-                .playOn(findViewById(R.id.text_view));
-
-    }
 
     @Override
     public void onActivityResult(int requestCode, final int resultCode, Intent intent) {

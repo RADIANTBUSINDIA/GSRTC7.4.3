@@ -46,11 +46,18 @@ public class BaseNavigationDrawerActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle mBun = getIntent().getExtras();
-        assert mBun != null;
-        textlang =mBun.getString("textlang");
+        try {
+            Bundle mBun = getIntent().getExtras();
 
-        assert textlang != null;
+            textlang =mBun.getString("textlang",null);
+            if(textlang==null){
+                textlang= "english";
+            }
+        }catch(Exception ex){
+            textlang= "english";
+        }
+
+
         if(textlang.equalsIgnoreCase("gujarati")){
             setContentView(R.layout.activity_base_navigation_drawer2);
         }else {

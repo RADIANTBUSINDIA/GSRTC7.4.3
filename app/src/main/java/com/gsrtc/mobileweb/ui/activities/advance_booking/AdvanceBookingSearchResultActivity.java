@@ -63,6 +63,8 @@ import com.gsrtc.mobileweb.utils.AppConstants;
 import com.gsrtc.mobileweb.utils.SoapClientUtil;
 import com.gsrtc.mobileweb.utils.customdialog.CustomisedProgressDialog;
 
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
 
 public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActivity {
 

@@ -139,6 +139,7 @@
                             android:textColorHint="@color/hint"
                             android:inputType="numberSigned"
                             android:textColor="@color/white"
+                            android:maxLength="2"
                             android:theme="@style/EditTextStyle"
                             android:layout_marginBottom="20dp"
                             android:layout_marginRight="6dp"
@@ -151,6 +152,7 @@
                             android:inputType="numberSigned"
                             android:textColor="@color/white"
                             android:textColorHint="@color/hint"
+                            android:maxLength="2"
                             android:theme="@style/EditTextStyle"
                             android:layout_marginBottom="20dp"
                             android:layout_weight="1"/>

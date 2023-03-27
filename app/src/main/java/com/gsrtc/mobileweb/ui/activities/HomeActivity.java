@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -66,8 +67,16 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
         setContentViewDrawer(R.layout.home_new);
 
-        Bundle mBun = getIntent().getExtras();
-        textlang =mBun.getString("textlang");
+        try {
+            Bundle mBun = getIntent().getExtras();
+
+            textlang =mBun.getString("textlang",null);
+            if(textlang==null){
+                textlang= "english";
+            }
+        }catch(Exception ex){
+            textlang= "english";
+        }
         Gsrtc_local_db mDb = Gsrtc_local_db.GET_DB_Instance(HomeActivity.this);
 
         mDb.deleteDivyangInfo();
@@ -77,9 +86,11 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         List<SliderUtils> listofimg = new ArrayList<SliderUtils>();
 
         listofimg.add(new SliderUtils("https://gsrtc.in/site/GSRTC_AndroidApp/images/GSRTC_bnr01.png"));
-//            listofimg.add(new SliderUtils("https://gsrtc.in/site/GSRTC_AndroidApp/images/GSRTC_bnr01.png"));
-//            listofimg.add(new SliderUtils("https://gsrtc.in/site/GSRTC_AndroidApp/images/GSRTC_bnr01.png"));
-//            listofimg.add(new SliderUtils("https://gsrtc.in/site/GSRTC_AndroidApp/images/GSRTC_bnr01.png"));
+            listofimg.add(new SliderUtils("https://gsrtc.in/site/GSRTC_AndroidApp/images/GSRTC_bnr02.png"));
+            listofimg.add(new SliderUtils("https://gsrtc.in/site/GSRTC_AndroidApp/images/GSRTC_bnr03.png"));
+            listofimg.add(new SliderUtils("https://gsrtc.in/site/GSRTC_AndroidApp/images/GSRTC_bnr04.png"));
+            listofimg.add(new SliderUtils("https://gsrtc.in/site/GSRTC_AndroidApp/images/GSRTC_bnr05.png"));
+            listofimg.add(new SliderUtils("https://gsrtc.in/site/GSRTC_AndroidApp/images/GSRTC_bnr06.png"));
 
         rq = CustomVolleyRequest.getInstance(this).getRequestQueue();
 
@@ -107,6 +118,21 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         }
 
         dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
+
+
+        // Auto scroll
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+            int i = 0;
+            public void run() {
+                if (i > viewPagerAdapter.getCount()) {
+                    i = 0;
+                }
+                viewPager.setCurrentItem(i++, true);
+                handler.postDelayed(this, 2000);
+            }
+        };
+        handler.postDelayed(runnable, 2000);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

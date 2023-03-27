@@ -8,6 +8,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
+import com.google.android.play.core.tasks.Task;
 import com.gsrtc.mobileweb.R;
 import com.gsrtc.mobileweb.models.Booking;
 import com.gsrtc.mobileweb.models.Seat;
@@ -25,13 +29,15 @@ public class BookingSuccessActivity extends BaseNavigationDrawerActivity {
     String textlang;
 
     TextView header,total_fare,returnjrny;
+    ReviewManager reviewManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentViewDrawer(R.layout.activity_booking_success);
         holder = new ViewHolder(this);
-
+        reviewManager = ReviewManagerFactory.create(this);
+        // Referencing the button
         if (getIntent() != null && getIntent().getExtras() != null) {
             Bundle extras = getIntent().getExtras();
             onwardBooking = (Booking) extras.getSerializable(AppConstants.INTENT_EXTRA.BOOKING_ONWARD);
@@ -176,7 +182,25 @@ public class BookingSuccessActivity extends BaseNavigationDrawerActivity {
 
             holder.total_fare.setText("INR " + (onwardPrice + returnPrice));
         }
+        showRateApp();
     }
+
+    public void showRateApp() {
+        Task<ReviewInfo> request = reviewManager.requestReviewFlow();
+        request.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                // Getting the ReviewInfo object
+                ReviewInfo reviewInfo = task.getResult();
+
+                Task<Void> flow = reviewManager.launchReviewFlow(this, reviewInfo);
+                flow.addOnCompleteListener(task1 -> {
+                    // The flow has finished. The API does not indicate whether the user
+                    // reviewed or not, or even whether the review dialog was shown.
+                });
+            }
+        });
+    }
+
 
     public String listToString(List<Seat> list){
         StringBuilder sb = new StringBuilder();

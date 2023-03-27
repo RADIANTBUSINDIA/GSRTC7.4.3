@@ -24,7 +24,7 @@
         android:id="@+id/textView2"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:text="No Internet"
+        android:text="The Server is Busy Please Try Again !!"
         android:gravity="center"
         android:textSize="18sp"
         android:textColor="@android:color/black">

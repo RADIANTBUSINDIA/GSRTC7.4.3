@@ -1198,6 +1198,7 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
             ActivityUtil.showToast(this, "Please enter valid Mobile Number");
             return;
         }
+        phone.getText().toString().replaceAll("\\s", "");
         if(phone.getText().toString().trim().length()==13)
         {
             String mobnum=phone.getText().toString();

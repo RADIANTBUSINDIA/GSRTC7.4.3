@@ -268,6 +268,7 @@
                                 android:hint="Adults"
                                 android:inputType="numberSigned"
                                 android:text="1"
+                                android:maxLength="2"
                                 android:textColor="@color/white"
                                 android:textColorHint="@color/hint"
                                 android:theme="@style/EditTextStyle" />
@@ -280,6 +281,7 @@
                                 android:hint="Child"
                                 android:inputType="numberSigned"
                                 android:textColor="@color/white"
+                                android:maxLength="2"
                                 android:textColorHint="@color/hint"
                                 android:theme="@style/EditTextStyle" />
                         </LinearLayout>
