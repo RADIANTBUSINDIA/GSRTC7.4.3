@@ -878,7 +878,7 @@ public class SoapClientUtil {
     }
 
 
-    public static void getServiceSeatDetails(BusService busService, SearchParams params, final GetServiceSeatDetailsCallback mCallback) {
+    public static void getServiceSeatDetails(BusService busService, SearchParams params,String methodName, final GetServiceSeatDetailsCallback mCallback) {
         List<Pair<String, String>> arg0 = new ArrayList<>();
         arg0.add(new Pair<String, String>("serviceID", busService.getServiceID().split(",")[0].trim()));
         arg0.add(new Pair<String, String>("startPlaceID", busService.getStartPlaceID()));
@@ -891,7 +891,7 @@ public class SoapClientUtil {
         arg0.add(new Pair<String, String>("userName", AppConstants.CREDENTIALS.USER_NAME));
         arg0.add(new Pair<String, String>("viaPlaces", busService.getViaPlaces()));
 
-        fetchResponseString("GetServiceSeatDetails", arg0, null, new BaseDefaultHttpCallback() {
+        fetchResponseString(methodName, arg0, null, new BaseDefaultHttpCallback() {
             @Override
             public void onError(Exception e) {
                 mCallback.onError(e);
@@ -905,8 +905,8 @@ public class SoapClientUtil {
                 try {
                     JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
                     JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
-                    JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetServiceSeatDetails");
-                    JSONArray jsonArray = requiredResponse.getJSONArray("GetServiceSeatDetails");
+                    JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, methodName);
+                    JSONArray jsonArray = requiredResponse.getJSONArray(methodName);
                     if (jsonArray.getString(0).trim().length() > 0)
                         serviceSeatDetails.setAvailableSeats(jsonArray.getString(0).split(","));
                     if (jsonArray.getString(1).trim().length() > 0)

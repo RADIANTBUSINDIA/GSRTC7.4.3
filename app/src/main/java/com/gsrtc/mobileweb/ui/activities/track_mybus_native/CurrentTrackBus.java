@@ -74,7 +74,7 @@ public class CurrentTrackBus extends BaseNavigationDrawerActivity {
     Date busTime,prevTime;
 
 
-    private String pnrNo, vehicleNo,vehicle,resultdata,tripcode,status;
+    private String pnrNo, vehicleNo,vehicle,resultdata,tripcode,status,trackBus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +87,7 @@ public class CurrentTrackBus extends BaseNavigationDrawerActivity {
 
             textlang =extras.getString("textlang");
             bookType =extras.getString("bookType");
+            trackBus =extras.getString("cred");
             StartPlace =searchParams.getFromLocation().getPlaceName();
             EndPlace =searchParams.getToLocation().getPlaceName();
 
@@ -467,6 +468,9 @@ public class CurrentTrackBus extends BaseNavigationDrawerActivity {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void trackData() {
+
+        String[] split = trackBus.split(",");
+
         String SOAP_ACTION = "http://tempuri.org/GetVehicleCurrentStatus";
         String METHOD_NAME = "GetVehicleCurrentStatus";
         String NAMESPACE = "http://tempuri.org/";
@@ -475,8 +479,8 @@ public class CurrentTrackBus extends BaseNavigationDrawerActivity {
 
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-            Request.addProperty("APIUserName", "infinium");
-            Request.addProperty("APIPassword", "Infinium1234");
+            Request.addProperty("APIUserName", split[0]);
+            Request.addProperty("APIPassword", split[1]);
             Request.addProperty("VehicleNo", vehicleNo );
             Calendar c = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

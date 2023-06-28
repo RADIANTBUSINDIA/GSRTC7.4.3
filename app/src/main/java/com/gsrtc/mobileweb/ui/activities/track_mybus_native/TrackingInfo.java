@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -66,7 +65,7 @@ public class TrackingInfo extends BaseNavigationDrawerActivity {
     private String StartPlace,EndPlace;
     Date busTime,prevTime;
     private String textlang,currentBusTime,exactBustTime;
-    private String pnrNo, vehicleNo,vehicle,resultdata,tripcode,status,scheduleDate;
+    private String pnrNo, vehicleNo,vehicle,resultdata,tripcode,status,scheduleDate,trackBus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +73,7 @@ public class TrackingInfo extends BaseNavigationDrawerActivity {
         if(getIntent()!=null && getIntent().getExtras()!=null){
             Bundle extras =  getIntent().getExtras();
             textlang =extras.getString("textlang");
-
+            trackBus =extras.getString("cred");
             Btnmap=(Button) findViewById(R.id.mapbtn);
             linearLayout = (LinearLayout)findViewById(R.id.moreinfo_title);
             moreinfo=(TextView) findViewById(R.id.more_info);

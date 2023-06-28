@@ -310,10 +310,11 @@
 
                                 <RadioButton
                                     android:id="@+id/single_lady"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:checked="false"
                                     android:textSize="13dp"
+                                    android:layout_gravity="center"
                                     android:layout_weight="1"
                                     android:textColor="@color/white"
                                     android:text="Single Lady"
@@ -323,12 +324,13 @@
 
                                 <RadioButton
                                     android:id="@+id/divyang"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:checked="false"
                                     android:textSize="13dp"
                                     android:layout_marginLeft="2dp"
                                     android:textColor="@color/white"
+                                    android:layout_gravity="center"
                                     android:text="Divyang"
                                     android:layout_weight="1"
                                     android:buttonTint="@color/white"
@@ -339,7 +341,7 @@
 
                                 <RadioButton
                                     android:id="@+id/div_helper"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="2dp"
                                     android:checked="false"
@@ -347,6 +349,7 @@
                                     android:textColor="@color/white"
                                     android:text="Divyang with Helper"
                                     android:buttonTint="@color/white"
+                                    android:layout_gravity="center"
                                     android:textStyle="bold"
                                     android:layout_weight="1"
                                     android:clickable="true"

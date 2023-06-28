@@ -37,6 +37,7 @@ import com.gsrtc.mobileweb.ui.activities.track_mybus_native.CurrentTrackBus;
 import com.gsrtc.mobileweb.utils.ActivityUtil;
 import com.gsrtc.mobileweb.utils.AppConstants;
 import com.gsrtc.mobileweb.utils.SoapClientUtil;
+import com.gsrtc.mobileweb.utils.XMLtoJSONResponseParser;
 import com.gsrtc.mobileweb.utils.customdialog.CustomisedProgressDialog;
 import com.gsrtc.mobileweb.utils.net.TrackMyBusNetworkUtil;
 
@@ -65,7 +66,7 @@ public class CurrentBookingSearchResultActivity extends BaseNavigationDrawerActi
     static String JourneyDate;
     static String ClassId;
 
-    String textlang;
+    String textlang,trackBus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,7 @@ public class CurrentBookingSearchResultActivity extends BaseNavigationDrawerActi
 
         if (getIntent() != null && getIntent().getExtras() != null) {
             searchParams = (SearchParamsCurrent) getIntent().getExtras().getSerializable(AppConstants.INTENT_EXTRA.SEARCH_PARAM);
-
+            getTrackBusCredentials();
             textlang = searchParams.getCrntlanguage().trim();
             StartPlaceID = searchParams.getFromLocation().getPlaceID();
             EndPlaceID = searchParams.getToLocation().getPlaceID();
@@ -517,6 +518,7 @@ public class CurrentBookingSearchResultActivity extends BaseNavigationDrawerActi
         CustomisedProgressDialog.STOP_CUST_DIA();
         Bundle bundle = new Bundle();
         bundle.putString("textlang",textlang);
+        bundle.putString("cred",trackBus);
         bundle.putString("bookType","ON_ROUTE");
         bundle.putSerializable(AppConstants.INTENT_EXTRA.TRACK_MY_BUS, tracking);
         bundle.putSerializable(AppConstants.INTENT_EXTRA.SEARCH_PARAM, searchParams);
@@ -598,5 +600,41 @@ public class CurrentBookingSearchResultActivity extends BaseNavigationDrawerActi
         intent.putExtras(data);
         startActivity(intent);
     }
+    public void getTrackBusCredentials(){
+
+        SoapClientUtil.fetchResponseString("GetTrackmyBusCredentials", "", "",
+                new SoapClientUtil.BaseDefaultHttpCallback() {
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(String response) {
+
+
+                        try {
+                            org.json.JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+                            org.json.JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
+                            String requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetTrackMyBusCredentials").getString("GetTrackMyBusCredentials");
+                            System.out.println(requiredResponse);
+                            trackBus =requiredResponse;
+
+
+
+
+                        }catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                    }
+                });
+
+
+    }
+
+
 
 }

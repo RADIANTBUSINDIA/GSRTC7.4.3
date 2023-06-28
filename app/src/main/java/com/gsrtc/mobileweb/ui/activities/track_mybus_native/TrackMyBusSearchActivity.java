@@ -30,6 +30,7 @@ import com.gsrtc.mobileweb.ui.activities.base.BaseNavigationDrawerActivity;
 import com.gsrtc.mobileweb.utils.ActivityUtil;
 import com.gsrtc.mobileweb.utils.AppConstants;
 import com.gsrtc.mobileweb.utils.SoapClientUtil;
+import com.gsrtc.mobileweb.utils.XMLtoJSONResponseParser;
 import com.gsrtc.mobileweb.utils.customdialog.CustomisedProgressDialog;
 import com.gsrtc.mobileweb.utils.net.TrackMyBusNetworkUtil;
 
@@ -56,7 +57,7 @@ public class TrackMyBusSearchActivity extends BaseNavigationDrawerActivity  {
     private GoogleMap mMap;
     private double lattitude, longtitude;
     private String firstLetter;
-    private String pnrNo, vehicleNo,vehicle, currentDate, value,resultdata,tripcode;
+    private String pnrNo, vehicleNo,vehicle, currentDate, value,resultdata,tripcode,trackBus;
     String textlang;
 
     TrackmybusHistorySearchParam trackmyParams;
@@ -72,7 +73,7 @@ public class TrackMyBusSearchActivity extends BaseNavigationDrawerActivity  {
 
         Bundle mBun = getIntent().getExtras();
         textlang =mBun.getString("textlang");
-
+        getTrackBusCredentials();
         submit = (Button) findViewById(R.id.submit);
         Btnmap=(Button) findViewById(R.id.mapbtn);
         PnrNo = (EditText) findViewById(R.id.PnrNo);
@@ -252,6 +253,7 @@ public class TrackMyBusSearchActivity extends BaseNavigationDrawerActivity  {
         CustomisedProgressDialog.STOP_CUST_DIA();
         Bundle bundle = new Bundle();
         bundle.putString("textlang",textlang);
+        bundle.putString("cred",trackBus);
         bundle.putSerializable(AppConstants.INTENT_EXTRA.TRACK_MY_BUS, tracking);
         ActivityUtil.openNewActivity(this, TrackingInfo.class, bundle);
     }
@@ -272,6 +274,7 @@ public class TrackMyBusSearchActivity extends BaseNavigationDrawerActivity  {
         CustomisedProgressDialog.STOP_CUST_DIA();
         Bundle bundle = new Bundle();
         bundle.putString("textlang",textlang);
+        bundle.putString("cred",trackBus);
         bundle.putSerializable(AppConstants.INTENT_EXTRA.TRACK_MY_BUS, tracking);
         ActivityUtil.openNewActivity(this, TrackingInfo.class, bundle);
     }
@@ -442,4 +445,40 @@ public class TrackMyBusSearchActivity extends BaseNavigationDrawerActivity  {
             }
         });
     }
+
+    public void getTrackBusCredentials(){
+
+        SoapClientUtil.fetchResponseString("GetTrackmyBusCredentials", "", "",
+                new SoapClientUtil.BaseDefaultHttpCallback() {
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(String response) {
+
+
+                        try {
+                            org.json.JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+                            org.json.JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
+                            String requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetTrackMyBusCredentials").getString("GetTrackMyBusCredentials");
+                            System.out.println(requiredResponse);
+                            trackBus =requiredResponse;
+
+
+
+
+                        }catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                    }
+                });
+
+
+    }
+
 }

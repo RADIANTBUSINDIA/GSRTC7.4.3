@@ -324,7 +324,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         vHolder.mLinearLayoutHireBus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(HomeActivity.this, HireBusLink.class);
+                Intent i = new Intent(HomeActivity.this, BookingHistoryActivity.class);
                 Bundle data = new Bundle();
                 data.putString("textlang", textlang);
                 i.putExtras(data);

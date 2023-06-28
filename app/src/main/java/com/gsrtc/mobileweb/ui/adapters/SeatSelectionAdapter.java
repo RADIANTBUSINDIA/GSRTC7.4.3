@@ -1,27 +1,27 @@
 package com.gsrtc.mobileweb.ui.adapters;
 
 import android.content.Context;
-
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gsrtc.mobileweb.R;
+import com.gsrtc.mobileweb.models.SearchParams;
+import com.gsrtc.mobileweb.models.Seat;
+import com.gsrtc.mobileweb.models.SeatRow;
+import com.gsrtc.mobileweb.models.ServiceSeatDetails;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.gsrtc.mobileweb.R;
-import com.gsrtc.mobileweb.models.SearchParams;
-import com.gsrtc.mobileweb.models.Seat;
-import com.gsrtc.mobileweb.models.SeatRow;
-import com.gsrtc.mobileweb.models.ServiceSeatDetails;
+import androidx.recyclerview.widget.RecyclerView;
 
 import static com.gsrtc.mobileweb.utils.AppConstants.SEAT_ROW_COUNT;
 
@@ -41,6 +41,7 @@ public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSele
     SearchParams searchParams;
     String class_layout_id, srv_class_id;
 
+
     public SeatSelectionAdapter(Context context, List<SeatRow> seatRowList, ServiceSeatDetails serviceSeatDetails, SearchParams searchParams, String layout_id, String class_id) {
 
         this.seatRowList = new ArrayList<SeatRow>();
@@ -54,6 +55,10 @@ public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSele
         this.class_layout_id = layout_id;
         this.srv_class_id = class_id;
     }
+
+
+
+
 
 
     @Override

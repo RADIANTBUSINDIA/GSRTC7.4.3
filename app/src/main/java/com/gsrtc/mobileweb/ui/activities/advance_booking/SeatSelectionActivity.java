@@ -133,15 +133,43 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
         });
     }
 
+
     public void setupSeatView(List<SeatRow> seatRows, ServiceSeatDetails serviceSeatDetails, String layout_id, String srv_class_id) {
+        List<String> sideBerths;
+        if (searchParams.getAdultFemaleCount() == 1) {
+            String singleSide = singleSideBerth(seatRows, layout_id,serviceSeatDetails);
+            sideBerths = Arrays.asList(singleSide.split(","));
+
+            System.out.println(sideBerths);
+            if (!sideBerths.get(0).equalsIgnoreCase("") || sideBerths.size() > 1) {
+                String[] ber = sideBerths.toArray(new String[0]);
+                serviceSeatDetails.setAvailableSeats(ber);
+
+                int totalSeats = seatRows.size()* 6;
+
+                String bookedDummy="";
+                for (int i=0 ;i<totalSeats;i++){
+                    if (!sideBerths.contains(String.valueOf(i))){
+                        bookedDummy+=i+",";
+                    }
+
+                }
+                String[] split = bookedDummy.split(",");
+                serviceSeatDetails.setBookedSeats(split);
+
+
+            }
+
+        }
+
+
+
         seatSelectionAdapter = new SeatSelectionAdapter(this, seatRows, serviceSeatDetails, searchParams, layout_id, srv_class_id) {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void allSeatsSelected(ArrayList<Seat> selectedSeats) {
 
-                if (searchParams.getAdultFemaleCount()==1){
-                   // getNearBySeatAndGender(selectedSeats,class_layout_id);
-                }
+
                 getReferenceNumber(busService, selectedSeats, searchParams);
 
 
@@ -151,6 +179,31 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
         holder.recyclerView.setLayoutManager(layoutManager);
         holder.recyclerView.setAdapter(seatSelectionAdapter);
         seatSelectionAdapter.notifyDataSetChanged();
+    }
+
+
+
+    private String singleSideBerth(List<SeatRow> Seats,String class_layout_id,ServiceSeatDetails serviceSeatDetails){
+        StringBuilder seats= new StringBuilder();
+
+        if (class_layout_id.equalsIgnoreCase("64")||class_layout_id.equalsIgnoreCase("143")||
+                class_layout_id.equalsIgnoreCase("188")||class_layout_id.equalsIgnoreCase("191")||
+                class_layout_id.equalsIgnoreCase("169")) {
+            if (Seats.size() > 0) {
+                for (int i =0;i<Seats.size();i++){
+                    int seatNo =Seats.get(i).getSeatss()[0].getSeatNo();
+
+                    if(!serviceSeatDetails.getBookedSeats().contains(seatNo)&&
+                            serviceSeatDetails.getAvailableSeats().contains(seatNo)){
+                        seats.append(seatNo).append(",");
+                    }
+                }
+            }
+
+        }
+
+        return seats.toString();
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -278,7 +331,16 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
     }
 
     public void fetchServiceSeatDetails(BusService busService, SearchParams searchParams) {
-        SoapClientUtil.getServiceSeatDetails(busService, searchParams, new SoapClientUtil.GetServiceSeatDetailsCallback() {
+
+        String methodName="";
+        if (searchParams.getDivyangBooking().equalsIgnoreCase("Divyang") || searchParams.getDivyangBooking().equalsIgnoreCase("Divyang with Helper")) {
+            methodName="GetDivyangServiceSeatDetails";
+
+        }else{
+            methodName="GetServiceSeatDetails";
+        }
+
+        SoapClientUtil.getServiceSeatDetails(busService, searchParams,methodName, new SoapClientUtil.GetServiceSeatDetailsCallback() {
             @Override
             public void onSuccess(ServiceSeatDetails serviceSeatDetailsRemote) {
 

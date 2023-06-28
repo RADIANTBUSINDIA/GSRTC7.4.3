@@ -50,7 +50,13 @@ public class BusPassLink extends AppCompatActivity {
 
             myWebView.loadUrl("https://www.gsrtc.in/OPRSPass/preOnlinePassengerNewBusPassSystem.do?hiddenAction=PassengerApplicationStatus");
 
-        }else{
+        }else if(pass_opt.equalsIgnoreCase("complaint")){
+
+            myWebView.loadUrl("http://117.239.183.164/helpdesk/");
+
+        }
+
+        else{
 
             myWebView.loadUrl("https://drive.google.com/file/d/16xLbAbGph9DNjZCBC2zGiSuYEBey4B9N/view");
         }
