@@ -11,6 +11,8 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -176,10 +178,8 @@ public class TrackingInfo extends BaseNavigationDrawerActivity {
             vehicleNo = book.getVehicleNo();
 
 
-            String strDepart = holder.DepartureDateTime.getText().toString();
+            String strDepart = book.getDepartureDateTime();
 
-//            scheduleDate = "2022-09-15";
-//            goNext();
                 if(!strDepart.isEmpty()) {
 
                     if (!book.getDepartureDateTime().equalsIgnoreCase("N/A")) {
@@ -425,13 +425,14 @@ public class TrackingInfo extends BaseNavigationDrawerActivity {
         String METHOD_NAME = "GetVehicleCurrentStatus";
         String NAMESPACE = "http://tempuri.org/";
 //        String URL = "https://gsrtcvehicletracking.infinium.management/Trackingservice.asmx";
-        String URL = "https://gujarattransporttrackbusapi.infinium.management/TrackingService.asmx";
+        String URL = "https://gsrtctrackbusapi.infinium.management/TrackingService.asmx";
 
 
+        String[] split = trackBus.split(",");
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-            Request.addProperty("APIUserName", "Amnex");
-            Request.addProperty("APIPassword", "AmnEx@2023!!#");
+            Request.addProperty("APIUserName", split[0]);
+            Request.addProperty("APIPassword", split[1]);
             Request.addProperty("VehicleNo", vehicleNo );
             Calendar c = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

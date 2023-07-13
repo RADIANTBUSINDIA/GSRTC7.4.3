@@ -93,7 +93,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //            mMap.addMarker(new MarkerOptions().position(latLng1).title(startplace).icon(BitmapDescriptorFactory.fromResource(R.drawable.trackmydra)
 //            ));
 
-                mMap.animateCamera(CameraUpdateFactory.zoomIn());
+/*                mMap.animateCamera(CameraUpdateFactory.zoomIn());
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(12), 1000, null);
                 CameraPosition cameraPosition1 = new CameraPosition.Builder().target(latLng)      // Sets the center of the map to Mountain View
                         .zoom(12)                   // Sets the zoom
@@ -106,7 +106,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
                 float zoomLevel = 06.0f;
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));*/
 
             }
         }

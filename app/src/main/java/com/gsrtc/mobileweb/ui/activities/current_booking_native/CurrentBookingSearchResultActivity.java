@@ -41,6 +41,8 @@ import com.gsrtc.mobileweb.utils.XMLtoJSONResponseParser;
 import com.gsrtc.mobileweb.utils.customdialog.CustomisedProgressDialog;
 import com.gsrtc.mobileweb.utils.net.TrackMyBusNetworkUtil;
 
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -616,9 +618,10 @@ public class CurrentBookingSearchResultActivity extends BaseNavigationDrawerActi
                         try {
                             org.json.JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
                             org.json.JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
-                            String requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetTrackMyBusCredentials").getString("GetTrackMyBusCredentials");
-                            System.out.println(requiredResponse);
-                            trackBus =requiredResponse;
+                            JSONObject getTrackmyBusCredentialsResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetTrackmyBusCredentials");
+                            String getTrackMyBusCredentials = getTrackmyBusCredentialsResponse.getString("GetTrackmyBusCredentials");
+                            System.out.println(getTrackMyBusCredentials);
+                            trackBus =getTrackMyBusCredentials;
 
 
 

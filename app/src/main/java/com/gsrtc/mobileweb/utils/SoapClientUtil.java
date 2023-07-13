@@ -449,6 +449,12 @@ public class SoapClientUtil {
         properties.add(new Pair<String, String>("endPlaceID", endPlaceId));
         properties.add(new Pair<String, String>("journeyToTime", "23:59"));
         properties.add(new Pair<String, String>("journeyFromTime", "00:00"));
+      /*  if (searchParams.getDivyangBooking() != null || !searchParams.getDivyangBooking().equalsIgnoreCase("Divyang")) {
+            properties.add(new Pair<String, String>("type", searchParams.getDivyangBooking()));
+        }else{
+            properties.add(new Pair<String, String>("type",searchParams.getDivyangBooking()));
+        }*/
+
         properties.add(new Pair<String, String>("journeyDate", journeyDate));
         properties.add(new Pair<String, String>("noOfSeats", "" + (searchParams.getNumOfPassengers())));
         properties.add(new Pair<String, String>("serviceClass", "0"));
