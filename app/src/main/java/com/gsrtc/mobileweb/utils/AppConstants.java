@@ -9,7 +9,7 @@ public class AppConstants {
     public static int SEAT_ROW_COUNT = 6; //Number of seats in seat row layout
 
       public static String live_url = "https://gsrtc.in/";
-      //public static String live_url = "http://192.168.222.177:8080/";
+      //public static String live_url = "http://192.168.222.242:8080/";
       public static String server_url = live_url;
 
     public static class CREDENTIALS {
