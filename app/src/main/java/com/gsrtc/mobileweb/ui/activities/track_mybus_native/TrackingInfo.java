@@ -425,10 +425,11 @@ public class TrackingInfo extends BaseNavigationDrawerActivity {
         String METHOD_NAME = "GetVehicleCurrentStatus";
         String NAMESPACE = "http://tempuri.org/";
 //        String URL = "https://gsrtcvehicletracking.infinium.management/Trackingservice.asmx";
-        String URL = "http://180.150.248.52/GSRTCMobile/Trackingservice.asmx";
+
 
 
         String[] split = trackBus.split(",");
+        String URL = split[2];
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
             Request.addProperty("APIUserName", split[0]);

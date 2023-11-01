@@ -475,7 +475,7 @@ public class CurrentTrackBus extends BaseNavigationDrawerActivity {
         String METHOD_NAME = "GetVehicleCurrentStatus";
         String NAMESPACE = "http://tempuri.org/";
 //        String URL = "http://180.150.248.52/GSRTCMobile/Trackingservice.asmx";
-        String URL = "http://180.150.248.52/GSRTCMobile/Trackingservice.asmx";
+        String URL = split[2];
 
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
