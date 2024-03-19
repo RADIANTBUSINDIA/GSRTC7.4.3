@@ -389,7 +389,7 @@
                         android:layout_marginTop="0dp"
                         android:fontFamily="@font/gotham"
                         android:paddingLeft="10dp"
-                        android:text="Current Booking"
+                        android:text="Current Status"
                         android:textColor="@color/white"
                         android:textSize="12dp" />
 
@@ -566,7 +566,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="   Version  7 . 1 . 6   "
+                android:text="   Version  7 . 2 . 1   "
                 android:textColor="@color/black"
                 android:layout_gravity="center"
                 android:background="@drawable/btn_shape"

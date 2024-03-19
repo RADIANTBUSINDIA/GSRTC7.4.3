@@ -5,12 +5,13 @@
       <map>
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/drawable/no_internet_toast.xml" value="0.113" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/drawable/splash_lay.xml" value="0.127" />
-        <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/activity_advance_booking.xml" value="0.2578024796921761" />
+        <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/activity_advance_booking.xml" value="0.25" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/activity_advance_booking_search_result.xml" value="0.19907407407407407" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/activity_bill_desk_failtrans.xml" value="0.2791666666666667" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/activity_booking_success.xml" value="0.17962962962962964" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/activity_cancellation_passenger_selection.xml" value="0.18796296296296297" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/activity_current_booking_search.xml" value="0.2791666666666667" />
+        <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/activity_current_booking_search_result_screen.xml" value="0.15775972637879435" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/activity_current_track_bus.xml" value="0.1974050046339203" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/activity_division__depot_info.xml" value="0.2791666666666667" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/activity_fare_details.xml" value="0.22" />
@@ -30,14 +31,15 @@
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/activity_view_smsticket.xml" value="0.17238183503243745" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/activity_weblink.xml" value="0.1974050046339203" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/current_booking_home.xml" value="0.22" />
+        <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/current_booking_list_item.xml" value="0.22" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/divyang_info.xml" value="0.21481481481481482" />
-        <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/home_new.xml" value="0.22" />
+        <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/home_new.xml" value="0.25" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/last_search_list.xml" value="0.2672082086361693" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/layout.xml" value="0.23354958294717332" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/no_internet_toast.xml" value="0.2791666666666667" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/seat_row_item.xml" value="0.18796296296296297" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/splash.xml" value="0.24925181701581872" />
-        <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/track_bus.xml" value="0.27546296296296297" />
+        <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/layout/track_bus.xml" value="0.22" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/menu/activity_home_drawer.xml" value="0.27546296296296297" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/menu/activity_home_drawer2.xml" value="0.27546296296296297" />
         <entry key="..\:/GSRTC_DIVYANG WITH HELPER/gsrtc_live_prd_live/app/src/main/res/menu/home.xml" value="0.27546296296296297" />

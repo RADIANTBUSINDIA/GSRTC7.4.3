@@ -130,6 +130,8 @@ public class ReferenceNumberActivity extends BaseNavigationDrawerActivity {
                         onwardBooking.getSearchParams().getDivyangBooking().equalsIgnoreCase("Divyang with Helper") )){
 
                    // Toast.makeText(ReferenceNumberActivity.this, "April fool", Toast.LENGTH_SHORT).show();
+                    CustomisedProgressDialog.SHOW_CUST_DIA(ReferenceNumberActivity.this, "Please wait Confirming Ticket...");
+
                     confirmTicket();
                 }
 

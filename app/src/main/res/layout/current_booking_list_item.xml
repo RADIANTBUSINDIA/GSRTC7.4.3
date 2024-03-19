@@ -309,6 +309,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textColor="@color/black"
+            android:visibility="gone"
             android:background="@drawable/search_input_btn_blue"
             android:text="@string/Rs" />
 

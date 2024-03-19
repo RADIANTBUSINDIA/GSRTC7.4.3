@@ -57,6 +57,7 @@
                         android:background="@drawable/border"
                         android:orientation="horizontal"
                         android:layout_gravity="center"
+                        android:visibility="gone"
                         android:weightSum="2">
 
                         <TextView
@@ -431,7 +432,7 @@
                         android:padding="10dp"
                         android:layout_marginBottom="5dp"
                         android:visibility="visible"
-                        android:text="* 1% discount on All Classes for all E &amp; M Booking transactions from 11th June 2022 onwards.  * GSRTC facilitates discounts of 10% on return journey and 5% for group booking (>= 4 Seats) for tickets booked before 6 hours prior to departure of service from the origin place.   * At any instance Single Discount will be applicable per ticket i.e. whichever discount is higher."
+                        android:text="* 1% discount on All Classes for all E &amp; M Booking transactions from 11th June 2022 onwards. * At any instance Single Discount will be applicable per ticket i.e. whichever discount is higher."
                         android:singleLine="true" />
 
                     <TextView
@@ -464,7 +465,7 @@
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:visibility="visible"
-                        android:text="Copyright 2022, GSRTC"/>
+                        android:text="Copyright 2024, GSRTC"/>
 
                 </LinearLayout>
 
