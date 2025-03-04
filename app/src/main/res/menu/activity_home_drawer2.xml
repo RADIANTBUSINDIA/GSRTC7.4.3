@@ -17,6 +17,7 @@
         <item
             android:id="@+id/nav_current_booking"
             android:icon="@drawable/menu_current"
+            android:visible="false"
             android:title="વર્તમાન ટિકિટ" />
         <item
             android:id="@+id/nav_ticket_cancellation"

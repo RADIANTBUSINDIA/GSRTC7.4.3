@@ -44,6 +44,7 @@ import com.gsrtc.mobileweb.models.Seat;
 import com.gsrtc.mobileweb.models.SeatRow;
 import com.gsrtc.mobileweb.models.ServiceSeatDetails;
 import com.gsrtc.mobileweb.models.TripSheetData;
+import com.gsrtc.mobileweb.ui.activities.HomeActivity;
 import com.gsrtc.mobileweb.ui.activities.base.BaseNavigationDrawerActivity;
 import com.gsrtc.mobileweb.ui.adapters.SeatSelectionAdapter;
 import com.gsrtc.mobileweb.utils.ActivityUtil;
@@ -411,11 +412,10 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
             @Override
             public void onError(Exception e) {
                 showLoading(true);
-                CustomisedProgressDialog.STOP_CUST_DIA();
-                fetchServiceSeatDetails(busService, searchParams);
-                layoutFetched = true;
-                serviceSeatDetailsFetched = false;
-                ActivityUtil.showErrorToast(SeatSelectionActivity.this, e);
+
+                Toast.makeText(SeatSelectionActivity.this, "Cannot Block the seat at the time. Please try later!", Toast.LENGTH_SHORT).show();
+
+                finish();
             }
         });
     }

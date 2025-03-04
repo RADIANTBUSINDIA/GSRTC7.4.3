@@ -82,8 +82,12 @@ public class AdvanceBookingNetworkUtil extends SoapClientUtil {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    mCallback.onError(new RuntimeException("Error Occured!"));
+                    return;
                 } catch (Exception e) {
                     e.printStackTrace();
+                    mCallback.onError(new RuntimeException("Error Occured!"));
+                    return;
                 }
                 mCallback.onSuccess(serviceSeatDetails);
             }

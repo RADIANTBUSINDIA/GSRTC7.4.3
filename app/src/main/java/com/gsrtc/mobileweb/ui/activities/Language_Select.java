@@ -22,14 +22,15 @@ import com.google.android.play.core.install.InstallStateUpdatedListener;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
-import com.google.android.play.core.tasks.Task;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.gsrtc.mobileweb.R;
 import com.gsrtc.mobileweb.models.Booking;
 import com.gsrtc.mobileweb.models.SearchParams;
+import com.gsrtc.mobileweb.utils.SecureApplication;
 
-public class Language_Select extends AppCompatActivity implements View.OnClickListener {
+public class Language_Select extends SecureApplication implements View.OnClickListener {
 
     Button gujarati,english;
     TextView text_view;

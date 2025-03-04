@@ -11,13 +11,12 @@ import java.util.List;
 import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
 import com.google.android.play.core.review.ReviewManagerFactory;
-import com.google.android.play.core.tasks.Task;
+import com.google.android.gms.tasks.Task;
 import com.gsrtc.mobileweb.R;
 import com.gsrtc.mobileweb.models.Booking;
 import com.gsrtc.mobileweb.models.Seat;
 import com.gsrtc.mobileweb.ui.activities.HomeActivity;
 import com.gsrtc.mobileweb.ui.activities.base.BaseNavigationDrawerActivity;
-import com.gsrtc.mobileweb.utils.ActivityUtil;
 import com.gsrtc.mobileweb.utils.AppConstants;
 
 public class BookingSuccessActivity extends BaseNavigationDrawerActivity {
