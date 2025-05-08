@@ -14,6 +14,17 @@ public class Place implements Serializable {
     String stateCode;
     String stateName;
 
+    public Place() {
+    }
+
+    public Place(String placeCode, String placeID, String placeName, String stateCode, String stateName) {
+        this.placeCode = placeCode;
+        this.placeID = placeID;
+        this.placeName = placeName;
+        this.stateCode = stateCode;
+        this.stateName = stateName;
+    }
+
     public String getPlaceCode() {
         return placeCode;
     }

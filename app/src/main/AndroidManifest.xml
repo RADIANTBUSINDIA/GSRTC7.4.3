@@ -3,6 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.gsrtc.mobileweb">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:name=".GSRTC"
         android:allowBackup="false"
@@ -17,6 +25,30 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
         tools:replace="android:allowBackup">
+        <activity
+            android:name=".ui.activities.packageBooking.CancellationWebViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.packageBooking.PackageSuccessActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.packageBooking.PackagePaymentScreen"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.packageBooking.PackageReferenceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.packageBooking.PackageFareDetails"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.packageBooking.PackagePassengerInfo"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.packageBooking.PackageBookingSearchResult"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.packageBooking.PackageBookingHome"
+            android:exported="false" />
         <activity
             android:name=".ui.activities.web_Linking.TrackRunningService"
             android:exported="false" />
@@ -311,13 +343,5 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

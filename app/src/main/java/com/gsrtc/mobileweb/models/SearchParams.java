@@ -1,5 +1,7 @@
 package com.gsrtc.mobileweb.models;
 
+import com.gsrtc.mobileweb.ui.activities.packageBooking.Model.PackageBookingModel;
+
 import java.io.Serializable;
 
 /**
@@ -27,6 +29,16 @@ public class SearchParams implements Serializable{
     String divyangIssueDistrictId;
     String divyangPercentage;
     String divyangWithHelperIds;
+
+    PackageBookingModel packageDetails;
+
+    public PackageBookingModel getPackageDetails() {
+        return packageDetails;
+    }
+
+    public void setPackageDetails(PackageBookingModel packageDetails) {
+        this.packageDetails = packageDetails;
+    }
 
     public String getDivyangWithHelperIds() {
         return divyangWithHelperIds;

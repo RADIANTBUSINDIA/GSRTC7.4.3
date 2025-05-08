@@ -21,7 +21,12 @@ import com.gsrtc.mobileweb.models.SeatRow;
 import com.gsrtc.mobileweb.models.ServiceSeatDetails;
 import com.gsrtc.mobileweb.models.trackmybus.Vehicle;
 import com.gsrtc.mobileweb.models.trackmybus.VehicleList;
+import com.gsrtc.mobileweb.ui.activities.packageBooking.Model.GetAllHotelInfoByPackageID;
+import com.gsrtc.mobileweb.ui.activities.packageBooking.Model.GetPackageTripsList;
+import com.gsrtc.mobileweb.ui.activities.packageBooking.Model.GetTotalPackageFareDetails;
+import com.gsrtc.mobileweb.ui.activities.packageBooking.Model.PackageBookingModel;
 import com.gsrtc.mobileweb.utils.net.NetworkException;
+import com.gsrtc.mobileweb.utils.net.TicketCancelNetworkUtil;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -43,6 +48,7 @@ import org.ksoap2.transport.HttpTransportSE;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
@@ -59,7 +65,7 @@ public class SoapClientUtil {
     //protected static final String URL = "http://111.93.131.113:7070/GSRTCWS2/reservationservice?wsdl";
 
      /******* LIVE URL *******/
-    protected static final String URL = AppConstants.server_url + "GSRTCWSAnd/reservationservice?wsdl";
+    protected static final String URL = AppConstants.server_url + "/reservationservice?wsdl";
 
     protected static final String username = "radwsnic";
     protected static final String password = "radwsnic";
@@ -97,7 +103,7 @@ public class SoapClientUtil {
                 marshal.register(envelope);
                 envelope.setAddAdornments(false);
 
-                HttpTransportSE androidHttpTransport = new HttpTransportSE(AppConstants.server_url+"GSRTCWSAnd/reservationservice");
+                HttpTransportSE androidHttpTransport = new HttpTransportSE(AppConstants.server_url+"/reservationservice");
 
                 try {
                     List<HeaderProperty> headerList = new ArrayList<HeaderProperty>();
@@ -175,7 +181,7 @@ public class SoapClientUtil {
             protected String doInBackground(String... distance) {
                 String strresponse = "";
 
-                HttpPost httppost = new HttpPost(AppConstants.server_url + "GSRTCWSAnd/reservationservice");
+                HttpPost httppost = new HttpPost(AppConstants.server_url + "/reservationservice");
                 try {
                     DefaultHttpClient client = new DefaultHttpClient();
                     BasicHttpResponse send_call_response;
@@ -265,7 +271,7 @@ public class SoapClientUtil {
             protected String doInBackground(String... distance) {
                 String strresponse = "";
 
-                HttpPost httppost = new HttpPost(AppConstants.server_url + "GSRTCWSAnd/reservationservice");
+                HttpPost httppost = new HttpPost(AppConstants.server_url + "/reservationservice");
                 try {
                     DefaultHttpClient client = new DefaultHttpClient();
                     BasicHttpResponse send_call_response;
@@ -497,6 +503,504 @@ public class SoapClientUtil {
                 mCallback.onSuccess(serviceList);
             }
         });
+    }
+
+
+
+    //servicedetails
+    public static void getPackageAvailableServiceDetails(SearchParams searchParams, boolean returnJourney, final GetAvailableServiceDetailsCallback mCallback) {
+
+        String journeyDate = (!returnJourney) ? searchParams.getOnWardDate() : searchParams.getReturnDate();
+        String startPlaceId = (!returnJourney) ? searchParams.getFromLocation().getPlaceID() : searchParams.getToLocation().getPlaceID();
+        String endPlaceId = (!returnJourney) ? searchParams.getToLocation().getPlaceID() : searchParams.getFromLocation().getPlaceID();
+
+        List<Pair<String, String>> properties = new ArrayList<>();
+        properties.add(new Pair<String, String>("counterCode", AppConstants.CREDENTIALS.COUNTER_CODE));
+        properties.add(new Pair<String, String>("userID", AppConstants.CREDENTIALS.USER_ID));
+        properties.add(new Pair<String, String>("userName", AppConstants.CREDENTIALS.USER_NAME));
+        properties.add(new Pair<String, String>("startPlaceID", startPlaceId));
+        properties.add(new Pair<String, String>("endPlaceID", endPlaceId));
+        properties.add(new Pair<String, String>("journeyToTime", "23:59"));
+        properties.add(new Pair<String, String>("journeyFromTime", "00:00"));
+      /*  if (searchParams.getDivyangBooking() != null || !searchParams.getDivyangBooking().equalsIgnoreCase("Divyang")) {
+            properties.add(new Pair<String, String>("type", searchParams.getDivyangBooking()));
+        }else{
+            properties.add(new Pair<String, String>("type",searchParams.getDivyangBooking()));
+        }*/
+
+        properties.add(new Pair<String, String>("journeyDate", journeyDate));
+        properties.add(new Pair<String, String>("noOfSeats", "" + (searchParams.getNumOfPassengers())));
+        properties.add(new Pair<String, String>("serviceClass", "0"));
+        properties.add(new Pair<String, String>("totFemales", String.valueOf(searchParams.getAdultFemaleCount())));
+        properties.add(new Pair<String, String>("totMales", String.valueOf(searchParams.getAdultCount())));
+        properties.add(new Pair<String, String>("advanceOrCurrentBooking", "ADVANCE"));
+        fetchResponseString("GetPackageAvailableServiceDetails", properties, null, new BaseDefaultHttpCallback() {
+            @Override
+            public void onError(Exception e) {
+                mCallback.onError(e);
+            }
+
+            @Override
+            public void onSuccess(String response) {
+                System.out.println(response);
+                Log.d("response", response);
+                List<BusService> serviceList = new ArrayList<BusService>();
+                JSONObject requiredResponse = null;
+                try {
+                    JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+                    JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
+                    requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetPackageAvailableServiceDetails");
+                    serviceList = JacksonUtil.getMapper().readValue(requiredResponse.getJSONArray("GetPackageAvailableServiceDetails").toString(), new TypeReference<List<BusService>>() {
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    try {
+                        serviceList = JacksonUtil.getMapper().readValue(requiredResponse.getJSONObject("GetPackageAvailableServiceDetails").toString(), new TypeReference<List<BusService>>() {
+                        });
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                mCallback.onSuccess(serviceList);
+            }
+        });
+    }
+
+
+
+    //getPackageTrips
+    public static void getPackageTripDetails( final GetPackageTripCallBack mCallback) {
+
+
+        List<Pair<String, String>> properties = new ArrayList<>();
+
+        properties.add(new Pair<>("AVAILABLE_ROOMS_COUNT", ""));
+        properties.add(new Pair<>("BOOKED_ROOMS", ""));
+        properties.add(new Pair<>("bookingdate", ""));
+        properties.add(new Pair<>("CHARGE_PER_ROOM", ""));
+        properties.add(new Pair<>("CHECK_IN_DATE", ""));
+        properties.add(new Pair<>("CHECK_IN_DATETIME", ""));
+        properties.add(new Pair<>("CHECK_IN_TIME", ""));
+        properties.add(new Pair<>("CHECK_OUT_DATE", ""));
+        properties.add(new Pair<>("CHECK_OUT_DATETIME", ""));
+        properties.add(new Pair<>("CHECK_OUT_TIME", ""));
+        properties.add(new Pair<>("CONTACT_NO", ""));
+        properties.add(new Pair<>("checkindate", ""));
+        properties.add(new Pair<>("checkoutdate", ""));
+        properties.add(new Pair<>("childCount", ""));
+        properties.add(new Pair<>("EXTRA_BED_CHARGE", ""));
+        properties.add(new Pair<>("EXTRA_BED_CHARGES", ""));
+        properties.add(new Pair<>("EXTRA_BED_COUNT", ""));
+        properties.add(new Pair<>("email", ""));
+        properties.add(new Pair<>("FOOD_CHARGES", ""));
+        properties.add(new Pair<>("FOOD_COUNT", ""));
+        properties.add(new Pair<>("FROM_PLACEID", ""));
+        properties.add(new Pair<>("FROM_PLACE_CODE", ""));
+        properties.add(new Pair<>("FROM_PLACE_NAME", ""));
+        properties.add(new Pair<>("female", ""));
+        properties.add(new Pair<>("GST_CHARGES", ""));
+        properties.add(new Pair<>("GST_PER", ""));
+        properties.add(new Pair<>("HMD_EXTRA_BED_YES_NO", ""));
+        properties.add(new Pair<>("HOTEL_ADDRESS", ""));
+        properties.add(new Pair<>("HOTEL_ID", ""));
+        properties.add(new Pair<>("HOTEL_NAME", ""));
+        properties.add(new Pair<>("HOTEL_PIN_CODE", ""));
+        properties.add(new Pair<>("HOTEL_ROOM_CHARGES", ""));
+        properties.add(new Pair<>("ID_PROOF_NO", ""));
+        properties.add(new Pair<>("ID_PROOF_TYPE", ""));
+        properties.add(new Pair<>("i_CREATEDBY", ""));
+        properties.add(new Pair<>("ipaddress", ""));
+        properties.add(new Pair<>("LIGHT_SOUND_CHARGES", ""));
+        properties.add(new Pair<>("MOBILENO", ""));
+        properties.add(new Pair<>("male", ""));
+        properties.add(new Pair<>("NAME", ""));
+        properties.add(new Pair<>("NO_OFDAYS", ""));
+        properties.add(new Pair<>("NO_OF_CHILDS", ""));
+        properties.add(new Pair<>("NO_OF_PASSENGERS", ""));
+        properties.add(new Pair<>("NO_OF_ROOMS", ""));
+        properties.add(new Pair<>("noofday", ""));
+        properties.add(new Pair<>("noofroom", ""));
+        properties.add(new Pair<>("OBNUMBER", ""));
+        properties.add(new Pair<>("o_EXTRA_BED_CHARGE", ""));
+        properties.add(new Pair<>("o_GST_CHARGES", ""));
+        properties.add(new Pair<>("o_LIGHT_AND_SOUND_CHARGES", ""));
+        properties.add(new Pair<>("o_ROOM_CHAREGS", ""));
+        properties.add(new Pair<>("o_TOTAL_AMOUNT", ""));
+        properties.add(new Pair<>("PACKAGE_ID", ""));
+        properties.add(new Pair<>("PACKAGE_NAME", ""));
+        properties.add(new Pair<>("PASSENGER_ADDRESS", ""));
+        properties.add(new Pair<>("PASSENGER_PIN_CODE", ""));
+        properties.add(new Pair<>("PNRID", ""));
+        properties.add(new Pair<>("packageType", ""));
+        properties.add(new Pair<>("pnrNO", ""));
+        properties.add(new Pair<>("RAD_HOTELID", ""));
+        properties.add(new Pair<>("REMARKS", ""));
+        properties.add(new Pair<>("SOMNATH_RFF_ID", ""));
+        properties.add(new Pair<>("STATUS", ""));
+        properties.add(new Pair<>("TOTAL_AMOUNT", ""));
+        properties.add(new Pair<>("TO_PLACECODE", ""));
+        properties.add(new Pair<>("TO_PLACEID", ""));
+        properties.add(new Pair<>("TO_PLACE_CODE", ""));
+        properties.add(new Pair<>("TO_PLACE_NAME", ""));
+        properties.add(new Pair<>("TRANSACTION_ID", ""));
+        properties.add(new Pair<>("TRAN_STATUS", ""));
+
+
+
+        fetchResponseString("GetPackageTripsList", properties, null, new BaseDefaultHttpCallback() {
+            @Override
+            public void onError(Exception e) {
+                mCallback.onError(e);
+            }
+
+            @Override
+            public void onSuccess(String response) {
+                Log.d("response", response);
+
+                List<GetPackageTripsList> serviceList = new ArrayList<>();
+                JSONObject requiredResponse = null;
+
+                try {
+                    JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+                    JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
+                    requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetPackageTripsList");
+
+                    // Handle both array and single object cases
+                    if (requiredResponse.has("GetPackageTripsList")) {
+                        Object data = requiredResponse.get("GetPackageTripsList");
+
+                        if (data instanceof org.json.JSONArray) {
+                            serviceList = JacksonUtil.getMapper().readValue(
+                                    data.toString(),
+                                    new TypeReference<List<GetPackageTripsList>>() {}
+                            );
+                        } else if (data instanceof org.json.JSONObject) {
+                            GetPackageTripsList item = JacksonUtil.getMapper().readValue(
+                                    data.toString(),
+                                    GetPackageTripsList.class
+                            );
+                            serviceList.add(item);
+                        }
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                mCallback.onSuccess(serviceList);
+            }
+        });
+
+    }
+
+
+
+    //confirmHotelDetails
+    public static void confirmHotelDetails(Booking onwardBooking, final TicketCancelNetworkUtil.GetRetrivetxnPassCallback mCallback) {
+        PackageBookingModel packageDetails = onwardBooking.getSearchParams().getPackageDetails();
+
+        GetAllHotelInfoByPackageID hotelInfo = packageDetails.getHotelInfo();
+        GetPackageTripsList tripSelected = packageDetails.getTripSelected();
+        GetTotalPackageFareDetails fareDetails = packageDetails.getFareDetails();
+
+
+
+        String getHOTEL_ID= hotelInfo.getHotelId()+"";
+        String getPACKAGE_ID=tripSelected.getPackageId()+"";
+        String getPNRID=onwardBooking.getSaveBookingDetailsTemporary().getPnrMasterID();
+        String getID_PROOF_TYPE="Aadhar Card";
+        String getID_PROOF_NO="123456";
+        String getPASSENGER_ADDRESS="123456";
+        String getPASSENGER_PIN_CODE="123456";
+        String getNO_OF_PASSENGERS=onwardBooking.getSearchParams().getNumOfPassengers()+"";
+        String getOBNUMBER=onwardBooking.getSaveBookingDetailsTemporary().getRtcRefNo();
+        String getBOOKED_ROOMS=hotelInfo.getRoomsAllocated();
+        String getCHECK_IN_DATE=hotelInfo.getCheckInDate();
+        String getCHECK_OUT_DATE=hotelInfo.getCheckOutDate();
+        String getCHECK_IN_TIME=hotelInfo.getCheckInTime();
+        String getCHECK_OUT_TIME=hotelInfo.getCheckOutTime();
+        String getNO_OFDAYS="1";
+        String getTRAN_STATUS="Success";
+        String getEXTRA_BED_COUNT="1";
+        String getEXTRA_BED_CHARGES=fareDetails.getExtraBedCharge()+"";
+        String getFOOD_COUNT="0";
+        String getFOOD_CHARGES="0.00";
+        String getHOTEL_ROOM_CHARGES=fareDetails.getRoomCharges()+"";
+        String getGST_CHARGES=fareDetails.getGstCharges()+"";
+        String getLIGHT_SOUND_CHARGES=fareDetails.getLightAndSoundCharges()+"";
+        String getI_CREATEDBY=AppConstants.CREDENTIALS.USER_ID;
+        String getSTATUS="0";
+        String getREMARKS="1";
+//
+        String MOBILENO=onwardBooking.getPassengerInfo().getPhone();
+        String NAME=onwardBooking.getPassengers().get(0).getPassengerName();
+        String Email=onwardBooking.getPassengerInfo().getEmail();
+
+
+        String PnrNO=onwardBooking.getSaveBookingDetailsTemporary().getPnrNumber();
+        String bookingdate=onwardBooking.getJourneyDate();
+        String checkoutdate=hotelInfo.getCheckOutDate();
+        String checkindate=hotelInfo.getCheckInDate();
+        String ipaddress="10.101.10";
+        String noofday="1";
+        String packageType="2";
+        String childCount="0";
+        String noofroom=hotelInfo.getRoomsAllocated();
+
+        long maleCount = 0;
+        long femaleCount = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            maleCount = onwardBooking.getPassengers().stream()
+                    .filter(p -> "Male".equalsIgnoreCase(p.getGender()))
+                    .count();
+            femaleCount = onwardBooking.getPassengers().stream()
+                    .filter(p -> "Female".equalsIgnoreCase(p.getGender()))
+                    .count();
+        }
+
+
+
+        List<Pair<String, String>> properties = new ArrayList<>();
+
+        properties.add(new Pair<>("HOTEL_ID", getHOTEL_ID));
+        properties.add(new Pair<>("PACKAGE_ID", getPACKAGE_ID));
+        properties.add(new Pair<>("PNRID", getPNRID));
+        properties.add(new Pair<>("ID_PROOF_TYPE", getID_PROOF_TYPE));
+        properties.add(new Pair<>("ID_PROOF_NO", getID_PROOF_NO));
+        properties.add(new Pair<>("PASSENGER_ADDRESS", getPASSENGER_ADDRESS));
+        properties.add(new Pair<>("PASSENGER_PIN_CODE", getPASSENGER_PIN_CODE));
+        properties.add(new Pair<>("NO_OF_PASSENGERS", getNO_OF_PASSENGERS));
+        properties.add(new Pair<>("OBNUMBER", getOBNUMBER));
+        properties.add(new Pair<>("BOOKED_ROOMS", getBOOKED_ROOMS));
+        properties.add(new Pair<>("CHECK_IN_DATE", getCHECK_IN_DATE));
+        properties.add(new Pair<>("CHECK_OUT_DATE", getCHECK_OUT_DATE));
+        properties.add(new Pair<>("CHECK_IN_TIME", getCHECK_IN_TIME));
+        properties.add(new Pair<>("CHECK_OUT_TIME", getCHECK_OUT_TIME));
+        properties.add(new Pair<>("NO_OFDAYS", getNO_OFDAYS));
+        properties.add(new Pair<>("TRAN_STATUS", getTRAN_STATUS));
+        properties.add(new Pair<>("EXTRA_BED_COUNT", "0"));
+        properties.add(new Pair<>("EXTRA_BED_CHARGES", getEXTRA_BED_CHARGES));
+        properties.add(new Pair<>("FOOD_COUNT", getFOOD_COUNT));
+        properties.add(new Pair<>("FOOD_CHARGES", getFOOD_CHARGES));
+        properties.add(new Pair<>("HOTEL_ROOM_CHARGES", getHOTEL_ROOM_CHARGES));
+        properties.add(new Pair<>("GST_CHARGES", getGST_CHARGES));
+        properties.add(new Pair<>("LIGHT_SOUND_CHARGES", getLIGHT_SOUND_CHARGES));
+        properties.add(new Pair<>("i_CREATEDBY", getI_CREATEDBY));
+        properties.add(new Pair<>("STATUS", getSTATUS));
+        properties.add(new Pair<>("REMARKS", getREMARKS));
+        properties.add(new Pair<>("MOBILENO", MOBILENO));
+        properties.add(new Pair<>("NAME", NAME));
+        properties.add(new Pair<>("email", Email));
+        properties.add(new Pair<>("male", String.valueOf(maleCount)));
+        properties.add(new Pair<>("female", String.valueOf(femaleCount)));
+        properties.add(new Pair<>("pnrNO", PnrNO));
+        properties.add(new Pair<>("bookingdate", bookingdate));
+        properties.add(new Pair<>("checkoutdate", checkoutdate));
+        properties.add(new Pair<>("checkindate", checkindate));
+        properties.add(new Pair<>("ipaddress", ipaddress));
+        properties.add(new Pair<>("noofday", noofday));
+        properties.add(new Pair<>("packageType", packageType));
+        properties.add(new Pair<>("childCount", childCount));
+        properties.add(new Pair<>("noofroom", noofroom));
+
+
+
+
+        fetchResponseString("SaveHotelTransactionDetails", properties, null, new BaseDefaultHttpCallback() {
+            @Override
+            public void onError(Exception e) {
+                mCallback.onError(e);
+            }
+
+            @Override
+            public void onSuccess(String response) {
+                Log.d("response", response);
+
+
+
+                try {
+                    JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+                    JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
+                    JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "SaveHotelTransactionDetails");
+
+                    if (requiredResponse != null && requiredResponse.has("SaveHotelTransactionDetails")) {
+                        String resultMessage = requiredResponse.getString("SaveHotelTransactionDetails");
+                        Log.d("ParsedMessage", resultMessage);
+
+                        // You can pass this message to callback or show in Toast
+                        mCallback.onSuccess(resultMessage);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mCallback.onError(e);
+                }
+
+
+
+
+            }
+        });
+
+    }
+
+
+
+
+    //getHotelList
+    public static void getHotelDetailsList(String packageId,String hotelType,String date ,final GetHotelListCallBack mCallback) {
+
+        String arg0 = "<arg0>" + packageId +"</arg0> ";
+         arg0+= "<arg1>" + hotelType +"</arg1> ";
+         arg0+= "<arg2>" + date +"</arg2> ";
+
+        fetchGPSResponseString("GetAllHotelInfoByPackageID", arg0,"", new BaseDefaultHttpCallback() {
+            @Override
+            public void onError(Exception e) {
+                mCallback.onError(e);
+            }
+
+            @Override
+            public void onSuccess(String response) {
+                Log.d("response", response);
+
+                List<GetAllHotelInfoByPackageID> serviceList = new ArrayList<>();
+                JSONObject requiredResponse = null;
+
+                try {
+                    JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+                    JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
+                    requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetAllHotelInfoByPackageID");
+
+                    // Handle both array and single object cases
+                    if (requiredResponse.has("GetAllHotelInfoByPackageID")) {
+                        Object data = requiredResponse.get("GetAllHotelInfoByPackageID");
+
+                        if (data instanceof org.json.JSONArray) {
+                            serviceList = JacksonUtil.getMapper().readValue(
+                                    data.toString(),
+                                    new TypeReference<List<GetAllHotelInfoByPackageID>>() {}
+                            );
+                        } else if (data instanceof org.json.JSONObject) {
+                            GetAllHotelInfoByPackageID item = JacksonUtil.getMapper().readValue(
+                                    data.toString(),
+                                    GetAllHotelInfoByPackageID.class
+                            );
+                            serviceList.add(item);
+                        }
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                mCallback.onSuccess(serviceList);
+            }
+        });
+
+    }
+
+
+
+    //getHotelList
+    public static void updatePackagetoCNF(String pnrId,String pnrNo ,final TicketCancelNetworkUtil.GetRetrivetxnPassCallback mCallback) {
+
+        String arg0 = "<arg0>" + pnrNo +"</arg0> ";
+        arg0+= "<arg1>" + pnrId +"</arg1> ";
+
+        fetchGPSResponseString("UpdatePackageDetailsCNF", arg0,"", new BaseDefaultHttpCallback() {
+            @Override
+            public void onError(Exception e) {
+                mCallback.onError(e);
+            }
+
+            @Override
+            public void onSuccess(String response) {
+                Log.d("response", response);
+
+
+
+                try {
+                    JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+                    JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
+                    JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "UpdatePackageDetailsCNF");
+
+                    if (requiredResponse != null && requiredResponse.has("UpdatePackageDetailsCNF")) {
+                        String resultMessage = requiredResponse.getString("UpdatePackageDetailsCNF");
+                        Log.d("ParsedMessage", resultMessage);
+
+                        // You can pass this message to callback or show in Toast
+                        mCallback.onSuccess(resultMessage);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mCallback.onError(e);
+                }
+
+
+
+
+            }
+        });
+
+    }
+
+
+
+
+    //getHotelFreDeatils
+    public static void getHotelFareDetail( String hotelId,String noOfRooms,String noOfBedCount,String noOfPassengers , final GetTotalPackageFareDetailsCallBack mCallback) {
+
+        String arg0 = "<arg0>" + hotelId +"</arg0> ";
+        arg0+= "<arg1>" + noOfRooms +"</arg1> ";
+        arg0+= "<arg2>" + noOfBedCount +"</arg2> ";
+        arg0+= "<arg3>" + noOfPassengers +"</arg3> ";
+
+        fetchGPSResponseString("GetTotalPackageFareDetails", arg0,"", new BaseDefaultHttpCallback() {
+            @Override
+            public void onError(Exception e) {
+                mCallback.onError(e);
+            }
+
+            @Override
+            public void onSuccess(String response) {
+                Log.d("response", response);
+
+                try {
+                    JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+                    JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
+                    JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetTotalPackageFareDetails");
+
+                    if (requiredResponse.has("GetTotalPackageFareDetails")) {
+                        Object data = requiredResponse.get("GetTotalPackageFareDetails");
+
+                        if (data instanceof JSONObject) {
+                            GetTotalPackageFareDetails item = JacksonUtil.getMapper().readValue(
+                                    data.toString(),
+                                    GetTotalPackageFareDetails.class
+                            );
+                            mCallback.onSuccess(item);
+                            return;
+                        }
+                    }
+
+                    // fallback if no data
+                    mCallback.onError(new Exception("No valid hotel fare details found"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mCallback.onError(e);
+                }
+            }
+
+        });
+
     }
 
     //Local_Trip_time_table_service_details
@@ -941,8 +1445,8 @@ public class SoapClientUtil {
             protected String doInBackground(String... distance) {
                 String strresponse = "";
                 //HttpPost httppost = new HttpPost("http://111.93.131.113:7070/GSRTCWS2/reservationservice");
-                //HttpPost httppost = new HttpPost("http://192.168.222.131:8080/GSRTCWSAnd/reservationservice");
-                HttpPost httppost = new HttpPost(AppConstants.server_url + "GSRTCWSAnd/reservationservice");
+                //HttpPost httppost = new HttpPost("http://192.168.222.131:8080//reservationservice");
+                HttpPost httppost = new HttpPost(AppConstants.server_url + "/reservationservice");
                 try {
                     DefaultHttpClient client = new DefaultHttpClient();
                     BasicHttpResponse send_call_response;
@@ -1002,9 +1506,9 @@ public class SoapClientUtil {
             @Override
             protected String doInBackground(String... distance) {
                 String strresponse = "";
-                //HttpPost httppost = new HttpPost("http://111.93.131.113:7070/GSRTCWSAnd/reservationservice");
-                //HttpPost httppost = new HttpPost("http://192.168.222.114:7070/GSRTCWSAnd/reservationservice");
-                HttpPost httppost = new HttpPost(AppConstants.server_url + "GSRTCWSAnd/reservationservice");
+                //HttpPost httppost = new HttpPost("http://111.93.131.113:7070//reservationservice");
+                //HttpPost httppost = new HttpPost("http://192.168.222.114:7070//reservationservice");
+                HttpPost httppost = new HttpPost(AppConstants.server_url + "/reservationservice");
                 try {
                     DefaultHttpClient client = new DefaultHttpClient();
                     BasicHttpResponse send_call_response;
@@ -1124,6 +1628,25 @@ public class SoapClientUtil {
 
     public interface GetAvailableServiceDetailsCallback {
         void onSuccess(List<BusService> serviceList);
+
+        void onError(Exception e);
+    }
+
+
+    public interface GetPackageTripCallBack {
+        void onSuccess(List<GetPackageTripsList> serviceList);
+
+        void onError(Exception e);
+    }
+
+    public interface GetHotelListCallBack {
+        void onSuccess(List<GetAllHotelInfoByPackageID> serviceList);
+
+        void onError(Exception e);
+    }
+
+    public interface GetTotalPackageFareDetailsCallBack {
+        void onSuccess(GetTotalPackageFareDetails serviceList);
 
         void onError(Exception e);
     }

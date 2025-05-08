@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:backgroundTint="#FFFFFF"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EEF2FF"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Package Name -->
+        <TextView
+            android:id="@+id/packageName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Somnath Package"
+            android:textColor="#1E3A8A"
+            android:textSize="18sp"
+            android:textStyle="bold" /> <!-- naviy -->
+
+        <!-- From and To Places -->
+        <TextView
+            android:id="@+id/fromTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="12dp"
+            android:text="From: Ahmedabad → To: Somnath"
+            android:textColor="#6B7280"
+            android:textSize="14sp" />
+
+        <!-- Date Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="Select Travel Date"
+            android:textColor="#1F2937"
+            android:textSize="14sp" />
+
+        <!-- Date Picker & Passenger Dropdown -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/datePickerEditText"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:backgroundTint="#000000"
+                android:drawableEnd="@drawable/date_img"
+                android:focusable="false"
+                android:hint="dd/MM/yyyy"
+                android:inputType="none"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:textColor="#1F2937"
+                android:textSize="14sp" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="Passengers"
+                    android:textColor="#1F2937"
+                    android:textSize="14sp" />
+
+                <Spinner
+                    android:id="@+id/passengerCountSpinner"
+                    android:layout_width="100dp"
+                    android:layout_height="48dp"
+                    android:dropDownVerticalOffset="4dp"
+                    android:entries="@array/num_of_pss"
+                    android:padding="10dp"
+                    android:popupBackground="#FFFFFF" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/packageDetailsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/singleSharingPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹4000 (Single Sharing)"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/doubleSharingPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹7050 (Double Occupancy on Twin Sharing Basis)"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="16sp"
+                android:layout_marginTop="4dp" />
+
+            <RadioGroup
+                android:id="@+id/roomTypeGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <RadioButton
+                    android:id="@+id/deluxeOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Deluxe"
+                    android:checked="true"/>
+
+                <RadioButton
+                    android:id="@+id/standardOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Standard"
+                    android:layout_marginStart="12dp"/>
+
+                <RadioButton
+                    android:id="@+id/suiteOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Suite"
+                    android:layout_marginStart="12dp"/>
+            </RadioGroup>
+        </LinearLayout>
+
+
+        <!-- Book Button -->
+        <Button
+            android:id="@+id/bookButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#2563EB"
+            android:drawableEnd="@drawable/right"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif-medium"
+            android:padding="12dp"
+            android:text="Book Now"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

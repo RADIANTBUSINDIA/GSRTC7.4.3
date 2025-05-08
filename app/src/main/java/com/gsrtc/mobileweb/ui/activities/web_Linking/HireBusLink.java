@@ -77,14 +77,6 @@ public class HireBusLink extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        //ActivityUtil.openNewActivityAsOnlyActivity(Weblink.this, HomeActivity.class, null);
-//        Intent i = new Intent(HireBusLink.this, HomeActivity.class);
-//        Bundle data = new Bundle();
-//        data.putString("textlang", textlang);
-//        i.putExtras(data);
-//        startActivity(i);
-//    }
+
 }
 

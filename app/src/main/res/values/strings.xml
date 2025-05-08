@@ -133,4 +133,28 @@
         <item>Failed</item>
     </string-array>
 
+
+    <string-array name="num_of_pss">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+
+    </string-array>
+
+    <string-array name="num_of_child">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+
+    </string-array>
+
+
+    <string-array name="documents">
+        <item>Aadhar Card</item>
+        <item>Voter ID</item>
+        <item>Passport</item>
+        <item>Driving Licence</item>
+
+    </string-array>
+
 </resources>

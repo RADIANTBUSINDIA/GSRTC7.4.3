@@ -31,6 +31,7 @@ import com.gsrtc.mobileweb.ui.activities.advance_booking.AdvanceBookingSearchAct
 import com.gsrtc.mobileweb.ui.activities.base.BaseNavigationDrawerActivity;
 import com.gsrtc.mobileweb.ui.activities.booking_history.BookingHistoryActivity;
 import com.gsrtc.mobileweb.ui.activities.current_booking_native.CurrentBookingHomeActivity;
+import com.gsrtc.mobileweb.ui.activities.packageBooking.PackageBookingHome;
 import com.gsrtc.mobileweb.ui.activities.ticket_cancellation.TicketCancellationActivity;
 import com.gsrtc.mobileweb.ui.activities.time_table.Timetable_Search;
 import com.gsrtc.mobileweb.ui.activities.track_mybus_native.Neraby_location;
@@ -222,7 +223,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         vHolder.mLinearLayoutTimeTable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(HomeActivity.this, Timetable_Search.class);
+                Intent i = new Intent(HomeActivity.this, PackageBookingHome.class);
                 Bundle data = new Bundle();
                 data.putString("textlang", textlang);
                 i.putExtras(data);
@@ -398,7 +399,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
                 refund_status.setText(R.string.gRefund_status);
                 hire_bus.setText(R.string.gHire_A_Bus);
                // show_more.setText(R.string.gShow_More);
-                time_table.setText(R.string.gTime_Table);
+                time_table.setText(R.string.package_booking);
                 iteneries.setText(R.string.gIteneries);
                 track_ticket.setText(R.string.gtrack_ticket);
             }

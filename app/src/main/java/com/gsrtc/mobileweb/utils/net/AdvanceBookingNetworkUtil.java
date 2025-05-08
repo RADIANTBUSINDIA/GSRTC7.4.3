@@ -706,6 +706,317 @@ public class AdvanceBookingNetworkUtil extends SoapClientUtil {
         });
     }
 
+
+
+
+    public static void GetOnwardPackageReferenceNumber(Booking booking, final boolean drop, final String isCard,String hotelId, final GetOnwardReferenceNumberCallback mCallback) {
+
+        BusService busService = booking.getBusService();
+        Place place = (drop) ? booking.getEndPlace() : booking.getStartPlace();
+        String consId;
+        if (booking.getSearchParams().getDivyangBooking().equalsIgnoreCase("Divyang")) {
+            consId = "2";
+        } else if (booking.getSearchParams().getDivyangBooking().equalsIgnoreCase("Divyang with Helper")) {
+
+            if (booking.getSearchParams().getDivyangWithHelperIds().equalsIgnoreCase("219")) {
+                consId = "49";
+            } else if (booking.getSearchParams().getDivyangWithHelperIds().equalsIgnoreCase("158")) {
+                consId = "3";
+            } else {
+                consId = "1";
+            }
+
+        } else {
+            consId = "1";
+        }
+
+        String arg0 = "<arg0>\n" +
+
+                "                <classID>" + busService.getClassID() + "</classID>\n" +
+//                "                <concessionTypeId>1</concessionTypeId>\n" +
+                "                <concessionTypeId>" + consId + "</concessionTypeId>\n" +
+                "                <counterCode>" + AppConstants.CREDENTIALS.COUNTER_CODE + "</counterCode>\n" +
+                "                <counterId>" + AppConstants.CREDENTIALS.COUNTER_ID + "</counterId>\n" +
+                "                <createdBy>" + AppConstants.CREDENTIALS.USER_ID + "</createdBy>\n" +
+                "                <creditCardNumber>0</creditCardNumber>\n" +
+                "                <emailId>" + booking.getPassengerInfo().getEmail() + "</emailId>\n" +
+                "                <endPlaceID>" + booking.getEndPlace().getPlaceCode() + "</endPlaceID>\n" +
+                "                <franchiseeUser>false</franchiseeUser>\n" +
+                "                <gatewayLookupID>" + isCard + "</gatewayLookupID>\n";
+
+
+        arg0 +=
+
+                "                <idProofLookupId>166</idProofLookupId>\n" +
+                "                <HOTEL_ID>"+hotelId+"</HOTEL_ID>\n" +
+                        "                <idProofRefernce>pan card</idProofRefernce>\n" +
+                        "                <journeyDate>" + booking.getJourneyDate() + "</journeyDate>\n";
+
+        String passengerGender = "";
+        String passengerAdult = "";
+        String passengerName = "";
+        String passengerAge = "";
+
+
+        if (booking.getSelectedSeats().size() == 1) {
+            passengerAge += booking.getPassengers().get(0).getAgeA();
+            passengerName += booking.getPassengers().get(0).getPassengerNameA();
+            passengerGender += booking.getPassengers().get(0).getGenderA();
+            if (Integer.parseInt(booking.getPassengers().get(0).getAgeA()) < 12)
+                passengerAdult += "C";
+            else
+                passengerAdult += "A";
+        }
+
+
+        if (booking.getSelectedSeats().size() == 2) {
+            passengerAge += booking.getPassengers().get(0).getAgeA() + "," + booking.getPassengers().get(1).getAgeB();
+            passengerName += booking.getPassengers().get(0).getPassengerNameA() + "," + booking.getPassengers().get(1).getPassengerNameB();
+            passengerGender += booking.getPassengers().get(0).getGenderA() + "," + booking.getPassengers().get(1).getGenderB();
+            if (Integer.parseInt(booking.getPassengers().get(0).getAgeA()) < 12)
+                passengerAdult += "C" + ",";
+            else
+                passengerAdult += "A" + ",";
+
+            if (Integer.parseInt(booking.getPassengers().get(1).getAgeB()) < 12)
+                passengerAdult += "C";
+            else
+                passengerAdult += "A";
+        }
+
+
+        if (booking.getSelectedSeats().size() == 3) {
+            passengerAge += booking.getPassengers().get(0).getAgeA() + "," + booking.getPassengers().get(1).getAgeB() + "," + booking.getPassengers().get(2).getAgeC();
+            passengerName += booking.getPassengers().get(0).getPassengerNameA() + "," + booking.getPassengers().get(1).getPassengerNameB() + "," + booking.getPassengers().get(2).getPassengerNameC();
+            passengerGender += booking.getPassengers().get(0).getGenderA() + "," + booking.getPassengers().get(1).getGenderB() + "," + booking.getPassengers().get(2).getGenderC();
+            if (Integer.parseInt(booking.getPassengers().get(0).getAgeA()) < 12)
+                passengerAdult += "C" + ",";
+            else
+                passengerAdult += "A" + ",";
+
+            if (Integer.parseInt(booking.getPassengers().get(1).getAgeB()) < 12)
+                passengerAdult += "C" + ",";
+            else
+                passengerAdult += "A" + ",";
+
+            if (Integer.parseInt(booking.getPassengers().get(2).getAgeC()) < 12)
+                passengerAdult += "C";
+            else
+                passengerAdult += "A";
+        }
+
+
+        if (booking.getSelectedSeats().size() == 4) {
+            passengerAge += booking.getPassengers().get(0).getAgeA() + "," + booking.getPassengers().get(1).getAgeB() + "," + booking.getPassengers().get(2).getAgeC() + ","
+                    + booking.getPassengers().get(3).getAgeD();
+            passengerName += booking.getPassengers().get(0).getPassengerNameA() + "," + booking.getPassengers().get(1).getPassengerNameB() + ","
+                    + booking.getPassengers().get(2).getPassengerNameC() + "," + booking.getPassengers().get(3).getPassengerNameD();
+            passengerGender += booking.getPassengers().get(0).getGenderA() + "," + booking.getPassengers().get(1).getGenderB() + ","
+                    + booking.getPassengers().get(2).getGenderC() + "," + booking.getPassengers().get(3).getGenderD();
+            if (Integer.parseInt(booking.getPassengers().get(0).getAgeA()) < 12)
+                passengerAdult += "C" + ",";
+            else
+                passengerAdult += "A" + ",";
+
+            if (Integer.parseInt(booking.getPassengers().get(1).getAgeB()) < 12)
+                passengerAdult += "C" + ",";
+            else
+                passengerAdult += "A" + ",";
+
+            if (Integer.parseInt(booking.getPassengers().get(2).getAgeC()) < 12)
+                passengerAdult += "C" + ",";
+            else
+                passengerAdult += "A" + ",";
+
+            if (Integer.parseInt(booking.getPassengers().get(3).getAgeD()) < 12)
+                passengerAdult += "C";
+            else
+                passengerAdult += "A";
+        }
+
+
+        if (booking.getSelectedSeats().size() == 5) {
+            passengerAge += booking.getPassengers().get(0).getAgeA() + "," + booking.getPassengers().get(1).getAgeB() + "," + booking.getPassengers().get(2).getAgeC() + ","
+                    + booking.getPassengers().get(3).getAgeD() + "," + booking.getPassengers().get(4).getAgeE();
+            passengerName += booking.getPassengers().get(0).getPassengerNameA() + "," + booking.getPassengers().get(1).getPassengerNameB() + ","
+                    + booking.getPassengers().get(2).getPassengerNameC() + "," + booking.getPassengers().get(3).getPassengerNameD() + "," + booking.getPassengers().get(4).getPassengerNameE();
+            passengerGender += booking.getPassengers().get(0).getGenderA() + "," + booking.getPassengers().get(1).getGenderB() + ","
+                    + booking.getPassengers().get(2).getGenderC() + "," + booking.getPassengers().get(3).getGenderD() + "," + booking.getPassengers().get(4).getGenderE();
+            if (Integer.parseInt(booking.getPassengers().get(0).getAgeA()) < 12)
+                passengerAdult += "C" + ",";
+            else
+                passengerAdult += "A" + ",";
+
+            if (Integer.parseInt(booking.getPassengers().get(1).getAgeB()) < 12)
+                passengerAdult += "C" + ",";
+            else
+                passengerAdult += "A" + ",";
+
+            if (Integer.parseInt(booking.getPassengers().get(2).getAgeC()) < 12)
+                passengerAdult += "C" + ",";
+            else
+                passengerAdult += "A" + ",";
+
+            if (Integer.parseInt(booking.getPassengers().get(3).getAgeD()) < 12)
+                passengerAdult += "C" + ",";
+            else
+                passengerAdult += "A" + ",";
+
+            if (Integer.parseInt(booking.getPassengers().get(4).getAgeE()) < 12)
+                passengerAdult += "C";
+            else
+                passengerAdult += "A";
+        }
+
+
+        if (booking.getSelectedSeats().size() == 6) {
+            passengerAge += booking.getPassengers().get(0).getAgeA() + "," + booking.getPassengers().get(1).getAgeB() + "," + booking.getPassengers().get(2).getAgeC() + ","
+                    + booking.getPassengers().get(3).getAgeD() + "," + booking.getPassengers().get(4).getAgeE() + "," + booking.getPassengers().get(5).getAgeF();
+            passengerName += booking.getPassengers().get(0).getPassengerNameA() + "," + booking.getPassengers().get(1).getPassengerNameB() + ","
+                    + booking.getPassengers().get(2).getPassengerNameC() + "," + booking.getPassengers().get(3).getPassengerNameD() + "," + booking.getPassengers().get(4).getPassengerNameE() + "," + booking.getPassengers().get(5).getPassengerNameF();
+            passengerGender += booking.getPassengers().get(0).getGenderA() + "," + booking.getPassengers().get(1).getGenderB() + ","
+                    + booking.getPassengers().get(2).getGenderC() + "," + booking.getPassengers().get(3).getGenderD() + "," + booking.getPassengers().get(4).getGenderE() + "," + booking.getPassengers().get(5).getGenderF();
+            if (Integer.parseInt(booking.getPassengers().get(0).getAgeA()) < 12)
+                passengerAdult += "C" + ",";
+            else
+                passengerAdult += "A" + ",";
+
+            if (Integer.parseInt(booking.getPassengers().get(1).getAgeB()) < 12)
+                passengerAdult += "C" + ",";
+            else
+                passengerAdult += "A" + ",";
+
+            if (Integer.parseInt(booking.getPassengers().get(2).getAgeC()) < 12)
+                passengerAdult += "C" + ",";
+            else
+                passengerAdult += "A" + ",";
+
+            if (Integer.parseInt(booking.getPassengers().get(3).getAgeD()) < 12)
+                passengerAdult += "C" + ",";
+            else
+                passengerAdult += "A" + ",";
+
+            if (Integer.parseInt(booking.getPassengers().get(4).getAgeE()) < 12)
+                passengerAdult += "C" + ",";
+            else
+                passengerAdult += "A" + ",";
+
+            if (Integer.parseInt(booking.getPassengers().get(5).getAgeF()) < 12)
+                passengerAdult += "C";
+            else
+                passengerAdult += "A";
+
+        }
+
+
+        arg0 +=
+                "                <childOrAdultsAnd>" + passengerAdult + "</childOrAdultsAnd>\n" +
+                        "                <gendersAnd>" + passengerGender + "</gendersAnd>\n" +
+                        "                <passengerAgeAnd>" + passengerAge + "</passengerAgeAnd>\n" +
+                        "                <passengerName>" + passengerName + "</passengerName>\n" +
+                        "                <passengerNameAnd>" + passengerName + "</passengerNameAnd>\n";
+
+        arg0 +=
+                "                <phoneNumber>" + booking.getPassengerInfo().getPhone() + "</phoneNumber>\n" +
+                        "                <pickupPointDropOffId>" + booking.getDropPointDetails().getPickupPointID().split(",")[0] + "</pickupPointDropOffId>\n" +
+                        "                <pickupPointDropOffTime>" + booking.getDropPointDetails().getPickupTime() + "</pickupPointDropOffTime>\n" +
+                        "                <pickupPointPlaceId>" + booking.getPickupPointDetails().getPickupPointID().split(",")[0] + "</pickupPointPlaceId>\n" +
+                        "                <pickupPointTime>" + booking.getPickupPointDetails().getPickupTime() + "</pickupPointTime>\n" +
+                        "                <pinCode>560202</pinCode>\n" +
+                        "                <refundPrcntOrLumpsum>0</refundPrcntOrLumpsum>\n" +
+                        "                <refundPrcntOrLumpsumValue>0</refundPrcntOrLumpsumValue>\n" +
+                        "                <returnServiceID>0</returnServiceID>\n";
+
+        String strSeatNo = "";
+        String strSeatId = "";
+
+        for (int i = 0; i < booking.getSelectedSeats().size(); i++) {
+            if (i != 0)
+                strSeatNo += ",";
+            strSeatNo += +booking.getSelectedSeats().get(i).getSeatNo();
+            if (booking.getAddBlockSeatsResponse() != null && booking.getAddBlockSeatsResponse().getSeatBlockIds() != null && booking.getAddBlockSeatsResponse().getSeatBlockIds().length > i) {
+                if (i != 0)
+                    strSeatId += ",";
+                strSeatId += booking.getAddBlockSeatsResponse().getSeatBlockIds()[i];
+            }
+        }
+
+
+        arg0 += "        <seatNumber>" + strSeatNo + "</seatNumber>\n";
+        arg0 += "        <seatNoAndroid>" + strSeatNo + "</seatNoAndroid>\n";
+
+        arg0 += "        <seatIDsAnd>" + strSeatId + "</seatIDsAnd>\n";
+        arg0 += "        <seatIDs>" + strSeatId + "</seatIDs>\n";
+        arg0 += "        <seatBlockIds>" + strSeatId + "</seatBlockIds>\n";
+        arg0 += "        <seatBlockIdsAnd>" + strSeatId + "</seatBlockIdsAnd>\n";
+        arg0 += "        <seatID>" + strSeatId + "</seatID>\n";
+
+
+        arg0 += "" +
+                "                <serviceID>" + busService.getServiceID().split(",")[0].trim() + "</serviceID>\n" +
+                "                <startPlaceCode>" + booking.getStartPlace().getPlaceCode() + "</startPlaceCode>\n" +
+                "                <startPlaceID>" + booking.getStartPlace().getPlaceCode() + "</startPlaceID>\n";
+
+        try {
+            arg0 += "                <totalFare>" + Double.parseDouble(booking.getTotalFareDetailsOfTicketResponse().getTotalFare()) + "</totalFare>\n";
+        } catch (Exception E) {
+
+        }
+
+
+        int totalNumAdlts = 0;
+        int totalNumchld = 0;
+        int totalSeats = 0;
+
+        totalNumAdlts = (booking.getSearchParams().getAdultCount() + booking.getSearchParams().getAdultFemaleCount());
+        totalNumchld = booking.getSearchParams().getChildrenCount();
+        totalSeats = booking.getSelectedSeats().size();
+
+
+        arg0 +=
+                "               <totalNumberOfAdults>" + totalNumAdlts + "</totalNumberOfAdults>\n" +
+                        "                <totalNumberOfChild>" + totalNumchld + "</totalNumberOfChild>\n" +
+                        "                <totalNumberOfSeats>" + totalSeats + "</totalNumberOfSeats>\n" +
+                        "                <totalSeats>" + totalSeats + "</totalSeats>\n" +
+                        "                <userName>" + AppConstants.CREDENTIALS.USER_NAME + "</userName>\n" +
+                        "                <WSRefNo>0</WSRefNo>\n" +
+                        "            </arg0>\n";
+
+        String arg1 = "";
+
+        Log.d("arg0", arg0);
+
+        fetchResponseString("SavePackageBookingDetailsTemporary", arg0, arg1, new BaseDefaultHttpCallback() {
+            @Override
+            public void onError(Exception e) {
+                mCallback.onError(e);
+            }
+
+            @Override
+            public void onSuccess(String response) {
+                System.out.println(response);
+                JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+                JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
+                JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "SavePackageBookingDetailsTemporary");
+                SaveBookingDetailsTemporary responseModel = null;
+                try {
+                    Object jsonOb = requiredResponse.get("SavePackageBookingDetailsTemporary");
+                    responseModel = JacksonUtil.getMapper().readValue(jsonOb.toString(), new TypeReference<SaveBookingDetailsTemporary>() {
+                    });
+
+                    Log.d("responseModel", responseModel.getRtcRefNo());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                mCallback.onSuccess(responseModel);
+            }
+        });
+    }
+
+
     public interface GetOnwardReferenceNumberCallback {
         void onSuccess(SaveBookingDetailsTemporary response);
 
@@ -1650,6 +1961,40 @@ public class AdvanceBookingNetworkUtil extends SoapClientUtil {
         });
     }
 
+    public static void getOTPForPackageBooking(String mobile, final GetOTPInfo mCallback) {
+
+        String arg0 = " <arg0>" + mobile+"</arg0>";
+        Log.d("arg0", arg0);
+        fetchResponseString("GetPackageOTP", arg0, "", new BaseDefaultHttpCallback() {
+            @Override
+            public void onError(Exception e) {
+                mCallback.onError(e);
+            }
+
+            @Override
+            public void onSuccess(String response) {
+                System.out.println(response);
+
+                String responseModel=null;
+                try {
+                    JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+                    JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
+                    JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetPackageOTP");
+                    responseModel = String.valueOf(requiredResponse.get("GetPackageOTP"));
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+                mCallback.onSuccess(responseModel);
+            }
+        });
+    }
+
+
     public interface InsertDivyangHelperInformationsCallback {
         void onSuccess(GetTotalFareDetailsOfTicketResponse response);
 
@@ -2531,6 +2876,12 @@ public class AdvanceBookingNetworkUtil extends SoapClientUtil {
 
     public interface GetReferenceNumberCallback {
         void onSuccess(GetReferenceNumberResponse response);
+
+        void onError(Exception e);
+    }
+
+    public interface GetOTPInfo {
+        void onSuccess(String response);
 
         void onError(Exception e);
     }

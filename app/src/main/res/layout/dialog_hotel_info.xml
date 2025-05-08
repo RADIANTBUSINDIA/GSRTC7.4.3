@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="@drawable/background_img"
+    tools:context="com.gsrtc.mobileweb.ui.activities.advance_booking.PassengerInfoActivity">
+
+    <ScrollView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:elevation="4dp"
+                android:padding="16dp">
+
+                <!-- Section Header -->
+                <TextView
+                    android:text="Hotel Information"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/bg_header"
+                    android:padding="14dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:elevation="2dp"
+                    android:padding="12dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Hotel Details"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333"
+                        android:gravity="center"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/hotelName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Hotel Name: ---"
+                        android:textColor="#444" />
+
+                    <TextView
+                        android:id="@+id/hotelAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Address: ---"
+                        android:textColor="#444" />
+
+                    <TextView
+                        android:id="@+id/hotelContact"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Contact: ---"
+                        android:textColor="#444" />
+
+                    <TextView
+                        android:id="@+id/checkInTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Check-In Time: ---"
+                        android:textColor="#444" />
+
+                    <TextView
+                        android:id="@+id/checkOutTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Check-Out Time: ---"
+                        android:textColor="#444" />
+
+                    <TextView
+                        android:id="@+id/chargePerRoom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Charge Per Room: ---"
+                        android:textColor="#444" />
+
+                    <TextView
+                        android:id="@+id/extraBed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Extra Bed: Yes/No"
+                        android:textColor="#444" />
+
+                    <TextView
+                        android:id="@+id/extraBedCharge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Extra Bed Charge: ---"
+                        android:textColor="#444" />
+
+                    <TextView
+                        android:id="@+id/gst"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="GST: ---"
+                        android:visibility="gone"
+                        android:textColor="#444" />
+
+                    <TextView
+                        android:id="@+id/roomsCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Rooms Count: ---"
+                        android:textColor="#444" />
+                </LinearLayout>
+
+
+                <!-- Check-in / Check-out Header -->
+                <TextView
+                    android:text="Dates"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!-- Dates Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:id="@+id/checkInDate"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="30/04/2025"
+                        android:padding="12dp"
+                        android:background="@drawable/bg_input"
+                        android:textColor="#000000"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/checkOutDate"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="01/05/2025"
+                        android:padding="12dp"
+                        android:background="@drawable/bg_input"
+                        android:textColor="#000000"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <!-- Room & Occupancy Header -->
+                <TextView
+                    android:text="Rooms and Occupants"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!-- Rooms & People Labels -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Rooms"
+                        android:textSize="14sp"
+                        android:textColor="#555555" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Adults"
+                        android:textSize="14sp"
+                        android:textColor="#555555"
+                        android:layout_marginStart="8dp"/>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Children"
+                        android:textSize="14sp"
+                        android:textColor="#555555"
+                        android:layout_marginStart="8dp"/>
+                </LinearLayout>
+
+                <!-- Rooms & People Text -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    android:layout_marginTop="4dp">
+
+                    <TextView
+                        android:id="@+id/textRooms"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:background="@drawable/bg_input"
+                        android:text="2"
+                        android:textColor="#000000"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/textAdults"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_input"
+                        android:text="3"
+                        android:textColor="#000000"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/textChildren"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_input"
+                        android:text="0"
+                        android:textColor="#000000"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <!-- Address Header -->
+                <TextView
+                    android:text="Address"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!-- Address -->
+                <EditText
+                    android:id="@+id/addressField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Address"
+                    android:layout_marginTop="8dp"
+                    android:minLines="3"
+                    android:gravity="top"
+                    android:padding="12dp"
+                    android:background="@drawable/bg_input"
+                    android:inputType="textMultiLine" />
+
+                <!-- ID Proof Header -->
+                <TextView
+                    android:text="Identity Proof"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!-- ID Proof -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_marginTop="8dp">
+
+                    <Spinner
+                        android:id="@+id/idProofType"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:entries="@array/documents"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_spinner"/>
+
+                    <EditText
+                        android:id="@+id/idProofNumber"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:hint="ID Proof Number"
+                        android:background="@drawable/bg_input"
+                        android:padding="12dp"
+                        android:inputType="text"/>
+                </LinearLayout>
+
+                <!-- Important Info -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Important Information"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginTop="20dp"
+                    android:textColor="#333333" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textSize="14sp"
+                    android:textColor="#555555"
+                    android:text="• All bookings are subject to availability.\n• Booking is confirmed only after payment and confirmation.\n• Valid photo ID required at check-in.\n• Extra beds cost additional.\n• Provide child count (0-5 yrs)." />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
