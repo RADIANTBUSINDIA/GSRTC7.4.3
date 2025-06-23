@@ -137,6 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Standard"
+                    android:visibility="gone"
                     android:layout_marginStart="12dp"/>
 
                 <RadioButton
@@ -144,6 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Suite"
+                    android:visibility="gone"
                     android:layout_marginStart="12dp"/>
             </RadioGroup>
         </LinearLayout>

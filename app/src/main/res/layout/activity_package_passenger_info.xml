@@ -35,7 +35,7 @@
                 android:id="@+id/passinfo_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Package Booking Passenger Details"
+                android:text="Package tour booking Passenger Details"
                 android:textColor="@color/white"
                 android:fontFamily="@font/gotham"
                 android:textSize="18dp"

@@ -605,6 +605,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="6dp"
                             android:orientation="horizontal"
+                            android:visibility="gone"
                             android:weightSum="1">
 
                             <TextView
@@ -627,6 +628,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="6dp"
                             android:orientation="horizontal"
+                            android:visibility="gone"
                             android:weightSum="1">
 
                             <TextView
@@ -671,6 +673,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="6dp"
                             android:orientation="horizontal"
+                            android:visibility="gone"
                             android:weightSum="1">
 
                             <TextView
@@ -693,6 +696,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="6dp"
                             android:orientation="horizontal"
+                            android:visibility="gone"
                             android:weightSum="1">
 
                             <TextView
@@ -715,6 +719,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="6dp"
                             android:orientation="horizontal"
+                            android:visibility="gone"
                             android:weightSum="1">
 
                             <TextView
@@ -737,6 +742,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="6dp"
                             android:orientation="horizontal"
+                            android:visibility="gone"
                             android:weightSum="1">
 
                             <TextView
@@ -759,6 +765,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="6dp"
                             android:orientation="horizontal"
+                            android:visibility="gone"
                             android:weightSum="1">
 
                             <TextView
@@ -781,6 +788,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="6dp"
                             android:orientation="horizontal"
+                            android:visibility="gone"
                             android:weightSum="1">
 
                             <TextView
@@ -803,6 +811,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="6dp"
                             android:orientation="horizontal"
+                            android:visibility="gone"
                             android:weightSum="1">
 
                             <TextView

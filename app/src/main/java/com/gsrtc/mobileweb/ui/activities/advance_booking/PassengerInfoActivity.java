@@ -125,7 +125,7 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
                 }
                 @Override
                 public void afterTextChanged(Editable s) {
-                    passengerNameB.setText(passengerNameA.getText());
+
 
                 }
             });
@@ -181,8 +181,7 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
                 }
                 @Override
                 public void afterTextChanged(Editable s) {
-                    passengerNameB.setText(passengerNameA.getText());
-                    passengerNameC.setText(passengerNameA.getText());
+
 
                 }
             });
@@ -249,9 +248,7 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
                 }
                 @Override
                 public void afterTextChanged(Editable s) {
-                    passengerNameB.setText(passengerNameA.getText());
-                    passengerNameC.setText(passengerNameA.getText());
-                    passengerNameD.setText(passengerNameA.getText());
+
                 }
             });
         }
@@ -327,10 +324,7 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
                 }
                 @Override
                 public void afterTextChanged(Editable s) {
-                    passengerNameB.setText(passengerNameA.getText());
-                    passengerNameC.setText(passengerNameA.getText());
-                    passengerNameD.setText(passengerNameA.getText());
-                    passengerNameE.setText(passengerNameA.getText());
+
 
                 }
             });
@@ -418,11 +412,7 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
                 }
                 @Override
                 public void afterTextChanged(Editable s) {
-                    passengerNameB.setText(passengerNameA.getText());
-                    passengerNameC.setText(passengerNameA.getText());
-                    passengerNameD.setText(passengerNameA.getText());
-                    passengerNameE.setText(passengerNameA.getText());
-                    passengerNameF.setText(passengerNameA.getText());
+
 
                 }
             });
