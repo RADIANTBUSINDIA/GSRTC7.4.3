@@ -9,6 +9,7 @@ import android.util.Patterns;
  */
 
 public class ValidationUtil {
+
     public static boolean isValidEmail(CharSequence target) {
         if (TextUtils.isEmpty(target)) {
             return false;
