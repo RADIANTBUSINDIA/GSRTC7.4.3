@@ -15,7 +15,7 @@ public class SecureApplication extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkSecurity(this);
+       // checkSecurity(this);
     }
 
     public static void checkSecurity(final Context context) {
@@ -51,7 +51,7 @@ public class SecureApplication extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        checkSecurity(this);
+       // checkSecurity(this);
     }
 
     private static boolean isDeveloperModeEnabled(Context context) {

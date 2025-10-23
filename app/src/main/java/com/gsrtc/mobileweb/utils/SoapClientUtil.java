@@ -62,7 +62,7 @@ public class SoapClientUtil {
     protected static final String SOAP_ACTION = "";
 
      /****** LOCAL URL ******/
-    //protected static final String URL = "http://111.93.131.113:7070/GSRTCWS2/reservationservice?wsdl";
+   // protected static final String URL = "http://172.31.99.234:8082/GSRTCSTGWSAnd/reservationservice?wsdl";
 
      /******* LIVE URL *******/
     protected static final String URL = AppConstants.server_url + "/reservationservice?wsdl";

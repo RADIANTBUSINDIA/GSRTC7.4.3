@@ -20,10 +20,28 @@ public class ValidationUtil {
     public static boolean isValidPhone(CharSequence target) {
         if (TextUtils.isEmpty(target)) {
             return false;
-        } else {
-            return Patterns.PHONE.matcher(target).matches() || PhoneNumberUtils.isGlobalPhoneNumber(target.toString());
         }
+
+        String phone = target.toString().trim();
+
+
+        if (!phone.matches("\\d+")) {
+            return false;
+        }
+
+
+        if (!phone.matches("^[6-9].*")) {
+            return false;
+        }
+
+        if (phone.matches(".*(\\d)\\1{4,}.*")) {
+            return false;
+        }
+
+        return Patterns.PHONE.matcher(phone).matches()
+                && PhoneNumberUtils.isGlobalPhoneNumber(phone);
     }
+
 
     public static boolean isValidNumber(String target){
         if (TextUtils.isEmpty(target)) {

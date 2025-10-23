@@ -2,17 +2,27 @@ package com.gsrtc.mobileweb.ui.activities.base;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.LayoutRes;
 import com.google.android.material.navigation.NavigationView;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.provider.Settings;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -47,6 +57,7 @@ public class BaseNavigationDrawerActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+      //  checkSecurity(this);
         try {
             Bundle mBun = getIntent().getExtras();
 
@@ -68,6 +79,19 @@ public class BaseNavigationDrawerActivity extends AppCompatActivity
 
         contentFrame = (FrameLayout) findViewById(R.id.content_frame);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) drawer.getLayoutParams();
+            // Convert 50dp to pixels
+            int topMarginInPx = (int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    45,
+                    getResources().getDisplayMetrics()
+            );
+            params.topMargin = topMarginInPx;
+            drawer.setLayoutParams(params);
+        }
+
 
 
         if(textlang.equalsIgnoreCase("gujarati")){
@@ -107,6 +131,18 @@ public class BaseNavigationDrawerActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+       // checkSecurity(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+      //  checkSecurity(this);
     }
 
     @Override
@@ -328,4 +364,88 @@ public class BaseNavigationDrawerActivity extends AppCompatActivity
 
         }
     }
+
+
+    public static void checkSecurity(final Context context) {
+        StringBuilder securityWarnings = new StringBuilder();
+
+        if (isDeveloperModeEnabled(context)) {
+            Log.e("Security", "Developer Mode is enabled!");
+            securityWarnings.append("⚠ Developer Mode is enabled!\n");
+        }
+
+        if (isEmulator()) {
+            Log.e("Security", "Running on an Emulator!");
+            securityWarnings.append("⚠ App is running on an Emulator!\n");
+        }
+
+        if (isUSBConnected(context)) {
+            Log.e("Security", "USB Debugging is enabled!");
+            securityWarnings.append("⚠ USB Debugging is enabled!\n");
+        }
+
+
+        if (securityWarnings.length() > 0) {
+            showSecurityDialog(context, securityWarnings.toString());
+        }
+    }
+
+
+
+    private static boolean isDeveloperModeEnabled(Context context) {
+        return Settings.Secure.getInt(
+                context.getContentResolver(),
+                Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1;
+    }
+
+    private static boolean isEmulator() {
+        String model = Build.MODEL;
+        String manufacturer = Build.MANUFACTURER;
+        String brand = Build.BRAND;
+        String hardware = Build.HARDWARE;
+        String fingerprint = Build.FINGERPRINT;
+        String product = Build.PRODUCT;
+        String device = Build.DEVICE;
+
+        return (product.contains("sdk") ||
+                model.contains("Emulator") ||
+                model.contains("Genymotion") ||
+                manufacturer.contains("Genymotion") ||
+                brand.contains("generic") ||
+                hardware.contains("goldfish") ||
+                hardware.contains("ranchu") ||
+                fingerprint.contains("generic") ||
+                device.contains("generic") ||
+                product.contains("vbox86p"));
+    }
+
+    private static boolean isUSBConnected(Context context) {
+        return Settings.Global.getInt(context.getContentResolver(),
+                Settings.Global.ADB_ENABLED, 0) == 1;
+    }
+
+    private static void showSecurityDialog(final Context context, String message) {
+        new AlertDialog.Builder(context)
+                .setTitle("Security Warning ⚠")
+                .setMessage(message )
+                .setCancelable(false)
+                /* .setPositiveButton("Allow", new DialogInterface.OnClickListener() {
+                     @Override
+                     public void onClick(DialogInterface dialog, int which) {
+                         // Continue using the app
+                         dialog.dismiss();
+                     }
+                 })*/
+                .setNegativeButton("Exit App", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Exit the app
+
+                        System.exit(0);
+                    }
+                })
+                .show();
+    }
+
+
 }

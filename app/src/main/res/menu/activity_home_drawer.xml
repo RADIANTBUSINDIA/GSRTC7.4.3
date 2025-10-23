@@ -31,6 +31,7 @@
         <item
             android:id="@+id/nav_track_my_bus"
             android:icon="@drawable/menu_track_bus"
+            android:visible="false"
             android:title="Track My Bus" />
         <item
             android:id="@+id/nav_forgot_transpass"
