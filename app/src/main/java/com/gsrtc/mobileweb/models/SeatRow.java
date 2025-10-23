@@ -12,6 +12,7 @@ import static com.gsrtc.mobileweb.utils.AppConstants.SEAT_ROW_COUNT;
  */
 
 public class SeatRow {
+
     String layoutID;
     Integer rowNumber;
     String status;
