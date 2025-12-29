@@ -407,14 +407,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+
+            <Button
+                android:id="@+id/confirm_btn"
+                android:text="CONFIRM BOOKING"
+                android:background="@drawable/btn_shape"
+                android:textColor="@color/naviy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="40dp"/>
+
         </LinearLayout>
+
+
     </ScrollView>
-    <Button
-        android:id="@+id/confirm_btn"
-        android:text="CONFIRM BOOKING"
-        android:background="@drawable/btn_shape"
-        android:textColor="@color/naviy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"/>
+
 </LinearLayout>

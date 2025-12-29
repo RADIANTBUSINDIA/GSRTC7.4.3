@@ -28,6 +28,7 @@ import com.gsrtc.mobileweb.models.SaveBookingDetailsTemporary;
 import com.gsrtc.mobileweb.models.SaveReturnBookingDetailsTemporary;
 import com.gsrtc.mobileweb.models.Seat;
 import com.gsrtc.mobileweb.ui.activities.HomeActivity;
+import com.gsrtc.mobileweb.ui.activities.Language_Select;
 import com.gsrtc.mobileweb.ui.activities.base.BaseNavigationDrawerActivity;
 
 import com.gsrtc.mobileweb.ui.widgets.AccordionWidget;
@@ -187,6 +188,30 @@ public class FareDetailsActivity extends BaseNavigationDrawerActivity {
                 CustomisedProgressDialog.STOP_CUST_DIA();
                 ActivityUtil.showErrorToast(FareDetailsActivity.this, e);
             }
+
+            @Override
+            public void onEmpty(boolean drop) {
+
+
+                CustomisedProgressDialog.STOP_CUST_DIA();
+
+                // 2. Show alert and redirect
+                new AlertDialog.Builder(FareDetailsActivity.this)
+                        .setTitle("GSRTC")
+                        .setMessage("Pickup and drop points are not available for this GSRTC service. Please contact GSRTC.")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", (d, w) -> {
+                            d.dismiss();
+
+                            // 3. Redirect to Home
+                            Intent intent = new Intent(FareDetailsActivity.this, Language_Select.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        })
+                        .show();
+            }
+
         });
     }
 

@@ -349,6 +349,7 @@ public class TimeTableServices extends BaseNavigationDrawerActivity {
                         Bundle extras = new Bundle();
                         extras.putString("textlang", textlang);
                         extras.putSerializable(AppConstants.INTENT_EXTRA.BOOKING_ONWARD, onwardBooking);
+                        searchParams = (SearchParams) getIntent().getExtras().getSerializable(AppConstants.INTENT_EXTRA.SEARCH_PARAM);
                         ActivityUtil.openNewActivity(this, PassengerInfoActivity.class, extras);
                     }
                 }

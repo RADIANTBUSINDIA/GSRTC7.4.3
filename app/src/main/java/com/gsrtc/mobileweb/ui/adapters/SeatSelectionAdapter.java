@@ -145,33 +145,35 @@ public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSele
                 view.setImageResource(R.drawable.available_ladies_sleeper);
             } else if (serviceSeatDetails.getAvailableSeats().contains(seat.getSeatNo())) {
                 // view.setImageResource(R.drawable.available_sleeper);
-                if (searchParams.getDivyangBooking().equalsIgnoreCase("Divyang") || searchParams.getDivyangBooking().equalsIgnoreCase("Divyang with Helper")) {
-                    if (srv_class_id.equalsIgnoreCase("21") || srv_class_id.equalsIgnoreCase("22")
-                            || srv_class_id.equalsIgnoreCase("42") || srv_class_id.equalsIgnoreCase("45")) {
-                        if (seat.getSeatNo() == 1 || seat.getSeatNo() == 2 || seat.getSeatNo() == 3 || seat.getSeatNo() == 4) {
-                            view.setImageResource(R.drawable.available_sleeper);
-                            view.setFocusable(true);
-                            view.setClickable(true);
-                            view.setEnabled(true);
-                        } else {
-                            view.setImageResource(R.drawable.available_sleeper);
-                            view.setFocusable(false);
-                            view.setClickable(false);
-                            view.setEnabled(false);
-                        }
-                    } else {
-                        view.setImageResource(R.drawable.available_sleeper);
-                        view.setFocusable(true);
-                        view.setClickable(true);
-                        view.setEnabled(true);
-                    }
-                } else {
+//                if (searchParams.getDivyangBooking().equalsIgnoreCase("Divyang") || searchParams.getDivyangBooking().equalsIgnoreCase("Divyang with Helper")) {
+//                    if (srv_class_id.equalsIgnoreCase("21") || srv_class_id.equalsIgnoreCase("22")
+//                            || srv_class_id.equalsIgnoreCase("42") || srv_class_id.equalsIgnoreCase("45")) {
+//                        if (seat.getSeatNo() == 1 || seat.getSeatNo() == 2 || seat.getSeatNo() == 3 || seat.getSeatNo() == 4) {
+//                            view.setImageResource(R.drawable.available_sleeper);
+//                            view.setFocusable(true);
+//                            view.setClickable(true);
+//                            view.setEnabled(true);
+//                        } else {
+//                            view.setImageResource(R.drawable.available_sleeper);
+//
+//
+//                            view.setFocusable(false);
+//                            view.setClickable(false);
+//                            view.setEnabled(false);
+//                        }
+//                    } else {
+//                        view.setImageResource(R.drawable.available_sleeper);
+//                        view.setFocusable(true);
+//                        view.setClickable(true);
+//                        view.setEnabled(true);
+//                    }
+//                } else {
                     view.setImageResource(R.drawable.available_sleeper);
                     view.setFocusable(true);
                     view.setClickable(true);
                     view.setEnabled(true);
                 }
-            }
+
 
         } else {
 
@@ -186,33 +188,33 @@ public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSele
             } else if (serviceSeatDetails.getAvailableSeats().contains(seat.getSeatNo())) {
 //                view.setImageResource(R.drawable.available_seat_new);
 
-                if (searchParams.getDivyangBooking().equalsIgnoreCase("Divyang") || searchParams.getDivyangBooking().equalsIgnoreCase("Divyang with Helper")) {
-                    if (srv_class_id.equalsIgnoreCase("21") || srv_class_id.equalsIgnoreCase("22")
-                            || srv_class_id.equalsIgnoreCase("42") || srv_class_id.equalsIgnoreCase("45")) {
-                        if (seat.getSeatNo() == 1 || seat.getSeatNo() == 2 || seat.getSeatNo() == 3 || seat.getSeatNo() == 4) {
-                            view.setImageResource(R.drawable.available_seat_new);
-                            view.setFocusable(true);
-                            view.setClickable(true);
-                            view.setEnabled(true);
-                        } else {
-                            view.setImageResource(R.drawable.available_seat_new);
-                            view.setFocusable(false);
-                            view.setClickable(false);
-                            view.setEnabled(false);
-
-                        }
-                    } else {
-                        view.setImageResource(R.drawable.available_seat_new);
-                        view.setFocusable(true);
-                        view.setClickable(true);
-                        view.setEnabled(true);
-                    }
-                } else {
+//                if (searchParams.getDivyangBooking().equalsIgnoreCase("Divyang") || searchParams.getDivyangBooking().equalsIgnoreCase("Divyang with Helper")) {
+//                    if (srv_class_id.equalsIgnoreCase("21") || srv_class_id.equalsIgnoreCase("22")
+//                            || srv_class_id.equalsIgnoreCase("42") || srv_class_id.equalsIgnoreCase("45")) {
+//                        if (seat.getSeatNo() == 1 || seat.getSeatNo() == 2 || seat.getSeatNo() == 3 || seat.getSeatNo() == 4) {
+//                            view.setImageResource(R.drawable.available_seat_new);
+//                            view.setFocusable(true);
+//                            view.setClickable(true);
+//                            view.setEnabled(true);
+//                        } else {
+//                            view.setImageResource(R.drawable.available_seat_new);
+//                            view.setFocusable(false);
+//                            view.setClickable(false);
+//                            view.setEnabled(false);
+//
+//                        }
+//                    } else {
+//                        view.setImageResource(R.drawable.available_seat_new);
+//                        view.setFocusable(true);
+//                        view.setClickable(true);
+//                        view.setEnabled(true);
+//                    }
+//                } else {
                     view.setImageResource(R.drawable.available_seat_new);
                     view.setFocusable(true);
                     view.setClickable(true);
                     view.setEnabled(true);
-                }
+
             }
         }
     }

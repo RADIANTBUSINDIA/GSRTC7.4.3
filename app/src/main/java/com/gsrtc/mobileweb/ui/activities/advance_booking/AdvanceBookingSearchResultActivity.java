@@ -82,12 +82,12 @@ public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActi
     ProgressDialog progressDialog;
     CalendarDatePickerDialogFragment calendarDialog;
     private String textlang, discfare, divyang_disable_type, divyang_auth, div_id_valid;
-    private String status, divName, address1, address2, address3, address4, div_id, gender, dob, place, type, percentage, expired, mobile, count;
+    private String status, divName, address1, address2, address3, address4, div_id, gender, dob, place, type, percentage, expired, mobile, count,otp;
     private String disabilityId, issueDistrictId;
     PopupWindow popupWindow;
     ArrayAdapter<String> adapter;
     ArrayAdapter<String> adapter1;
-    private EditText div_id_text, div_type_text, div_birth_date, div_expiry_date, div_percentage;
+    private EditText div_id_text, div_type_text, div_birth_date, div_expiry_date, div_percentage,div_otp;
     private Spinner div_disability_type, div_authority;
     private Button div_cancel, div_confirm;
     String crntDate ="",crntTime="";
@@ -235,6 +235,7 @@ public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActi
                     div_authority = (Spinner) customView.findViewById(R.id.div_authority);
                     div_cancel = (Button) customView.findViewById(R.id.div_cancel);
                     div_confirm = (Button) customView.findViewById(R.id.div_submit);
+                    div_otp = (EditText) customView.findViewById(R.id.div_otpNumber);
 
                     div_disability_type.setAdapter(adapter);
                     div_authority.setAdapter(adapter1);
@@ -290,6 +291,19 @@ public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActi
                     div_confirm.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
+                            String divotp = div_otp.getText().toString();
+
+                            if (divotp == null || divotp.trim().isEmpty()) {
+                                Toast.makeText(AdvanceBookingSearchResultActivity.this, "Please enter the OTP", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+                            if (otp == null || !divotp.equalsIgnoreCase(otp)) {
+                                Toast.makeText(AdvanceBookingSearchResultActivity.this, "Invalid OTP", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
                             if (divyang_disable_type.equalsIgnoreCase("--SELECT TYPE--") || divyang_auth.equalsIgnoreCase("--SELECT--")) {
 
                                 Toast.makeText(AdvanceBookingSearchResultActivity.this, "Please select valid Disability Type / Authority Details", Toast.LENGTH_SHORT).show();
@@ -329,6 +343,7 @@ public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActi
                             expired = "";
                             mobile = "";
                             count = "";
+                            otp = "";
                         }
                     });
 
@@ -1103,6 +1118,7 @@ public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActi
 //        String divId = "130021600461";
         String divId = div_id_text.getText().toString();
 
+
         if (!AdvanceBookingSearchResultActivity.this.isFinishing()) {
             CustomisedProgressDialog.SHOW_CUST_DIA(AdvanceBookingSearchResultActivity.this, "processing...");
         }
@@ -1138,9 +1154,10 @@ public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActi
                     expired = getDivyang[10];
                     mobile = getDivyang[13];
                     count = getDivyang[14];
+                    otp = getDivyang[15];
 
 
-                    System.out.println("DivResponse:" + status + "|" + divName + "|" + address1 + "|" + address2 + "|" + address3 + "|" + address4 + "|" + div_id + "|" + gender + "|" + dob + "|" + place + "|" + type + "|" + percentage + "|" + expired + "|" + mobile + "|" + count);
+                    System.out.println("DivResponse:" + status + "|" + divName + "|" + address1 + "|" + address2 + "|" + address3 + "|" + address4 + "|" + div_id + "|" + gender + "|" + dob + "|" + place + "|" + type + "|" + percentage + "|" + expired + "|" + mobile + "|" + count +"|"+otp);
 
                     div_birth_date.setText(dob);
                     div_expiry_date.setText(expired);

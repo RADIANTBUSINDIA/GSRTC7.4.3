@@ -34,7 +34,8 @@ public class Division_Depot_info extends BaseNavigationDrawerActivity {
         // Configure the client to use when opening URLs
         myWebView.setWebViewClient(new MyBrowser());
         // Load the initial URL
-        myWebView.loadUrl("https://gsrtc.in/site/downloads/innerPages/android_gsrtc_web/divisions_app.html");
+        myWebView.loadUrl("https://gsrtc.in/site/downloads/innerPages/busEnquiry.html");
+
     }
 
     private class MyBrowser extends WebViewClient {

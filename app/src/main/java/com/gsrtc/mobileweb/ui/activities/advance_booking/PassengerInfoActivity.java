@@ -5,6 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -49,6 +53,17 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentViewDrawer(R.layout.activity_passenger_info);
+
+        View rootView = findViewById(android.R.id.content);
+
+
+        ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, insets) -> {
+            Insets imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime());
+            int imeHeight = imeInsets.bottom;
+
+            v.setPadding(0, 0, 0, imeHeight);  // Push layout above keyboard
+            return insets;
+        });
 
         if (getIntent() != null && getIntent().getExtras() != null) {
             Bundle extras = getIntent().getExtras();

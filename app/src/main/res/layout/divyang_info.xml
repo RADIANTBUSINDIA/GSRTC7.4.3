@@ -183,6 +183,47 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:id="@+id/div_otp"
+                android:paddingLeft="1dp"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:text="Divyang Otp"
+                android:textSize="16dp" />
+
+            <EditText
+                android:id="@+id/div_otpNumber"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:inputType="number"
+                android:hint="Enter OTP sent to your registered mobile number"
+                android:theme="@style/AppTheme.spinnerDropDownItemStyle"
+                android:layout_marginTop="3dp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="6dip"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingLeft="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:id="@+id/div_authority_txt"
                 android:paddingLeft="1dp"
                 android:singleLine="true"

@@ -35,9 +35,6 @@ public class ValidationUtil {
             return false;
         }
 
-        if (phone.matches(".*(\\d)\\1{4,}.*")) {
-            return false;
-        }
 
         return Patterns.PHONE.matcher(phone).matches()
                 && PhoneNumberUtils.isGlobalPhoneNumber(phone);

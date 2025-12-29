@@ -15,32 +15,10 @@ public class SecureApplication extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // checkSecurity(this);
+        checkSecurity(this);
     }
 
-    public static void checkSecurity(final Context context) {
-        StringBuilder securityWarnings = new StringBuilder();
 
-        if (isDeveloperModeEnabled(context)) {
-            Log.e("Security", "Developer Mode is enabled!");
-            securityWarnings.append("⚠ Developer Mode is enabled!\n");
-        }
-
-        if (isEmulator()) {
-            Log.e("Security", "Running on an Emulator!");
-            securityWarnings.append("⚠ App is running on an Emulator!\n");
-        }
-
-        if (isUSBConnected(context)) {
-            Log.e("Security", "USB Debugging is enabled!");
-            securityWarnings.append("⚠ USB Debugging is enabled!\n");
-        }
-
-
-        if (securityWarnings.length() > 0) {
-            showSecurityDialog(context, securityWarnings.toString());
-        }
-    }
 
     @Override
     protected void onPause() {
@@ -51,7 +29,7 @@ public class SecureApplication extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       // checkSecurity(this);
+        checkSecurity(this);
     }
 
     private static boolean isDeveloperModeEnabled(Context context) {
@@ -84,6 +62,32 @@ public class SecureApplication extends AppCompatActivity {
     private static boolean isUSBConnected(Context context) {
         return Settings.Global.getInt(context.getContentResolver(),
                 Settings.Global.ADB_ENABLED, 0) == 1;
+    }
+
+    public static void checkSecurity(final Context context) {
+        StringBuilder securityWarnings = new StringBuilder();
+
+        if (isDeveloperModeEnabled(context)) {
+            Log.e("Security", "Developer Mode is enabled!");
+            securityWarnings.append("⚠ Developer Mode is enabled!\n");
+        }
+
+        if (isEmulator()) {
+            Log.e("Security", "Running on an Emulator!");
+            securityWarnings.append("⚠ App is running on an Emulator!\n");
+        }
+
+        if (isUSBConnected(context)) {
+            Log.e("Security", "USB Debugging is enabled!");
+            securityWarnings.append("⚠ USB Debugging is enabled!\n");
+        }
+
+      //  securityWarnings = new StringBuilder();
+
+
+        if (securityWarnings.length() > 0) {
+            showSecurityDialog(context, securityWarnings.toString());
+        }
     }
 
     private static void showSecurityDialog(final Context context, String message) {

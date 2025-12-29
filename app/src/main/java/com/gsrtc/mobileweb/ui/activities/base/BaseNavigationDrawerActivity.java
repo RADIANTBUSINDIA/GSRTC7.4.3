@@ -57,7 +57,7 @@ public class BaseNavigationDrawerActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  checkSecurity(this);
+        checkSecurity(this);
         try {
             Bundle mBun = getIntent().getExtras();
 
@@ -136,13 +136,13 @@ public class BaseNavigationDrawerActivity extends AppCompatActivity
     @Override
     protected void onRestart() {
         super.onRestart();
-       // checkSecurity(this);
+        checkSecurity(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-      //  checkSecurity(this);
+        checkSecurity(this);
     }
 
     @Override
@@ -383,7 +383,8 @@ public class BaseNavigationDrawerActivity extends AppCompatActivity
             Log.e("Security", "USB Debugging is enabled!");
             securityWarnings.append("⚠ USB Debugging is enabled!\n");
         }
-
+       //to run in debugmode
+      //  securityWarnings = new StringBuilder();
 
         if (securityWarnings.length() > 0) {
             showSecurityDialog(context, securityWarnings.toString());

@@ -1,5 +1,6 @@
 package com.gsrtc.mobileweb.utils.net;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.util.Pair;
 
 import android.util.Log;
@@ -11,6 +12,9 @@ import com.gsrtc.mobileweb.models.BusService;
 import com.gsrtc.mobileweb.models.ConfirmAdvSeatBookingAndroidResponse;
 import com.gsrtc.mobileweb.models.ConfirmAdvSeatBookingResponse;
 import com.gsrtc.mobileweb.models.ConfirmRtnSeatBookingAndroidResponse;
+import com.gsrtc.mobileweb.models.DivyangDetails;
+import com.gsrtc.mobileweb.models.DivyangStore;
+import com.gsrtc.mobileweb.models.Divyangresponse;
 import com.gsrtc.mobileweb.models.GetAllServicePickupPointsByServiceIDResponse;
 import com.gsrtc.mobileweb.models.GetReferenceNumberResponse;
 import com.gsrtc.mobileweb.models.GetTotalFareDetailsOfTicketResponse;
@@ -19,6 +23,7 @@ import com.gsrtc.mobileweb.models.SaveBookingDetailsTemporary;
 import com.gsrtc.mobileweb.models.SaveReturnBookingDetailsTemporary;
 import com.gsrtc.mobileweb.models.SearchParams;
 import com.gsrtc.mobileweb.models.Seat;
+import com.gsrtc.mobileweb.models.trackmybus.IpDetails;
 import com.gsrtc.mobileweb.utils.AppConstants;
 import com.gsrtc.mobileweb.utils.JacksonUtil;
 import com.gsrtc.mobileweb.utils.SoapClientUtil;
@@ -124,28 +129,58 @@ public class AdvanceBookingNetworkUtil extends SoapClientUtil {
             @Override
             public void onSuccess(String response) {
                 System.out.println(response);
+
+                if (response == null || response.trim().isEmpty()) {
+                    mCallback.onEmpty(drop);
+                    return;
+                }
+
+                // Explicit empty SOAP response check
+                if (response.contains("<GetAllServicePickupPointsByServiceIDResponse")
+                        && response.contains("/>")) {
+
+                    mCallback.onEmpty(drop);
+                    return;
+                }
+
+                // Namespace-safe check (IMPORTANT)
+                if (response.matches(".*GetAllServicePickupPointsByServiceIDResponse[^>]*\\/>.*")) {
+                    mCallback.onEmpty(drop);
+                    return;
+                }
+
                 JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
                 JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
-                JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetAllServicePickupPointsByServiceID");
+                JSONObject requiredResponse =
+                        XMLtoJSONResponseParser.getRequiredResponse(
+                                responseBody,
+                                "GetAllServicePickupPointsByServiceID");
+
                 GetAllServicePickupPointsByServiceIDResponse responseModel = null;
+
                 try {
                     Object jsonOb = requiredResponse.get("GetAllServicePickupPointsByServiceID");
+
                     if (jsonOb instanceof JSONObject) {
-                        JSONObject json = requiredResponse.getJSONObject("GetAllServicePickupPointsByServiceID");
-                        responseModel = JacksonUtil.getMapper().readValue(json.toString(), new TypeReference<GetAllServicePickupPointsByServiceIDResponse>() {
-                        });
+                        responseModel = JacksonUtil.getMapper().readValue(
+                                ((JSONObject) jsonOb).toString(),
+                                new TypeReference<GetAllServicePickupPointsByServiceIDResponse>() {});
                     } else if (jsonOb instanceof JSONArray) {
-                        JSONObject json = requiredResponse.getJSONArray("GetAllServicePickupPointsByServiceID").getJSONObject(0);
-                        responseModel = JacksonUtil.getMapper().readValue(json.toString(), new TypeReference<GetAllServicePickupPointsByServiceIDResponse>() {
-                        });
+                        responseModel = JacksonUtil.getMapper().readValue(
+                                ((JSONArray) jsonOb).getJSONObject(0).toString(),
+                                new TypeReference<GetAllServicePickupPointsByServiceIDResponse>() {});
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    mCallback.onError(e);
+                    return;
                 }
+
                 mCallback.onSuccess(responseModel, drop);
             }
+
+
+
         });
     }
 
@@ -153,6 +188,7 @@ public class AdvanceBookingNetworkUtil extends SoapClientUtil {
         void onSuccess(GetAllServicePickupPointsByServiceIDResponse response, boolean drop);
 
         void onError(Exception e);
+        void onEmpty(boolean drop);
     }
 
 
@@ -271,6 +307,246 @@ public class AdvanceBookingNetworkUtil extends SoapClientUtil {
                 mCallback.onSuccess(responseModel);
             }
         });
+    }
+
+
+    /***Pickup and Dropoff point***/
+
+    public static void GetDivyangStatus(Booking booking, final boolean drop, final GetTDivyangStatusCallback mCallback) {
+
+        BusService busService = booking.getBusService();
+
+        // Get Divyang ID
+        String divId = "";
+        DivyangDetails dy = DivyangStore.getDivyangDetails();
+        if (dy != null) {
+            divId = dy.getDivId();
+        }
+
+        // Determine Concession ID
+        String bookingType = booking.getSearchParams().getDivyangBooking();
+        String consId;
+
+        if (bookingType.equalsIgnoreCase("Divyang") ||
+                bookingType.equalsIgnoreCase("Divyang with Helper")) {
+            consId = "2";
+        } else {
+            consId = "1";
+        }
+
+        // Determine from/to place based on drop
+        Place Splace = drop ? booking.getEndPlace() : booking.getStartPlace();
+        Place Eplace = drop ? booking.getStartPlace() : booking.getEndPlace(); // Corrected
+
+        // Prepare XML request
+        String arg0 =
+                "<arg0>\n" +
+                        "   <concessionLookupID>" + consId + "</concessionLookupID>\n" +
+                        "   <serviceID>" + busService.getServiceID().split(",")[0].trim() + "</serviceID>\n" +
+                        "   <fromPlaceCode>" + booking.getStartPlace().getPlaceID() + "</fromPlaceCode>\n" +
+                        "   <toPlaceCode>" + booking.getEndPlace().getPlaceID() + "</toPlaceCode>\n" +
+                        "   <divIdCardNo>" + divId + "</divIdCardNo>\n" +
+                        "   <journeyDate>" + booking.getJourneyDate() + "</journeyDate>\n" +
+                        "</arg0>";
+
+        Log.d("arg0", arg0);
+
+        fetchResponseString("GetDivyangStatuBYID", arg0, "", new BaseDefaultHttpCallback() {
+            @Override
+            public void onError(Exception e) {
+                mCallback.onError(e);
+            }
+
+            @Override
+            public void onSuccess(String response) {
+                System.out.println(response);
+
+                try {
+                    JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+                    JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
+                    JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetDivyangStatuBYID");
+
+                    Object value = requiredResponse.get("GetDivyangStatuBYID");
+
+                    Divyangresponse divyangDetails = new Divyangresponse();
+
+                    if (value instanceof JSONObject) {
+                        JSONObject json = (JSONObject) value;
+                        divyangDetails = JacksonUtil.getMapper()
+                                .readValue(json.toString(), new TypeReference<Divyangresponse>() {});
+                    } else {
+                        divyangDetails.setGetDivyangStatuBYID(String.valueOf(value));
+                    }
+
+                    // Send parsed result
+                    mCallback.onSuccess(divyangDetails);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mCallback.onError(new RuntimeException("Error occurred!"));
+                }
+            }
+        });
+
+    }
+
+
+
+    public interface GetTDivyangStatusCallback {
+
+        void onSuccess(Divyangresponse response);
+
+
+        void onError(Exception e);
+    }
+
+
+    public static void GetcaptureIPDetalsBP(Booking booking,String ipAddress, final GetcaptureIPDetalsBPCallback mCallback) {
+
+         String mobleNo  = booking.getPassengerInfo().getPhone();
+         String ipAddressS  = ipAddress;
+         String emailId  = booking.getPassengerInfo().getEmail();
+         String pnrNo  = booking.getSaveBookingDetailsTemporary().getPnrNumber();
+         String obRefNo  = booking.getSaveBookingDetailsTemporary().getRtcRefNo();
+         String userId  = AppConstants.CREDENTIALS.USER_ID;
+
+
+        // Prepare XML request
+        String arg0 =
+                "<arg0>\n" +
+                        "   <mobileNo>" + mobleNo + "</mobileNo>\n" +
+                        "   <ipAdress>" +ipAddress + "</ipAdress>\n" +
+                        "   <emailId>" + emailId + "</emailId>\n" +
+                        "   <pnrNo>" + pnrNo + "</pnrNo>\n" +
+                        "   <obRefNo>" + obRefNo + "</obRefNo>\n" +
+                        "   <userId>" + userId + "</userId>\n" +
+                        "</arg0>";
+
+        Log.d("arg0", arg0);
+
+        fetchResponseString("CaptureIPDetalsBP", arg0, "", new BaseDefaultHttpCallback() {
+            @Override
+            public void onError(Exception e) {
+                mCallback.onError(e);
+            }
+
+            @Override
+            public void onSuccess(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+                    JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
+                    JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "CaptureIPDetalsBP");
+
+                    Object obj = requiredResponse.get("CaptureIPDetalsBP");
+
+                    if (obj instanceof JSONObject) {
+                        JSONObject json = (JSONObject) obj;
+
+                        Divyangresponse divyangDetails =
+                                JacksonUtil.getMapper().readValue(json.toString(), new TypeReference<Divyangresponse>() {});
+
+                        mCallback.onSuccess(divyangDetails);
+
+                    } else {
+                        // Handle plain integer response
+                        Divyangresponse res = new Divyangresponse();
+                        res.getGetDivyangStatuBYID();
+
+                        mCallback.onSuccess(res);
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mCallback.onError(new RuntimeException("Error occurred!"));
+                }
+            }
+        });
+    }
+
+
+
+    public interface GetcaptureIPDetalsBPCallback {
+
+        void onSuccess(Divyangresponse response);
+
+
+        void onError(Exception e);
+    }
+
+    public static void GetcaptureIPDetalsAP(Booking booking,String ipAddress, final GetcaptureIPDetalsBPCallback mCallback) {
+
+        String mobleNo  = booking.getPassengerInfo().getPhone();
+        String ipAddressS  = ipAddress;
+        String emailId  = booking.getPassengerInfo().getEmail();
+        String pnrNo  = booking.getSaveBookingDetailsTemporary().getPnrNumber();
+        String obRefNo  = booking.getSaveBookingDetailsTemporary().getRtcRefNo();
+        String userId  = AppConstants.CREDENTIALS.USER_ID;
+
+
+        // Prepare XML request
+        String arg0 =
+                "<arg0>\n" +
+                        "   <mobileNo>" + mobleNo + "</mobileNo>\n" +
+                        "   <ipAdress>" +ipAddress + "</ipAdress>\n" +
+                        "   <emailId>" + emailId + "</emailId>\n" +
+                        "   <pnrNo>" + pnrNo + "</pnrNo>\n" +
+                        "   <obRefNo>" + obRefNo + "</obRefNo>\n" +
+                        "   <userId>" + userId + "</userId>\n" +
+                        "</arg0>";
+
+        Log.d("arg0", arg0);
+
+        fetchResponseString("CaptureIPDetalsAP", arg0, "", new BaseDefaultHttpCallback() {
+            @Override
+            public void onError(Exception e) {
+                mCallback.onError(e);
+            }
+
+            @Override
+            public void onSuccess(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+                    JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
+                    JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "CaptureIPDetalsAP");
+
+                    Object obj = requiredResponse.get("CaptureIPDetalsAP");
+
+                    if (obj instanceof JSONObject) {
+                        JSONObject json = (JSONObject) obj;
+
+                        Divyangresponse divyangDetails =
+                                JacksonUtil.getMapper().readValue(json.toString(), new TypeReference<Divyangresponse>() {});
+
+                        mCallback.onSuccess(divyangDetails);
+
+                    } else {
+                        // Handle plain integer response
+                        Divyangresponse res = new Divyangresponse();
+                        res.getGetDivyangStatuBYID();
+
+                        mCallback.onSuccess(res);
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mCallback.onError(new RuntimeException("Error occurred!"));
+                }
+            }
+        });
+    }
+
+
+
+    public interface GetcaptureIPDetalsAPCallback {
+
+        void onSuccess(Divyangresponse response);
+
+
+        void onError(Exception e);
     }
 
     public interface GetTotalFareDetailsOfTicketCallback {

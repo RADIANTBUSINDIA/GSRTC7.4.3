@@ -27,6 +27,8 @@ import com.gsrtc.mobileweb.models.SaveReturnBookingDetailsTemporary;
 import com.gsrtc.mobileweb.models.Seat;
 import com.gsrtc.mobileweb.ui.activities.HomeActivity;
 
+import com.gsrtc.mobileweb.ui.activities.Language_Select;
+import com.gsrtc.mobileweb.ui.activities.advance_booking.FareDetailsActivity;
 import com.gsrtc.mobileweb.ui.activities.base.BaseNavigationDrawerActivity;
 import com.gsrtc.mobileweb.ui.activities.packageBooking.Model.GetAllHotelInfoByPackageID;
 import com.gsrtc.mobileweb.ui.activities.packageBooking.Model.GetTotalPackageFareDetails;
@@ -221,6 +223,29 @@ public class PackageFareDetails  extends BaseNavigationDrawerActivity {
             public void onError(Exception e) {
                 CustomisedProgressDialog.STOP_CUST_DIA();
                 ActivityUtil.showErrorToast(PackageFareDetails.this, e);
+            }
+
+            @Override
+            public void onEmpty(boolean drop) {
+
+
+                CustomisedProgressDialog.STOP_CUST_DIA();
+
+                // 2. Show alert and redirect
+                new AlertDialog.Builder(PackageFareDetails.this)
+                        .setTitle("GSRTC")
+                        .setMessage("Pickup and drop points are not available for this GSRTC service. Please contact GSRTC.")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", (d, w) -> {
+                            d.dismiss();
+
+                            // 3. Redirect to Home
+                            Intent intent = new Intent(PackageFareDetails.this, Language_Select.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        })
+                        .show();
             }
         });
     }
