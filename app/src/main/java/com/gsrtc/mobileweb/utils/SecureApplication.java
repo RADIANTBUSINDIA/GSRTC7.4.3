@@ -82,7 +82,7 @@ public class SecureApplication extends AppCompatActivity {
             securityWarnings.append("⚠ USB Debugging is enabled!\n");
         }
 
-      //  securityWarnings = new StringBuilder();
+      securityWarnings = new StringBuilder();
 
 
         if (securityWarnings.length() > 0) {

@@ -383,8 +383,9 @@ public class BaseNavigationDrawerActivity extends AppCompatActivity
             Log.e("Security", "USB Debugging is enabled!");
             securityWarnings.append("⚠ USB Debugging is enabled!\n");
         }
+
        //to run in debugmode
-      //  securityWarnings = new StringBuilder();
+      securityWarnings = new StringBuilder();
 
         if (securityWarnings.length() > 0) {
             showSecurityDialog(context, securityWarnings.toString());
