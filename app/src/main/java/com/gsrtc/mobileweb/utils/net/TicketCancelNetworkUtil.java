@@ -214,6 +214,7 @@ public class TicketCancelNetworkUtil extends SoapClientUtil {
     public interface GetFullCancellationTransactionDetailsCallback{
         void onSuccess(GetFullCancellationTransactionDetailsResponse response);
         void onError(Exception e);
+        //
     }
 
     public static void ConfirmFullCancellation (BookingCancellation booking, final ConfirmFullCancellationCallback mCallback){
