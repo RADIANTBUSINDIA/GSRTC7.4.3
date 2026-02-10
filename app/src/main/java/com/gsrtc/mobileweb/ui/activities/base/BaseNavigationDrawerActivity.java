@@ -385,7 +385,7 @@ public class BaseNavigationDrawerActivity extends AppCompatActivity
         }
 
        //to run in debugmode
-      securityWarnings = new StringBuilder();
+      //securityWarnings = new StringBuilder();
 
         if (securityWarnings.length() > 0) {
             showSecurityDialog(context, securityWarnings.toString());
