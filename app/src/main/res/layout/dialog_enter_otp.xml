@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="@drawable/otp_dialog_bg_half">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/txtOtpTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enter OTP"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/naviy"
+            android:gravity="center"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/txtOtpDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please enter the 6-digit OTP sent to your mobile number"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:gravity="center"
+            android:layout_marginBottom="20dp" />
+
+        <!-- OTP Input -->
+        <EditText
+            android:id="@+id/etOtp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Enter 6-digit OTP"
+            android:inputType="number"
+            android:maxLength="6"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:background="@drawable/otp_edittext_bg"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCancelOtp"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="Cancel"
+                android:textAllCaps="false"
+                android:background="@drawable/otp_cancel_btn"
+                android:textColor="@color/naviy" />
+
+            <View
+                android:layout_width="12dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btnVerifyOtp"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="Verify"
+                android:textAllCaps="false"
+                android:background="@drawable/otp_verify_btn"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <!-- OTP Error Message -->
+        <TextView
+            android:id="@+id/txtOtpError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wrong OTP entered"
+            android:textSize="14sp"
+            android:textColor="#D32F2F"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_marginTop="12dp" />
+
+    </LinearLayout>
+</ScrollView>
