@@ -1,12 +1,20 @@
+# IntelliJ / Android Studio
 *.iml
-.gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
-.DS_Store
-/build
-/captures
-.externalNativeBuild
+.idea/
+.gradle/
 
-# Project exclude paths
+# Local Android config
+/local.properties
+
+# macOS junk (IMPORTANT)
+.DS_Store
+._*
+__MACOSX/
+
+# Android / Gradle build outputs
+/build/
+/captures/
+.externalNativeBuild/
+
+# Module-specific build
 /pgsdkv5ax/build/
