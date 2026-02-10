@@ -30,6 +30,12 @@ public class SearchParams implements Serializable{
     String divyangPercentage;
     String divyangWithHelperIds;
 
+    //divyang helpers added by abhi tarun
+    String divyangName;
+    String divyangGender;
+    String divyangDob;
+    String divyangMobile;
+
     PackageBookingModel packageDetails;
 
     public PackageBookingModel getPackageDetails() {
@@ -213,4 +219,39 @@ public class SearchParams implements Serializable{
     public int getAdultFemaleCount() {
         return adultFemaleCount;
     }
+
+    public String getDivyangName() {
+        return divyangName;
+    }
+
+    public void setDivyangName(String divyangName) {
+        this.divyangName = divyangName;
+    }
+
+    public String getDivyangGender() {
+        return divyangGender;
+    }
+
+    public void setDivyangGender(String divyangGender) {
+        this.divyangGender = divyangGender;
+    }
+
+    public String getDivyangDob() {
+        return divyangDob;
+    }
+
+    public void setDivyangDob(String divyangDob) {
+        this.divyangDob = divyangDob;
+    }
+
+    public String getDivyangMobile() {
+        return divyangMobile;
+    }
+
+    public void setDivyangMobile(String divyangMobile) {
+        this.divyangMobile = divyangMobile;
+    }
+
+
+
 }

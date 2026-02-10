@@ -1,6 +1,7 @@
 package com.gsrtc.mobileweb.ui.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -56,6 +57,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends BaseNavigationDrawerActivity  {
+
+
+    private static boolean isImportantPopupShownInSession = false;
 
     ViewHolder vHolder;
     RelativeLayout mLinLayHome;
@@ -166,6 +170,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
         boolean isInserted = mDb.insertDivyangMaster();
 
         setupViews();
+        showImportantInfoPopupOnce();
     }
 
     public void setupViews(){
@@ -256,16 +261,24 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
                 startActivity(i);
             }
         });
-        vHolder.mLinearLayoutLinkBooking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(HomeActivity.this, Neraby_location.class);
-                Bundle data = new Bundle();
-                data.putString("textlang", textlang);
-                i.putExtras(data);
-                startActivity(i);
-            }
-        });
+//        vHolder.mLinearLayoutLinkBooking.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent i = new Intent(HomeActivity.this, Neraby_location.class);
+//                Bundle data = new Bundle();
+//                data.putString("textlang", textlang);
+//                i.putExtras(data);
+//                startActivity(i);
+//            }
+//        });
+
+        // Disable Near Location click & redirect
+        vHolder.mLinearLayoutLinkBooking.setOnClickListener(null);
+        vHolder.mLinearLayoutLinkBooking.setClickable(false);
+        vHolder.mLinearLayoutLinkBooking.setEnabled(false);
+
+
+
         vHolder.mLinearLayoutTrackTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -348,8 +361,54 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
                 startActivity(i);
             }
         });
+}
+        //pop up one added by abhi tarun on 30-01-2026
 
+    private void showImportantInfoPopupOnce() {
+        if (isImportantPopupShownInSession) return;
+
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_important_info);
+        dialog.setCancelable(true);
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setDimAmount(0.5f);
+        }
+
+        dialog.setOnDismissListener(d -> {
+            isImportantPopupShownInSession = true;
+        });
+
+        ImageView btnClose = dialog.findViewById(R.id.btnClose);
+        btnClose.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setLayout(
+                    (int) (getResources().getDisplayMetrics().widthPixels * 0.92),
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        }
     }
+
+
+//    private void markPopupAsShown() {
+//        getApplicationContext()
+//                .getSharedPreferences("GSRTC_PREF", MODE_PRIVATE)
+//                .edit()
+//                .putBoolean("IMPORTANT_INFO_SHOWN", true)
+//                .apply();
+//    }
+
+//    private boolean isPopupAlreadyShown() {
+//        return getApplicationContext()
+//                .getSharedPreferences("GSRTC_PREF", MODE_PRIVATE)
+//                .getBoolean("IMPORTANT_INFO_SHOWN", false);
+//    }
+
+//pop -up window ended here
 
     private class ViewHolder{
 

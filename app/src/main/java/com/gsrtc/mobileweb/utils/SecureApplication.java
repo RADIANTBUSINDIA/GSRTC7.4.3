@@ -81,7 +81,7 @@ public class SecureApplication extends AppCompatActivity {
             Log.e("Security", "USB Debugging is enabled!");
             securityWarnings.append("⚠ USB Debugging is enabled!\n");
         }
-
+//to run in debug mode
       securityWarnings = new StringBuilder();
 
 

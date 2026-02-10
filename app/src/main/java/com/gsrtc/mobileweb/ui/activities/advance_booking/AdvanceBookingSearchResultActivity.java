@@ -1156,6 +1156,13 @@ public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActi
                     count = getDivyang[14];
                     otp = getDivyang[15];
 
+                    // 🔥 STEP 2 — STORE DIVYANG PERSONAL DETAILS
+                    searchParams.setDivyangName(divName);
+                    searchParams.setDivyangGender(gender);
+                    searchParams.setDivyangDob(dob);
+                    searchParams.setDivyangMobile(mobile);
+
+
 
                     System.out.println("DivResponse:" + status + "|" + divName + "|" + address1 + "|" + address2 + "|" + address3 + "|" + address4 + "|" + div_id + "|" + gender + "|" + dob + "|" + place + "|" + type + "|" + percentage + "|" + expired + "|" + mobile + "|" + count +"|"+otp);
 

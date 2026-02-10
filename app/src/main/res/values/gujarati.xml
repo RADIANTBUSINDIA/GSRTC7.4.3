@@ -224,6 +224,9 @@
     /**Trasaction History**/
     <string name="transhis_title">વ્યવહારનો ઇતિહાસ</string>
     <string name="transhis_enter_email">ઇમેઇલ આઈડી દાખલ કરો</string>
+    <string name="transhis_enter_mobile">મોબાઇલ નંબર દાખલ કરો</string>
+    <string name="transhis_mobile">મોબાઇલ નંબર</string>
+
     <string name="transhis_email">ઇમેઇલ આઈડી</string>
     <string name="transhis_date">તારીખ</string>
     <string name="transhis_fromdate">તારીખથી</string>

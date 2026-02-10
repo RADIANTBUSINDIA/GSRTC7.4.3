@@ -111,7 +111,7 @@ public class TicketCancelNetworkUtil extends SoapClientUtil {
                 "            </arg0>";
         String arg1 = "";
 
-        fetchResponseString("GetFullCancellationDetails", arg0,arg1,  new BaseDefaultHttpCallback() {
+        fetchResponseString("GetFullCancellationDetailsNew", arg0,arg1,  new BaseDefaultHttpCallback() {
             @Override
             public void onError(Exception e) {
                 mCallback.onError(e);
@@ -140,8 +140,8 @@ public class TicketCancelNetworkUtil extends SoapClientUtil {
                     } else {
                         JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
                         JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
-                        JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetFullCancellationDetails");
-                        JSONObject json = requiredResponse.getJSONObject("GetFullCancellationDetails");
+                        JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetFullCancellationDetailsNew");
+                        JSONObject json = requiredResponse.getJSONObject("GetFullCancellationDetailsNew");
                         responseModel = JacksonUtil.getMapper().readValue(json.toString(), new TypeReference<GetFullCancellationDetailsResponse>() {
                         });
                         mCallback.onSuccess(responseModel);
@@ -311,7 +311,7 @@ public class TicketCancelNetworkUtil extends SoapClientUtil {
                 "            </arg0>";
         String arg1 = "";
 
-        fetchResponseString("GetPartialCancellationDetails", arg0,arg1,  new BaseDefaultHttpCallback() {
+        fetchResponseString("GetPartialCancellationDetailsNew", arg0,arg1,  new BaseDefaultHttpCallback() {
             @Override
             public void onError(Exception e) {
                 mCallback.onError(e);
@@ -324,8 +324,8 @@ public class TicketCancelNetworkUtil extends SoapClientUtil {
                 try {
                     JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
                     JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
-                    JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetPartialCancellationDetails");
-                    JSONObject json = requiredResponse.getJSONObject("GetPartialCancellationDetails");
+                    JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetPartialCancellationDetailsNewy");
+                    JSONObject json = requiredResponse.getJSONObject("GetPartialCancellationDetailsNew");
                     responseModel = JacksonUtil.getMapper().readValue(json.toString(), new TypeReference<GetPartialCancellationDetailsResponse>() {});
 
                 } catch (JSONException e) {
@@ -543,6 +543,68 @@ public class TicketCancelNetworkUtil extends SoapClientUtil {
         void onSuccess(String response);
         void onError(Exception e);
     }
+    public static void GetCommonOTP(
+            String mobileNo,
+            final GetCommonOTPCallback mCallback) {
+
+        // Backend expects SIMPLE arg0
+        String arg0 = "<arg0>" + mobileNo + "</arg0>";
+        String arg1 = "";
+
+        fetchResponseString("GetCommonOTP", arg0, arg1,
+                new BaseDefaultHttpCallback() {
+
+                    @Override
+                    public void onError(Exception e) {
+                        mCallback.onError(e);
+                    }
+
+                    @Override
+                    public void onSuccess(String response) {
+
+                        System.out.println(response);
+
+                        String otp = null;
+
+                        try {
+                            JSONObject responseJson =
+                                    XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+
+                            JSONObject responseBody =
+                                    XMLtoJSONResponseParser.getResponseBody(responseJson);
+
+                            JSONObject requiredResponse =
+                                    XMLtoJSONResponseParser.getRequiredResponse(
+                                            responseBody, "GetCommonOTP");
+
+                            Object jsonOb = requiredResponse.opt("GetCommonOTP");
+
+                            if (jsonOb != null) {
+                                otp = jsonOb.toString(); // 🔥 ACTUAL OTP
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        mCallback.onSuccess(otp);
+                    }
+                });
+    }
+
+
+    public interface GetCommonOTPCallback {
+        void onSuccess(String otp);
+        void onError(Exception e);
+    }
+
+
+
+
+
+
+
+
 
 
 }

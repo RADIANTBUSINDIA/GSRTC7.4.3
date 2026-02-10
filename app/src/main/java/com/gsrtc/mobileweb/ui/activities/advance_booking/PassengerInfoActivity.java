@@ -75,6 +75,11 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
 
         textlang =onwardBooking.getTextlanguage().trim();
         passengercount = onwardBooking.getSearchParams().getNumOfPassengers();
+        boolean isDivyang =
+                onwardBooking.getSearchParams() != null &&
+                        ("Divyang".equalsIgnoreCase(onwardBooking.getSearchParams().getDivyangBooking())
+                                || "Divyang with Helper".equalsIgnoreCase(onwardBooking.getSearchParams().getDivyangBooking()));
+
 
         if (passengercount == 1) {
             passengerNameA = (EditText) findViewById(R.id.passenger_name_one);
@@ -445,8 +450,52 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
             confirm_btn.setText(R.string.pass_cnfm_btn);
         }
 
+        // DIVYANG AUTO FILL SECTION
+        // =========================
+        if (isDivyang) {
+
+            if (passengerNameA != null &&
+                    onwardBooking.getSearchParams().getDivyangName() != null) {
+
+                passengerNameA.setText(
+                        onwardBooking.getSearchParams().getDivyangName());
+                lockEditText(passengerNameA);
+            }
+
+            if (ageA != null &&
+                    onwardBooking.getSearchParams().getDivyangDob() != null) {
+
+                int age = calculateAgeFromDob(
+                        onwardBooking.getSearchParams().getDivyangDob());
+                ageA.setText(String.valueOf(age));
+                lockEditText(ageA);
+            }
+
+            if (genderA != null &&
+                    onwardBooking.getSearchParams().getDivyangGender() != null) {
+
+                if (onwardBooking.getSearchParams()
+                        .getDivyangGender().equalsIgnoreCase("Male")) {
+                    genderA.setSelection(0);
+                } else {
+                    genderA.setSelection(1);
+                }
+                lockSpinner(genderA);
+            }
+
+            if (phone != null &&
+                    onwardBooking.getSearchParams().getDivyangMobile() != null) {
+
+                phone.setText(
+                        onwardBooking.getSearchParams().getDivyangMobile());
+                lockEditText(phone);
+            }
+        }
+
+
         setupViews();
     }
+
 
     public void setupViews() {
 
@@ -1253,6 +1302,42 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
         }
         goNext();
     }
+    private int calculateAgeFromDob(String dob) {
+        try {
+            java.text.SimpleDateFormat sdf =
+                    new java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault());
+            java.util.Date birthDate = sdf.parse(dob);
+
+            java.util.Calendar today = java.util.Calendar.getInstance();
+            java.util.Calendar birth = java.util.Calendar.getInstance();
+            birth.setTime(birthDate);
+
+            int age = today.get(java.util.Calendar.YEAR) - birth.get(java.util.Calendar.YEAR);
+
+            if (today.get(java.util.Calendar.DAY_OF_YEAR)
+                    < birth.get(java.util.Calendar.DAY_OF_YEAR)) {
+                age--;
+            }
+            return age;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    private void lockEditText(EditText et) {
+        et.setFocusable(false);
+        et.setFocusableInTouchMode(false);
+        et.setClickable(false);
+        et.setLongClickable(false);
+        et.setCursorVisible(false);
+        et.setInputType(InputType.TYPE_NULL);
+    }
+
+    private void lockSpinner(Spinner sp) {
+        sp.setEnabled(false);
+    }
+
+
 
     public void goNext() {
         Bundle extras = new Bundle();

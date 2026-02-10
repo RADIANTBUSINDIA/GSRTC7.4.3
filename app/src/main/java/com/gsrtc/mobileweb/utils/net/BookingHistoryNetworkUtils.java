@@ -21,53 +21,77 @@ import com.gsrtc.mobileweb.utils.XMLtoJSONResponseParser;
  */
 
 public class BookingHistoryNetworkUtils extends SoapClientUtil {
-    public static void GetViewBookingHistoryDetails(BookingHistory booking, final GetViewBookingHistoryDetailsCallback mCallback) {
-        String arg0 = "<arg0> \n" +
-                "<counterCode>" + AppConstants.CREDENTIALS.COUNTER_CODE + "</counterCode> \n" +
-                "<emailID>" + booking.bookingHistorySearchParam.email + "</emailID> \n" +
-                "<fromDate>" + booking.bookingHistorySearchParam.fromDate + "</fromDate> \n" +
-                "<status>" + booking.bookingHistorySearchParam.status + "</status> \n" +
-                "<toDate>" + booking.bookingHistorySearchParam.toDate + "</toDate> \n" +
-                "<userName>" + AppConstants.CREDENTIALS.USER_NAME + "</userName> \n" +
-                "</arg0> ";
+    public static void GetViewBookingHistoryDetails(
+            BookingHistory booking,
+            final GetViewBookingHistoryDetailsCallback mCallback) {
+
+        String arg0 =
+                "<arg0> \n" +
+                        "<counterCode>" + AppConstants.CREDENTIALS.COUNTER_CODE + "</counterCode> \n" +
+                        "<emailID>" + booking.bookingHistorySearchParam.email + "</emailID> \n" +
+                        "<mobileNo>" + booking.bookingHistorySearchParam.mobileNo + "</mobileNo> \n" +  // 🔥 ADDED
+                        "<fromDate>" + booking.bookingHistorySearchParam.fromDate + "</fromDate> \n" +
+                        "<status>" + booking.bookingHistorySearchParam.status + "</status> \n" +
+                        "<toDate>" + booking.bookingHistorySearchParam.toDate + "</toDate> \n" +
+                        "<userName>" + AppConstants.CREDENTIALS.USER_NAME + "</userName> \n" +
+                        "</arg0>";
+
         String arg1 = "";
 
-        fetchResponseString("GetViewBookingHistoryDetails", arg0, arg1, new BaseDefaultHttpCallback() {
-            @Override
-            public void onError(Exception e) {
-                mCallback.onError(e);
-            }
+        fetchResponseString(
+                "GetViewBookingHistoryDetailsNew",
+                arg0,
+                arg1,
+                new BaseDefaultHttpCallback() {
 
-            @Override
-            public void onSuccess(String response) {
-                System.out.println(response);
-
-                GetViewBookingHistoryDetailsResponse[] responseModel = null;
-                try {
-                    JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
-                    JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
-                    JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetViewBookingHistoryDetails");
-                    Object jsonOb = requiredResponse.get("GetViewBookingHistoryDetails");
-                    String jsonString = "";
-                    if (jsonOb instanceof JSONObject) {
-                        jsonString = ((JSONObject) jsonOb).toString();
-                    } else if (jsonOb instanceof JSONArray) {
-                        jsonString = ((JSONArray) jsonOb).toString();
+                    @Override
+                    public void onError(Exception e) {
+                        mCallback.onError(e);
                     }
-                    responseModel = JacksonUtil.getMapper().readValue(jsonString, new TypeReference<GetViewBookingHistoryDetailsResponse[]>() {
-                    });
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                mCallback.onSuccess(responseModel);
-            }
+                    @Override
+                    public void onSuccess(String response) {
+                        System.out.println(response);
 
+                        GetViewBookingHistoryDetailsResponse[] responseModel = null;
 
-        });
+                        try {
+                            JSONObject responseJson =
+                                    XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+
+                            JSONObject responseBody =
+                                    XMLtoJSONResponseParser.getResponseBody(responseJson);
+
+                            JSONObject requiredResponse =
+                                    XMLtoJSONResponseParser.getRequiredResponse(
+                                            responseBody,
+                                            "GetViewBookingHistoryDetailsNew");
+
+                            Object jsonOb =
+                                    requiredResponse.get("GetViewBookingHistoryDetailsNew");
+
+                            String jsonString = "";
+
+                            if (jsonOb instanceof JSONObject) {
+                                jsonString = ((JSONObject) jsonOb).toString();
+                            } else if (jsonOb instanceof JSONArray) {
+                                jsonString = ((JSONArray) jsonOb).toString();
+                            }
+
+                            responseModel = JacksonUtil.getMapper().readValue(
+                                    jsonString,
+                                    new TypeReference<GetViewBookingHistoryDetailsResponse[]>() {
+                                    });
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        mCallback.onSuccess(responseModel);
+                    }
+                });
     }
+
 
     public interface GetViewBookingHistoryDetailsCallback {
         void onSuccess(GetViewBookingHistoryDetailsResponse[] response);
@@ -291,5 +315,64 @@ public class BookingHistoryNetworkUtils extends SoapClientUtil {
         void onSuccess(String response);
         void onError(Exception e);
     }
+
+    public static void GetCommonOTP(
+            String mobileNo,
+            final GetCommonOTPCallback mCallback) {
+
+        // ✅ SIMPLE STRING PARAM
+        String arg0 = "<arg0>" + mobileNo + "</arg0>";
+        String arg1 = "";
+
+        fetchResponseString("GetCommonOTP", arg0, arg1,
+                new BaseDefaultHttpCallback() {
+
+                    @Override
+                    public void onError(Exception e) {
+                        mCallback.onError(e);
+                    }
+
+                    @Override
+                    public void onSuccess(String response) {
+                        System.out.println(response);
+
+                        String otp = null;
+
+                        try {
+                            JSONObject responseJson =
+                                    XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+
+                            JSONObject responseBody =
+                                    XMLtoJSONResponseParser.getResponseBody(responseJson);
+
+                            JSONObject requiredResponse =
+                                    XMLtoJSONResponseParser.getRequiredResponse(
+                                            responseBody, "GetCommonOTP");
+
+                            Object jsonOb = requiredResponse.opt("GetCommonOTP");
+
+                            if (jsonOb != null) {
+                                otp = jsonOb.toString(); // 🔥 THIS IS THE OTP
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        // ✅ Return OTP (null if failed)
+                        mCallback.onSuccess(otp);
+                    }
+                });
+    }
+
+    public interface GetCommonOTPCallback {
+        void onSuccess(String otp);
+        void onError(Exception e);
+    }
+
+
+
+
+
 
 }

@@ -11,124 +11,128 @@
     android:paddingTop="10dp"
     android:weightSum="1"
     tools:context="com.gsrtc.mobileweb.ui.activities.ticket_cancellation.TicketCancellationActivity">
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <!-- Header -->
             <TextView
                 android:id="@+id/header_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Cancel Ticket"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:layout_gravity="center"
                 android:textColor="@color/white"
                 android:fontFamily="@font/gotham"
-                android:layout_marginBottom="10dp"
-                android:text="Cancel Ticket"/>
+                android:layout_marginBottom="10dp"/>
+
             <View
                 android:id="@+id/second"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_below="@+id/top"
                 android:layout_marginBottom="15dp"
                 android:background="@color/white" />
 
+            <!-- Content -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <!-- PNR -->
                 <TextView
                     android:id="@+id/txtpnr"
-                    android:text="PNR No."
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white" />
+                    android:text="PNR No."
+                    android:textColor="@color/white"/>
+
                 <EditText
                     android:id="@+id/pnr"
-                    android:theme="@style/EditTextStyle"
-                    android:singleLine="true"
-                    android:textColorHint="@color/hint"
-                    android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:theme="@style/EditTextStyle"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/hint"
                     android:hint="PNR No"/>
+
+                <!-- Email -->
                 <TextView
                     android:id="@+id/txtemail"
-                    android:text="Email ID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Email ID"
                     android:textColor="@color/white"/>
+
                 <EditText
                     android:id="@+id/email"
-                    android:theme="@style/EditTextStyle"
                     android:layout_width="match_parent"
-                    android:inputType="textEmailAddress"
                     android:layout_height="wrap_content"
+                    android:theme="@style/EditTextStyle"
+                    android:inputType="textEmailAddress"
                     android:singleLine="true"
-                    android:textColorHint="@color/hint"
                     android:textColor="@color/white"
+                    android:textColorHint="@color/hint"
                     android:hint="Email"/>
+
+                <!-- Mobile -->
                 <TextView
                     android:id="@+id/txtmobile"
-                    android:text="Mobile No"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Mobile No"
                     android:textColor="@color/white"/>
+
                 <EditText
                     android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:theme="@style/EditTextStyle"
                     android:inputType="phone"
-                    android:singleLine="true"
                     android:maxLength="13"
-                    android:textColorHint="@color/hint"
-                    android:textColor="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Mobile No"/>
-                <TextView
-                    android:id="@+id/txtpass"
-                    android:text="Txn Password"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"/>
-                <EditText
-                    android:id="@+id/text_password"
-                    android:theme="@style/EditTextStyle"
-                    android:inputType="textPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:textColorHint="@color/hint"
                     android:textColor="@color/white"
-                    android:hint="Transaction Password"/>
+                    android:textColorHint="@color/hint"
+                    android:hint="Mobile No"/>
+
+                <!-- Reference Number (Hidden) -->
                 <TextView
-                    android:text="Reference Number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Reference Number"
                     android:visibility="gone"/>
+
                 <EditText
                     android:id="@+id/wsRefNo"
-                    android:theme="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:theme="@style/EditTextStyle"
                     android:visibility="gone"/>
-            </LinearLayout>
 
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <!-- Submit -->
     <Button
         android:id="@+id/submitBtn"
-       android:background="@drawable/btn_shape"
-        android:textColor="@color/naviy"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Submit"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:background="@drawable/btn_shape"
+        android:text="Submit"
+        android:textColor="@color/naviy"
         android:textStyle="bold"/>
+
 </LinearLayout>

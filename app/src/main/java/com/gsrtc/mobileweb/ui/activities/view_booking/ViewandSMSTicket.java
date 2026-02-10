@@ -1,6 +1,7 @@
 package com.gsrtc.mobileweb.ui.activities.view_booking;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,229 +24,328 @@ import com.gsrtc.mobileweb.utils.customdialog.CustomisedProgressDialog;
 import com.gsrtc.mobileweb.utils.net.BookingHistoryNetworkUtils;
 
 public class ViewandSMSTicket extends BaseNavigationDrawerActivity {
-    PrintSmsData ticketsms;
-    ViewHolder holder;
-    private String email,mobile;
-    String textlang;
+
+    private PrintSmsData ticketsms;
+    private ViewHolder holder;
+    private String email, mobile;
+    private String textlang;
+
+    // 🔥 STORE SERVER OTP
+    private String serverOtp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentViewDrawer(R.layout.activity_view_smsticket);
 
-        Bundle mBun = getIntent().getExtras();
-        textlang =mBun.getString("textlang");
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            textlang = bundle.getString("textlang");
+        }
 
         setup();
     }
 
     private void setup() {
-
         ticketsms = new PrintSmsData();
         ticketsms.printSmsParam = new PrintSmsParam();
         holder = new ViewHolder(this);
+
         holder.submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onSubmitBtn();
 
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm =
+                        (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(holder.email.getWindowToken(), 0);
                 imm.hideSoftInputFromWindow(holder.mobile.getWindowToken(), 0);
-
             }
         });
     }
 
-
     private void onSubmitBtn() {
 
-        ticketsms.printSmsParam.emailID = holder.email.getText().toString();
-        ticketsms.printSmsParam.mobileNo = holder.mobile.getText().toString();
+        email = holder.email.getText().toString().trim();
+        mobile = holder.mobile.getText().toString().trim();
 
-        email=ticketsms.printSmsParam.emailID;
-        mobile=ticketsms.printSmsParam.mobileNo;
+        ticketsms.printSmsParam.emailID = email;
+        ticketsms.printSmsParam.mobileNo = mobile;
 
-        if(email.equalsIgnoreCase("") && mobile.equalsIgnoreCase("")){
-            ActivityUtil.showToast(this, "Please Enter valid details");
-            return;
-        }
-        if(!holder.email.getText().toString().isEmpty() && !ValidationUtil.isValidEmail(holder.email.getText())) {
-            ActivityUtil.showToast(this, "Please enter valid Email");
+        if (email.isEmpty() && mobile.isEmpty()) {
+            ActivityUtil.showToast(this,
+                    "Please enter Email ID or Mobile Number");
             return;
         }
 
-        if(!holder.email.getText().toString().isEmpty() && !holder.mobile.getText().toString().isEmpty()){
-            ActivityUtil.showToast(this, "Please Enter EmailID or Mobile Number ");
+        if (!email.isEmpty() && !mobile.isEmpty()) {
+            ActivityUtil.showToast(this,
+                    "Please enter only Email OR Mobile Number");
             return;
         }
-        if(!holder.email.getText().toString().isEmpty() && mobile.equalsIgnoreCase("")){
+
+        /* ================= EMAIL FLOW (NO OTP) ================= */
+        if (!email.isEmpty()) {
+
+            if (!ValidationUtil.isValidEmail(holder.email.getText())) {
+                ActivityUtil.showToast(this,
+                        "Please enter valid Email");
+                return;
+            }
+
             goEmail();
-        }
-        if(!holder.mobile.getText().toString().isEmpty() && !ValidationUtil.isValidPhone(holder.mobile.getText())) {
-            ActivityUtil.showToast(this, "Please enter valid Mobile Number");
             return;
         }
-        if(email.equalsIgnoreCase("") && mobile!=null){
 
-            if (!ValidationUtil.isValidPhone(holder.mobile.getText().toString())) {
-                ActivityUtil.showToast(this, "Please enter valid Mobile Number");
+        /* ================= MOBILE FLOW ================= */
+        if (!mobile.isEmpty()) {
+
+            if (!ValidationUtil.isValidPhone(holder.mobile.getText())) {
+                ActivityUtil.showToast(this,
+                        "Please enter valid Mobile Number");
                 return;
             }
-            else if (holder.mobile.getText().length()<10) {
-                ActivityUtil.showToast(this, "Please enter valid Mobile Number");
+
+            if (mobile.length() < 10 || mobile.length() > 13) {
+                ActivityUtil.showToast(this,
+                        "Please enter valid Mobile Number");
                 return;
             }
-            else if(holder.mobile.getText().toString().trim().length()==13)
-            {
-                String mobnum=holder.mobile.getText().toString();
 
-                if (mobnum.startsWith("+"))
-                {
-                    if (mobnum.length() == 13)
-                    {
-                        String str_getMOBILE = mobnum.substring(3);
-                        holder.mobile.setText(str_getMOBILE);
-                    }
-                }
-                else
-                {
-                    ActivityUtil.showToast(this, "Please enter valid Mobile Number");
-                    return;
-                }
-            }
-            else if(holder.mobile.getText().toString().trim().length()>10)
-            {
-                ActivityUtil.showToast(this, "Please enter valid Mobile Number");
-                return;
-            }
-            else if(holder.mobile.getText().toString().trim().length()==10) {
-
-                String mobnum = holder.mobile.getText().toString();
-
-                if (mobnum.startsWith("+")) {
-                    ActivityUtil.showToast(this, "Please enter valid Mobile Number");
-                    return;
-                }
-            }
-
-            goMobile();
-
+            // 🔥 FIRST CHECK BOOKINGS
+            checkMobileHasBookings();
         }
     }
+
+    /* ================= CHECK BOOKINGS FIRST ================= */
+
+    private void checkMobileHasBookings() {
+
+        CustomisedProgressDialog.SHOW_CUST_DIA(
+                ViewandSMSTicket.this,
+                "Checking bookings..."
+        );
+
+        BookingHistoryNetworkUtils.GetPrintTicketMobile(
+                ticketsms,
+                new BookingHistoryNetworkUtils.GetPrintTicketMobileCallback() {
+
+                    @Override
+                    public void onSuccess(GetPrintSmsDetailslResponse[] response) {
+
+                        CustomisedProgressDialog.STOP_CUST_DIA();
+
+                        // ❌ NO BOOKINGS → STOP (NO OTP)
+                        if (response == null || response.length == 0) {
+                            ActivityUtil.showToast(
+                                    ViewandSMSTicket.this,
+                                    "No Transaction Found!"
+                            );
+                            return;
+                        }
+
+                        // ✅ BOOKINGS EXIST → SAVE & SEND OTP
+                        ticketsms.getPrintSmsDetailslResponses = response;
+                        sendOtpToMobile();
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        CustomisedProgressDialog.STOP_CUST_DIA();
+                        ActivityUtil.showErrorToast(
+                                ViewandSMSTicket.this, e);
+                    }
+                });
+    }
+
+    /* ================= SEND OTP ================= */
+
+    private void sendOtpToMobile() {
+
+        CustomisedProgressDialog.SHOW_CUST_DIA(
+                ViewandSMSTicket.this,
+                "Sending OTP..."
+        );
+
+        BookingHistoryNetworkUtils.GetCommonOTP(
+                mobile,
+                new BookingHistoryNetworkUtils.GetCommonOTPCallback() {
+
+                    @Override
+                    public void onSuccess(String otp) {
+
+                        CustomisedProgressDialog.STOP_CUST_DIA();
+
+                        if (otp != null && otp.length() == 6) {
+                            serverOtp = otp;
+                            showOtpDialog();
+                        } else {
+                            ActivityUtil.showToast(
+                                    ViewandSMSTicket.this,
+                                    "Failed to send OTP");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        CustomisedProgressDialog.STOP_CUST_DIA();
+                        ActivityUtil.showErrorToast(
+                                ViewandSMSTicket.this, e);
+                    }
+                });
+    }
+
+    /* ================= OTP DIALOG ================= */
+
+    private void showOtpDialog() {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_enter_otp);
+        dialog.setCancelable(false);
+
+        EditText etOtp = dialog.findViewById(R.id.etOtp);
+        Button btnVerify = dialog.findViewById(R.id.btnVerifyOtp);
+        Button btnCancel = dialog.findViewById(R.id.btnCancelOtp);
+        TextView txtOtpError = dialog.findViewById(R.id.txtOtpError);
+
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        btnVerify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String enteredOtp = etOtp.getText().toString().trim();
+                txtOtpError.setVisibility(View.GONE);
+
+                if (enteredOtp.isEmpty()) {
+                    txtOtpError.setText("Please enter OTP");
+                    txtOtpError.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                if (enteredOtp.length() != 6) {
+                    txtOtpError.setText("OTP must be 6 digits");
+                    txtOtpError.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                if (!enteredOtp.equals(serverOtp)) {
+                    txtOtpError.setText("Wrong OTP entered");
+                    txtOtpError.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                // ✅ OTP SUCCESS
+                dialog.dismiss();
+                goMobile();
+            }
+        });
+
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+
+        dialog.getWindow().setSoftInputMode(
+                android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+
+        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9);
+
+        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.5)
+                + (int) (140 * getResources().getDisplayMetrics().density);
+
+        dialog.getWindow().setLayout(width, height);
+
+
+    }
+
+    /* ================= NAVIGATION ================= */
+
     public void goMobile() {
-        if (ticketsms.getPrintSmsDetailslResponses == null) {
-            getTicketMobile();
+
+        if (ticketsms.getPrintSmsDetailslResponses == null ||
+                ticketsms.getPrintSmsDetailslResponses.length == 0) {
+
+            ActivityUtil.showToast(this, "No Transaction Found!");
             return;
         }
-        else {
-            CustomisedProgressDialog.STOP_CUST_DIA();
-        }
+
         Bundle bundle = new Bundle();
         bundle.putString("textlang", textlang);
-        bundle.putSerializable(AppConstants.INTENT_EXTRA.PRINT_SMS_TICKET, ticketsms);
+        bundle.putSerializable(
+                AppConstants.INTENT_EXTRA.PRINT_SMS_TICKET, ticketsms);
+
         ActivityUtil.openNewActivity(this, TicketData.class, bundle);
     }
 
     public void goEmail() {
+
         if (ticketsms.getPrintSmsDetailslResponses == null) {
             getTicketEmail();
             return;
         }
-        else {
-            CustomisedProgressDialog.STOP_CUST_DIA();
-        }
+
         Bundle bundle = new Bundle();
         bundle.putString("textlang", textlang);
-        bundle.putSerializable(AppConstants.INTENT_EXTRA.PRINT_SMS_TICKET, ticketsms);
+        bundle.putSerializable(
+                AppConstants.INTENT_EXTRA.PRINT_SMS_TICKET, ticketsms);
+
         ActivityUtil.openNewActivity(this, TicketData.class, bundle);
     }
 
-    /**calling print ticket email **/
-
     private void getTicketEmail() {
 
-        CustomisedProgressDialog.SHOW_CUST_DIA(ViewandSMSTicket.this, "Please wait loading...");
+        CustomisedProgressDialog.SHOW_CUST_DIA(this,
+                "Please wait loading...");
 
-        BookingHistoryNetworkUtils.GetPrintTicketEmail(ticketsms, new BookingHistoryNetworkUtils.GetPrintTicketEmailCallback() {
-            @Override
-            public void onSuccess(GetPrintSmsDetailslResponse[] response) {
-                if (response != null) {
-                    if(response.length == 0){
-                        CustomisedProgressDialog.STOP_CUST_DIA();
-                        ActivityUtil.showToast(ViewandSMSTicket.this, "No Transaction Found!");
+        BookingHistoryNetworkUtils.GetPrintTicketEmail(
+                ticketsms,
+                new BookingHistoryNetworkUtils.GetPrintTicketEmailCallback() {
+
+                    @Override
+                    public void onSuccess(
+                            GetPrintSmsDetailslResponse[] response) {
+
+                        if (response != null && response.length > 0) {
+                            ticketsms.getPrintSmsDetailslResponses = response;
+                            goEmail();
+                        } else {
+                            CustomisedProgressDialog.STOP_CUST_DIA();
+                            ActivityUtil.showToast(
+                                    ViewandSMSTicket.this,
+                                    "No Transaction Found!");
+                        }
                     }
-                    ticketsms.getPrintSmsDetailslResponses = response;
-                    goEmail();
-                } else {
-                    ActivityUtil.showToast(ViewandSMSTicket.this, "No Transaction Found!");
-                    CustomisedProgressDialog.STOP_CUST_DIA();
-                }
-            }
 
-            @Override
-            public void onError(Exception e) {
-                CustomisedProgressDialog.STOP_CUST_DIA();
-                ActivityUtil.showErrorToast(ViewandSMSTicket.this, e);
-            }
-        });
-    }
-
-    /**calling print ticket Mobile **/
-
-    private void getTicketMobile() {
-
-        CustomisedProgressDialog.SHOW_CUST_DIA(ViewandSMSTicket.this, "Please wait loading...");
-
-        BookingHistoryNetworkUtils.GetPrintTicketMobile(ticketsms, new BookingHistoryNetworkUtils.GetPrintTicketMobileCallback() {
-            @Override
-            public void onSuccess(GetPrintSmsDetailslResponse[] response) {
-                if (response != null) {
-                    if(response.length == 0){
+                    @Override
+                    public void onError(Exception e) {
                         CustomisedProgressDialog.STOP_CUST_DIA();
-                        ActivityUtil.showToast(ViewandSMSTicket.this, "No Transaction Found!");
+                        ActivityUtil.showErrorToast(
+                                ViewandSMSTicket.this, e);
                     }
-                    ticketsms.getPrintSmsDetailslResponses = response;
-                    goMobile();
-                } else {
-                    ActivityUtil.showToast(ViewandSMSTicket.this, "No Transaction Found!");
-                    CustomisedProgressDialog.STOP_CUST_DIA();
-                }
-            }
-
-            @Override
-            public void onError(Exception e) {
-                CustomisedProgressDialog.STOP_CUST_DIA();
-                ActivityUtil.showErrorToast(ViewandSMSTicket.this, e);
-            }
-        });
+                });
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        if(ticketsms!=null){
-            ticketsms.getPrintSmsDetailslResponses = null;
-        }
-    }
-
+    /* ================= VIEW HOLDER ================= */
 
     public class ViewHolder {
+
         EditText email, mobile;
-        TextView title,emailtxt,mobiletxt,or;
+        TextView title, emailtxt, mobiletxt, or;
         Button submitBtn;
 
         ViewHolder(Activity activity) {
-            submitBtn = (Button) activity.findViewById(R.id.submitBtn);
-            email = (EditText) activity.findViewById(R.id.email);
-            mobile = (EditText) activity.findViewById(R.id.mobile);
 
-            title = (TextView) activity.findViewById(R.id.title_sms);
-            emailtxt = (TextView) activity.findViewById(R.id.emailtxt);
-            mobiletxt = (TextView) activity.findViewById(R.id.mobiletxt);
-            or = (TextView) activity.findViewById(R.id.sms_or);
+            submitBtn = activity.findViewById(R.id.submitBtn);
+            email = activity.findViewById(R.id.email);
+            mobile = activity.findViewById(R.id.mobile);
 
-            if(textlang.equalsIgnoreCase("gujarati")){
+            title = activity.findViewById(R.id.title_sms);
+            emailtxt = activity.findViewById(R.id.emailtxt);
+            mobiletxt = activity.findViewById(R.id.mobiletxt);
+            or = activity.findViewById(R.id.sms_or);
+
+            if ("gujarati".equalsIgnoreCase(textlang)) {
 
                 email.setHint(R.string.vwsms_enter_email);
                 mobile.setHint(R.string.vwsms_enter_mobile);
@@ -261,12 +361,8 @@ public class ViewandSMSTicket extends BaseNavigationDrawerActivity {
 
     @Override
     public void onBackPressed() {
-       // ActivityUtil.openNewActivityAsOnlyActivity(ViewandSMSTicket.this, HomeActivity.class, null);
-        Intent i = new Intent(ViewandSMSTicket.this, HomeActivity.class);
-        Bundle data = new Bundle();
-        data.putString("textlang", textlang);
-        i.putExtras(data);
+        Intent i = new Intent(this, HomeActivity.class);
+        i.putExtra("textlang", textlang);
         startActivity(i);
     }
-
 }
