@@ -10,9 +10,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,6 +48,7 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
     Button confirm_btn;
     TextView pass_title;
     EditText phone, email;
+    boolean isDivyang;
     EditText passengerNameA, passengerNameB, passengerNameC, passengerNameD, passengerNameE, passengerNameF;
     EditText ageA, ageB, ageC, ageD, ageE, ageF;
     Spinner genderA, genderB, genderC, genderD, genderE, genderF;
@@ -75,7 +79,7 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
 
         textlang =onwardBooking.getTextlanguage().trim();
         passengercount = onwardBooking.getSearchParams().getNumOfPassengers();
-        boolean isDivyang =
+         isDivyang =
                 onwardBooking.getSearchParams() != null &&
                         ("Divyang".equalsIgnoreCase(onwardBooking.getSearchParams().getDivyangBooking())
                                 || "Divyang with Helper".equalsIgnoreCase(onwardBooking.getSearchParams().getDivyangBooking()));
@@ -84,9 +88,11 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
         if (passengercount == 1) {
             passengerNameA = (EditText) findViewById(R.id.passenger_name_one);
             passengerNameA.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameA);
             //genderA = (Spinner) findViewById(R.id.gender_one);
             ageA = (EditText) findViewById(R.id.age_one);
             ageA.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageA);
             if(textlang.equalsIgnoreCase("gujarati")) {
                 passengerNameA.setHint(R.string.pass_pass_name);
                 ageA.setHint(R.string.pass_age);
@@ -110,14 +116,19 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
         if (passengercount == 2) {
             passengerNameA = (EditText) findViewById(R.id.passenger_name_one);
             passengerNameA.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameA);
             genderA = (Spinner) findViewById(R.id.gender_one);
             ageA = (EditText) findViewById(R.id.age_one);
             ageA.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageA);
             passengerNameB = (EditText) findViewById(R.id.passenger_name_two);
             passengerNameB.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameB);
             genderB = (Spinner) findViewById(R.id.gender_two);
             ageB = (EditText) findViewById(R.id.age_two);
             ageB.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageB);
+
 
             if(textlang.equalsIgnoreCase("gujarati")) {
                 passengerNameA.setHint(R.string.pass_pass_name);
@@ -154,19 +165,25 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
         if (passengercount == 3) {
             passengerNameA = (EditText) findViewById(R.id.passenger_name_one);
             passengerNameA.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameA);
             genderA = (Spinner) findViewById(R.id.gender_one);
             ageA = (EditText) findViewById(R.id.age_one);
             ageA.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageA);
             passengerNameB = (EditText) findViewById(R.id.passenger_name_two);
             passengerNameB.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameB);
             genderB = (Spinner) findViewById(R.id.gender_two);
             ageB = (EditText) findViewById(R.id.age_two);
             ageB.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageB);
             passengerNameC = (EditText) findViewById(R.id.passenger_name_three);
             passengerNameC.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameC);
             genderC = (Spinner) findViewById(R.id.gender_three);
             ageC = (EditText) findViewById(R.id.age_three);
             ageC.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageC);
 
             if(textlang.equalsIgnoreCase("gujarati")) {
                 passengerNameA.setHint(R.string.pass_pass_name);
@@ -210,24 +227,34 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
         if (passengercount == 4) {
             passengerNameA = (EditText) findViewById(R.id.passenger_name_one);
             passengerNameA.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameA);
             genderA = (Spinner) findViewById(R.id.gender_one);
             ageA = (EditText) findViewById(R.id.age_one);
             ageA.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageA);
             passengerNameB = (EditText) findViewById(R.id.passenger_name_two);
             passengerNameB.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+
+            applyNameValidation(passengerNameB);
             genderB = (Spinner) findViewById(R.id.gender_two);
             ageB = (EditText) findViewById(R.id.age_two);
             ageB.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageB);
             passengerNameC = (EditText) findViewById(R.id.passenger_name_three);
             passengerNameC.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameC);
             genderC = (Spinner) findViewById(R.id.gender_three);
             ageC = (EditText) findViewById(R.id.age_three);
             ageC.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageC);
             passengerNameD = (EditText) findViewById(R.id.passenger_name_four);
             passengerNameD.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameD);
             genderD = (Spinner) findViewById(R.id.gender_four);
             ageD = (EditText) findViewById(R.id.age_four);
             ageD.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageD);
+
 
             if(textlang.equalsIgnoreCase("gujarati")) {
                 passengerNameA.setHint(R.string.pass_pass_name);
@@ -276,29 +303,40 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
         if (passengercount == 5) {
             passengerNameA = (EditText) findViewById(R.id.passenger_name_one);
             passengerNameA.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameA);
             genderA = (Spinner) findViewById(R.id.gender_one);
             ageA = (EditText) findViewById(R.id.age_one);
             ageA.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageA);
+
             passengerNameB = (EditText) findViewById(R.id.passenger_name_two);
             passengerNameB.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameB);
             genderB = (Spinner) findViewById(R.id.gender_two);
             ageB = (EditText) findViewById(R.id.age_two);
             ageB.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageB);
             passengerNameC = (EditText) findViewById(R.id.passenger_name_three);
             passengerNameC.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameC);
             genderC = (Spinner) findViewById(R.id.gender_three);
             ageC = (EditText) findViewById(R.id.age_three);
             ageC.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageC);
             passengerNameD = (EditText) findViewById(R.id.passenger_name_four);
             passengerNameD.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameD);
             genderD = (Spinner) findViewById(R.id.gender_four);
             ageD = (EditText) findViewById(R.id.age_four);
             ageD.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageD);
             passengerNameE = (EditText) findViewById(R.id.passenger_name_five);
             passengerNameE.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameE);
             genderE = (Spinner) findViewById(R.id.gender_five);
             ageE = (EditText) findViewById(R.id.age_five);
             ageE.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageE);
 
             if(textlang.equalsIgnoreCase("gujarati")) {
                 passengerNameA.setHint(R.string.pass_pass_name);
@@ -353,34 +391,46 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
         if (passengercount == 6) {
             passengerNameA = (EditText) findViewById(R.id.passenger_name_one);
             passengerNameA.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameA);
             genderA = (Spinner) findViewById(R.id.gender_one);
             ageA = (EditText) findViewById(R.id.age_one);
             ageA.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageA);
             passengerNameB = (EditText) findViewById(R.id.passenger_name_two);
             passengerNameB.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameB);
             genderB = (Spinner) findViewById(R.id.gender_two);
             ageB = (EditText) findViewById(R.id.age_two);
             ageB.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageB);
             passengerNameC = (EditText) findViewById(R.id.passenger_name_three);
             passengerNameC.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameC);
             genderC = (Spinner) findViewById(R.id.gender_three);
             ageC = (EditText) findViewById(R.id.age_three);
             ageC.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageC);
             passengerNameD = (EditText) findViewById(R.id.passenger_name_four);
             passengerNameD.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameD);
             genderD = (Spinner) findViewById(R.id.gender_four);
             ageD = (EditText) findViewById(R.id.age_four);
             ageD.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageD);
             passengerNameE = (EditText) findViewById(R.id.passenger_name_five);
             passengerNameE.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameE);
             genderE = (Spinner) findViewById(R.id.gender_five);
             ageE = (EditText) findViewById(R.id.age_five);
             ageE.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageE);
             passengerNameF = (EditText) findViewById(R.id.passenger_name_six);
             passengerNameF.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            applyNameValidation(passengerNameF);
             genderF = (Spinner) findViewById(R.id.gender_six);
             ageF = (EditText) findViewById(R.id.age_six);
             ageF.setInputType(InputType.TYPE_CLASS_NUMBER);
+            applyAgeValidation(ageF);
 
             if(textlang.equalsIgnoreCase("gujarati")) {
                 passengerNameA.setHint(R.string.pass_pass_name);
@@ -441,7 +491,12 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
         pass_title = (TextView) findViewById(R.id.passinfo_title);
         confirm_btn = (Button) findViewById(R.id.confirm_btn);
         phone = (EditText) findViewById(R.id.phone);
+        phone.setInputType(InputType.TYPE_CLASS_NUMBER);
+        phone.setFilters(new InputFilter[]{ new InputFilter.LengthFilter(10) });
+
         email = (EditText) findViewById(R.id.email);
+        email.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+
 
         if(textlang.equalsIgnoreCase("gujarati")){
             pass_title.setText(R.string.pass_pass_details);
@@ -486,8 +541,7 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
             if (phone != null &&
                     onwardBooking.getSearchParams().getDivyangMobile() != null) {
 
-                phone.setText(
-                        onwardBooking.getSearchParams().getDivyangMobile());
+                phone.setText(onwardBooking.getSearchParams().getDivyangMobile());
                 lockEditText(phone);
             }
         }
@@ -520,6 +574,7 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
             Passenger passenger = new Passenger();
             passenger.setPassengerNameA(passengerNameA.getText().toString());
             passenger.setAgeA(ageA.getText().toString());
+            Log.d("DEBUG_BOOKING", "Entered Age A = " + passenger.getAgeA());
             singleLady=onwardBooking.getSearchParams().getAdultFemaleCount();
             if(singleLady ==1){
 
@@ -542,6 +597,11 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
                 ActivityUtil.showToast(this, "Passenger name cannot be empty");
                 return;
             }
+            if (!passengerNameA.getText().toString().matches("^[\\p{L} ]{1,50}$")) {
+                ActivityUtil.showToast(this, "Invalid passenger name");
+                return;
+            }
+
 
 //            if (((double) Double.parseDouble(String.valueOf(ageA.getText()))) < 10d) {
 //                ActivityUtil.showToast(this, "Not a valid age");
@@ -557,6 +617,7 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
                 ActivityUtil.showToast(this, "Please enter valid age");
                 return;
             }
+
 
             if (!ValidationUtil.isValidNumber(passenger.getAgeA()) || ((double) Double.parseDouble(passenger.getAgeA())) <= 11d) {
                 childCount += 1;
@@ -1229,6 +1290,26 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
 
         }
 
+
+        Log.d("DEBUG_BOOKING", "----- START -----");
+
+        Log.d("DEBUG_BOOKING", "isDivyang = " + isDivyang);
+
+        Log.d("DEBUG_BOOKING", "Passenger Count = " + passengercount);
+
+
+
+        Log.d("DEBUG_BOOKING", "Calculated childCount = " + childCount);
+        Log.d("DEBUG_BOOKING", "Calculated adultCount = " + adultCount);
+
+        Log.d("DEBUG_BOOKING", "Backend childrenCount = " + onwardBooking.getSearchParams().getChildrenCount());
+        Log.d("DEBUG_BOOKING", "Backend adultCount = " + onwardBooking.getSearchParams().getAdultCount());
+        Log.d("DEBUG_BOOKING", "Backend adultFemaleCount = " + onwardBooking.getSearchParams().getAdultFemaleCount());
+
+        Log.d("DEBUG_BOOKING", "Divyang Type = " + onwardBooking.getSearchParams().getDivyangBooking());
+
+        Log.d("DEBUG_BOOKING", "----- END -----");
+
         if (onwardBooking.getSearchParams().getChildrenCount() != childCount) {
             ActivityUtil.showToast(this, "Child passenger count mismatch");
             return;
@@ -1238,8 +1319,12 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
             ActivityUtil.showToast(this, "Adult passenger count mismatch");
             return;
         }
-
+        String emailStr = email.getText().toString().trim();
         if (!ValidationUtil.isValidEmail(email.getText())) {
+            ActivityUtil.showToast(this, "Please enter valid email");
+            return;
+        }
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailStr).matches()) {
             ActivityUtil.showToast(this, "Please enter valid email");
             return;
         }
@@ -1252,6 +1337,41 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
             ActivityUtil.showToast(this, "Please enter valid Mobile Number");
             return;
         }
+
+        String phoneStr = phone.getText().toString().trim();
+
+        if (TextUtils.isEmpty(phoneStr)) {
+            ActivityUtil.showToast(this, "Please enter Mobile Number");
+            return;
+        }
+
+// Must be exactly 10 digits
+        if (!phoneStr.matches("^[0-9]{10}$")) {
+            ActivityUtil.showToast(this, "Mobile number must be 10 digits");
+            return;
+        }
+
+// Should not start with 0 (Indian mobile rule)
+        if (phoneStr.startsWith("0")) {
+            ActivityUtil.showToast(this, "Invalid Mobile Number");
+            return;
+        }
+
+// Should not be all same digits like 9999999999
+        if (phoneStr.matches("(\\d)\\1{9}")) {
+            ActivityUtil.showToast(this, "Invalid Mobile Number");
+            return;
+        }
+
+// Should not be simple sequence like 1234567890
+        if (phoneStr.equals("1234567890") || phoneStr.equals("0987654321") || phoneStr.equals("9876543210")) {
+            ActivityUtil.showToast(this, "Invalid Mobile Number");
+            return;
+        }
+
+
+
+
         phone.getText().toString().replaceAll("\\s", "");
         if(phone.getText().toString().trim().length()==13)
         {
@@ -1324,6 +1444,7 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
         }
     }
 
+
     private void lockEditText(EditText et) {
         et.setFocusable(false);
         et.setFocusableInTouchMode(false);
@@ -1336,6 +1457,63 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
     private void lockSpinner(Spinner sp) {
         sp.setEnabled(false);
     }
+
+    private void applyNameValidation(EditText editText) {
+
+        InputFilter nameFilter = new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+
+                for (int i = start; i < end; i++) {
+                    char ch = source.charAt(i);
+
+                    if (!Character.isLetter(ch) && !Character.isSpaceChar(ch)) {
+                        return "";
+                    }
+                }
+                return null;
+            }
+        };
+
+        editText.setFilters(new InputFilter[]{
+                new InputFilter.LengthFilter(50),
+                nameFilter
+        });
+    }
+    private void applyAgeValidation(EditText editText) {
+
+        InputFilter rangeFilter = new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+
+                try {
+                    String newValue = dest.subSequence(0, dstart)
+                            + source.toString()
+                            + dest.subSequence(dend, dest.length());
+
+                    if (newValue.isEmpty())
+                        return null;
+
+                    int input = Integer.parseInt(newValue);
+
+                    if (input >= 1 && input <= 120)
+                        return null; // Accept
+                } catch (NumberFormatException ignored) {}
+
+                return ""; // Reject if <1 or >120
+            }
+        };
+
+        editText.setFilters(new InputFilter[]{
+                new InputFilter.LengthFilter(3),
+                rangeFilter
+        });
+    }
+
+
+
 
 
 

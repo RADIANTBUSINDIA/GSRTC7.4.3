@@ -58,6 +58,11 @@ public class CancellationFareDetailsActivity extends BaseNavigationDrawerActivit
 
     public void setup(){
         holder = new ActivityViewHolder(this);
+        //added by abhi tarun on 26-02-2026
+        if (booking != null && booking.cancellationSearchParams != null) {
+            holder.email.setText(booking.cancellationSearchParams.email);
+            holder.phone.setText(booking.cancellationSearchParams.mobile);
+        }
         if(booking.isPartialCancellation){
             holder.fullCancellation.container.setVisibility(View.GONE);
             populatePartialCancellationViews();

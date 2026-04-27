@@ -96,6 +96,7 @@ public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActi
         DEP_TIME, CLASS, PRICE;
     }
 
+    private static final int REQ_USER_CONSENT = 201;
     public static int SEAT_SELECTION_REQUEST = 1;
     List<BusService> busServiceList = new ArrayList<>();
 
@@ -137,6 +138,35 @@ public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActi
         adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, divyang_authority);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     }
+
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        android.content.IntentFilter filter = new android.content.IntentFilter(
+                com.google.android.gms.auth.api.phone.SmsRetriever.SMS_RETRIEVED_ACTION
+        );
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(smsReceiver, filter, android.content.Context.RECEIVER_EXPORTED);
+        } else {
+            registerReceiver(smsReceiver, filter);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        try {
+            unregisterReceiver(smsReceiver);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public void setupViews() {
 
@@ -287,6 +317,7 @@ public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActi
 
                     //display the popup window
                     popupWindow.showAtLocation(vHolder.recyclerView, Gravity.CENTER, 0, 0);
+                    startSmsUserConsent();
 
                     div_confirm.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -299,7 +330,7 @@ public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActi
                                 return;
                             }
 
-                            if (otp == null || !divotp.equalsIgnoreCase(otp)) {
+                            if (otp == null || (!divotp.equalsIgnoreCase(otp))) {
                                 Toast.makeText(AdvanceBookingSearchResultActivity.this, "Invalid OTP", Toast.LENGTH_SHORT).show();
                                 return;
                             }
@@ -602,8 +633,40 @@ public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActi
     }
 
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQ_USER_CONSENT) {
+            if (resultCode == RESULT_OK && data != null) {
+
+                String message = data.getStringExtra(
+                        com.google.android.gms.auth.api.phone.SmsRetriever.EXTRA_SMS_MESSAGE
+                );
+
+                android.util.Log.d("OTP_DEBUG", "SMS: " + message);
+
+                if (message != null) {
+                    java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\d{6}");
+                    java.util.regex.Matcher matcher = pattern.matcher(message);
+
+                    if (matcher.find()) {
+                        String otpValue = matcher.group(0);
+
+                        android.util.Log.d("OTP_DEBUG", "OTP: " + otpValue);
+
+                        if (div_otp != null) {
+                            div_otp.setText(otpValue);
+                           /* String smsOtp = otpValue;*/
+                        }
+                    }
+                }
+            }
+
+            return;
+        }
+        // ===== END OTP BLOCK =====
+
+
         if (requestCode == SEAT_SELECTION_REQUEST) {
             if (resultCode == RESULT_OK) {
                 if (data != null && data.getExtras() != null) {
@@ -1156,7 +1219,7 @@ public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActi
                     count = getDivyang[14];
                     otp = getDivyang[15];
 
-                    // 🔥 STEP 2 — STORE DIVYANG PERSONAL DETAILS
+
                     searchParams.setDivyangName(divName);
                     searchParams.setDivyangGender(gender);
                     searchParams.setDivyangDob(dob);
@@ -1194,6 +1257,56 @@ public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActi
         requestQueue.add(stringRequest);
 
     }
+
+
+    private void startSmsUserConsent() {
+        com.google.android.gms.auth.api.phone.SmsRetrieverClient client =
+                com.google.android.gms.auth.api.phone.SmsRetriever.getClient(this);
+
+        client.startSmsUserConsent(null)
+                .addOnSuccessListener(aVoid -> {
+                    android.util.Log.d("OTP_DEBUG", "Consent STARTED");
+                })
+                .addOnFailureListener(e -> {
+                    android.util.Log.e("OTP_DEBUG", "Consent FAILED");
+                });
+    }
+
+    private android.content.BroadcastReceiver smsReceiver = new android.content.BroadcastReceiver() {
+        @Override
+        public void onReceive(android.content.Context context, android.content.Intent intent) {
+
+            if (com.google.android.gms.auth.api.phone.SmsRetriever.SMS_RETRIEVED_ACTION
+                    .equals(intent.getAction())) {
+
+                android.os.Bundle extras = intent.getExtras();
+                if (extras == null) return;
+
+                com.google.android.gms.common.api.Status status =
+                        (com.google.android.gms.common.api.Status)
+                                extras.get(com.google.android.gms.auth.api.phone.SmsRetriever.EXTRA_STATUS);
+
+                if (status == null) return;
+
+                if (status.getStatusCode() ==
+                        com.google.android.gms.common.api.CommonStatusCodes.SUCCESS) {
+
+                    android.content.Intent consentIntent =
+                            extras.getParcelable(
+                                    com.google.android.gms.auth.api.phone.SmsRetriever.EXTRA_CONSENT_INTENT
+                            );
+
+                    try {
+                        startActivityForResult(consentIntent, REQ_USER_CONSENT);
+                    } catch (android.content.ActivityNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    };
+
+
 
     @SuppressLint("Range")
     public void getDivyangConcess(String div_concess) {

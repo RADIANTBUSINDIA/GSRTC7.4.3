@@ -5,7 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-
+import android.content.Context;
 import androidx.annotation.RequiresApi;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Vibrator;
+import android.os.VibrationEffect;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +28,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import android.os.Handler;
+import android.os.Looper;
 import java.util.Set;
 
 import com.android.volley.AuthFailureError;
@@ -52,6 +56,9 @@ import com.gsrtc.mobileweb.utils.AppConstants;
 import com.gsrtc.mobileweb.utils.SoapClientUtil;
 import com.gsrtc.mobileweb.utils.customdialog.CustomisedProgressDialog;
 import com.gsrtc.mobileweb.utils.net.AdvanceBookingNetworkUtil;
+import android.speech.tts.TextToSpeech;
+import java.util.Collections;
+import java.util.Locale;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,6 +80,10 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
     Set<Integer> condseat;
     String textlang, class_layout_id, class_id;
 
+    TextToSpeech tts;
+    boolean isTtsReady = false;
+    boolean hasSpoken = false;
+
 
     ProgressDialog seatBlockingProgressDialog;
 
@@ -84,6 +95,15 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentViewDrawer(R.layout.activity_seat_selection);
+
+        tts = new TextToSpeech(this, status -> {
+            if (status == TextToSpeech.SUCCESS) {
+                tts.setLanguage(Locale.ENGLISH);
+                isTtsReady = true;
+
+                trySpeakSeats();
+            }
+        });
 
         seatcls = (TextView) findViewById(R.id.classservice);
         tripcode = (TextView) findViewById(R.id.tripco);
@@ -134,11 +154,21 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
         });
     }
 
+    private boolean isDivyangUser() {
+        if (searchParams == null) return false;
 
+        String type = searchParams.getDivyangBooking();
+
+        if (type == null) return false;
+
+        return type.equalsIgnoreCase("Divyang") ||
+                type.equalsIgnoreCase("Divyang with Helper");
+    }
     public void setupSeatView(List<SeatRow> seatRows, ServiceSeatDetails serviceSeatDetails, String layout_id, String srv_class_id) {
+
         List<String> sideBerths;
         if (searchParams.getAdultFemaleCount() == 1) {
-            String singleSide = singleSideBerth(seatRows, layout_id,serviceSeatDetails);
+            String singleSide = singleSideBerth(seatRows, layout_id, serviceSeatDetails);
             sideBerths = Arrays.asList(singleSide.split(","));
 
             System.out.println(sideBerths);
@@ -146,43 +176,122 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
                 String[] ber = sideBerths.toArray(new String[0]);
                 serviceSeatDetails.setAvailableSeats(ber);
 
-                int totalSeats = seatRows.size()* 6;
+                int totalSeats = seatRows.size() * 6;
 
-                String bookedDummy="";
-                for (int i=0 ;i<totalSeats;i++){
-                    if (!sideBerths.contains(String.valueOf(i))){
-                        bookedDummy+=i+",";
+                String bookedDummy = "";
+                for (int i = 0; i < totalSeats; i++) {
+                    if (!sideBerths.contains(String.valueOf(i))) {
+                        bookedDummy += i + ",";
                     }
-
                 }
+
                 String[] split = bookedDummy.split(",");
                 serviceSeatDetails.setBookedSeats(split);
-
-
             }
-
         }
 
+        seatSelectionAdapter = new SeatSelectionAdapter(
+                this,
+                seatRows,
+                serviceSeatDetails,
+                searchParams,
+                layout_id,
+                srv_class_id,
+                new SeatSelectionAdapter.OnSeatActionListener() {
 
+                    @Override
+                    public void onSeatSelected(int seatNo) {
+                        if (isTtsReady && isDivyangUser()) {
+                            tts.stop();
+                            tts.speak("Seat " + seatNo + " selected", TextToSpeech.QUEUE_FLUSH, null, null);
+                        }
+                        if (isDivyangUser()) {
+                            vibrate();
+                        }
+                    }
 
-        seatSelectionAdapter = new SeatSelectionAdapter(this, seatRows, serviceSeatDetails, searchParams, layout_id, srv_class_id) {
+                    @Override
+                    public void onSeatAlreadyBooked(int seatNo) {
+                        if (isTtsReady && isDivyangUser()) {
+                            tts.stop();
+                            tts.speak("Seat " + seatNo + " already booked", TextToSpeech.QUEUE_FLUSH, null, null);
+                        }
+                        if (isDivyangUser()) {
+                            vibrate();
+                        }
+                    }
+
+                    @Override
+                    public void onSeatUnavailable(int seatNo) {
+                        if (isTtsReady && isDivyangUser()) {
+                            tts.stop();
+                            tts.speak("Seat " + seatNo + " not available", TextToSpeech.QUEUE_FLUSH, null, null);
+                        }
+                        if (isDivyangUser()) {
+                            vibrate();
+                        }
+                    }
+                }
+        ) {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void allSeatsSelected(ArrayList<Seat> selectedSeats) {
+                if (isTtsReady && selectedSeats != null && !selectedSeats.isEmpty()) {
+                    speakSelectedSeat(selectedSeats);
+                    new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                        getReferenceNumber(busService, selectedSeats, searchParams);
+                    }, 1700);
 
-
-                getReferenceNumber(busService, selectedSeats, searchParams);
-
-
+                } else {
+                    getReferenceNumber(busService, selectedSeats, searchParams);
+                }
             }
         };
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         holder.recyclerView.setLayoutManager(layoutManager);
         holder.recyclerView.setAdapter(seatSelectionAdapter);
         seatSelectionAdapter.notifyDataSetChanged();
     }
 
+    private void speakSelectedSeat(ArrayList<Seat> selectedSeats) {
+        if (!isTtsReady || selectedSeats == null || selectedSeats.isEmpty()) {
+            return;
+        }
+        if (!isDivyangUser()) {
+            return;
+        }
+        StringBuilder message = new StringBuilder();
+        if (selectedSeats.size() == 1) {
+            message.append("Seat ")
+                    .append(selectedSeats.get(0).getSeatNo())
+                    .append(" selected");
+        } else {
+            message.append("Selected seats are ");
 
+            for (int i = 0; i < selectedSeats.size(); i++) {
+                message.append(selectedSeats.get(i).getSeatNo());
+
+                if (i != selectedSeats.size() - 1) {
+                    message.append(", ");
+                }
+            }
+        }
+        tts.stop();
+        tts.speak(message.toString(), TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
+    private void vibrate() {
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        if (vibrator != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                vibrator.vibrate(100);
+            }
+        }
+    }
 
     private String singleSideBerth(List<SeatRow> Seats,String class_layout_id,ServiceSeatDetails serviceSeatDetails){
         StringBuilder seats= new StringBuilder();
@@ -319,6 +428,7 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
                 if (serviceSeatDetailsFetched && layoutFetched) {
                     setupSeatView(seatRows, serviceSeatDetails, class_layout_id, class_id);
                     showLoading(false);
+                    trySpeakSeats();
                     CustomisedProgressDialog.STOP_CUST_DIA();
                 }
                 layoutFetched = true;
@@ -330,6 +440,81 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
             }
         });
     }
+
+    private void trySpeakSeats() {
+        Log.d("TTS_DEBUG", "trySpeakSeats called");
+        if (!isTtsReady) {
+            Log.d("TTS_DEBUG", "TTS not ready");
+            return;
+        }
+        if (!serviceSeatDetailsFetched || !layoutFetched) {
+            Log.d("TTS_DEBUG", "Data not ready yet");
+            return;
+        }
+        if (hasSpoken) {
+            Log.d("TTS_DEBUG", "Already spoken once");
+            return;
+        }
+        if (searchParams == null) {
+            Log.d("TTS_DEBUG", "searchParams is null");
+            return;
+        }
+        String type = searchParams.getDivyangBooking();
+        Log.d("TTS_DEBUG", "DivyangBooking value = " + type);
+        if (type != null &&
+                (type.equalsIgnoreCase("Divyang") ||
+                        type.equalsIgnoreCase("Divyang with Helper"))) {
+            Log.d("TTS_DEBUG", "User is Divyang → speaking seats");
+            tts.stop();
+            speakAvailableSeats(serviceSeatDetails.getAvailableSeats());
+            hasSpoken = true;
+
+        } else {
+            Log.d("TTS_DEBUG", "User is NOT Divyang → skipping voice");
+        }
+    }
+
+    private void speakAvailableSeats(Set<Integer> seats) {
+
+        Log.d("TTS_DEBUG", "speakAvailableSeats called");
+        if (seats == null || seats.isEmpty()) {
+            Log.d("TTS_DEBUG", "Seats are empty or null");
+            return;
+        }
+        if (!isTtsReady) {
+            Log.d("TTS_DEBUG", "TTS not ready");
+            return;
+        }
+        if (!isDivyangUser()) {
+            Log.d("TTS_DEBUG", "Not a Divyang user → skipping available seats voice");
+            return;
+        }
+        List<Integer> sortedSeats = new ArrayList<>(seats);
+        Collections.sort(sortedSeats);
+        Log.d("TTS_DEBUG", "Available seats count = " + sortedSeats.size());
+        Log.d("TTS_DEBUG", "Available seats list = " + sortedSeats.toString());
+        String message = formatSeats(sortedSeats);
+        Log.d("TTS_DEBUG", "Speaking message = " + message);
+        tts.stop(); // important to avoid overlap
+        tts.speak(message, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
+    private String formatSeats(List<Integer> seats) {
+        StringBuilder result = new StringBuilder("Available seats are ");
+
+        for (int i = 0; i < seats.size(); i++) {
+            result.append(seats.get(i));
+
+            if (i != seats.size() - 1) {
+                result.append(", ");
+            }
+        }
+
+        return result.toString();
+    }
+
+
+
 
     public void fetchServiceSeatDetails(BusService busService, SearchParams searchParams) {
 
@@ -361,6 +546,8 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
                 } else if (serviceSeatDetailsFetched && layoutFetched) {
                     setupSeatView(seatRows, serviceSeatDetails, class_layout_id, class_id);
                     showLoading(false);
+                    trySpeakSeats();
+
                     CustomisedProgressDialog.STOP_CUST_DIA();
                 }
             }
@@ -555,6 +742,14 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
             e.printStackTrace();
         }
         return str;
+    }
+    @Override
+    protected void onDestroy() {
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
     }
 
 }

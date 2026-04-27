@@ -45,6 +45,7 @@ import com.gsrtc.mobileweb.ui.activities.track_mybus_native.Neraby_location;
 import com.gsrtc.mobileweb.ui.activities.track_mybus_native.TrackMyBusSearchActivity;
 import com.gsrtc.mobileweb.ui.activities.view_booking.TrackTicketHistory;
 import com.gsrtc.mobileweb.ui.activities.web_Linking.BusPassLink;
+import com.gsrtc.mobileweb.ui.activities.web_Linking.FeedBackModule;
 import com.gsrtc.mobileweb.ui.activities.web_Linking.HireBusLink;
 import com.gsrtc.mobileweb.ui.activities.web_Linking.RefundStatus;
 import com.gsrtc.mobileweb.ui.activities.web_Linking.TrackRunningService;
@@ -261,6 +262,8 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
                 startActivity(i);
             }
         });
+
+
 //        vHolder.mLinearLayoutLinkBooking.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -351,6 +354,22 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
                 startActivity(i);
             }
         });
+        vHolder.mlinearLayoutFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(HomeActivity.this, FeedBackModule.class);
+
+                Bundle data = new Bundle();
+                data.putString("textlang", textlang);
+                i.putExtras(data);
+
+                startActivity(i);
+            }
+        });
+
+
+
         vHolder.runningStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -416,9 +435,9 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
         private LinearLayout mLinearLayoutTrackMyBus, mLinearLayoutCurrentBooking;
         private LinearLayout mLinearLayoutIteneries, mLinearLayoutTimeTable;
         private LinearLayout mLinearLayoutResheduleTicket, mLinearLayoutRefundStatus,mLinearLayoutTrackTicket, mLinearLayoutLinkBooking,
-                mLinearLayoutBusPass, mLinearLayoutHireBus,runningStatus;
+                mLinearLayoutBusPass, mLinearLayoutHireBus,runningStatus,mlinearLayoutFeedback;
 
-        private TextView ad_booking,cr_booking,can_ticket,trackbus,track_ticket,rescdule_tkt,bus_pass,near_location,refund_status,hire_bus,show_more,show_less,time_table,iteneries;
+        private TextView ad_booking,cr_booking,can_ticket,trackbus,track_ticket,rescdule_tkt,bus_pass,near_location,refund_status,hire_bus,show_more,show_less,time_table,iteneries,feedback_text;
 
         ViewHolder(View rootView){
             mLinearLayoutAdvanceBooking = (LinearLayout)findViewById(R.id.linearLayoutAdvanceBooking);
@@ -431,11 +450,14 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
             mLinearLayoutResheduleTicket = (LinearLayout)findViewById(R.id.linearLayoutResheduleTicket);
             mLinearLayoutRefundStatus = (LinearLayout)findViewById(R.id.linearLayoutRefundStatus);
 
+
+
             mLinearLayoutTrackTicket = (LinearLayout)findViewById(R.id.linearLayoutTrackTicket);
             mLinearLayoutLinkBooking = (LinearLayout)findViewById(R.id.linearLayoutLinkBooking);
             mLinearLayoutBusPass = (LinearLayout)findViewById(R.id.linearLayoutBusPass);
             mLinearLayoutHireBus = (LinearLayout)findViewById(R.id.linearLayoutHireBus);
             runningStatus = (LinearLayout)findViewById(R.id.linearLayoutTrackRunning);
+            mlinearLayoutFeedback =(LinearLayout)findViewById(R.id.linearLayoutFeedback);
 
             ad_booking = (TextView)findViewById(R.id.textViewBusIcon);
             cr_booking = (TextView)findViewById(R.id.textViewCurrentBooking);
@@ -443,6 +465,9 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
             can_ticket = (TextView)findViewById(R.id.textViewCancelTicket);
 
             rescdule_tkt = (TextView)findViewById(R.id.textViewResheduleTicket);
+
+
+
             bus_pass = (TextView)findViewById(R.id.textViewBusPass);
             near_location = (TextView)findViewById(R.id.textViewLinkBooking);
             refund_status = (TextView)findViewById(R.id.textViewRefundStatus);
@@ -451,6 +476,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
             time_table = (TextView)findViewById(R.id.textViewTimeTable);
             iteneries = (TextView)findViewById(R.id.textViewItineries);
             track_ticket = (TextView)findViewById(R.id.textViewTrack_ticket);
+            feedback_text = (TextView)findViewById(R.id.textViewFeedback);
 
             if(textlang.equalsIgnoreCase("gujarati"))
             {
@@ -459,6 +485,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
                 can_ticket.setText(R.string.hm_cancel_ticket);
                 trackbus.setText(R.string.hm_track_my_bus);
                 rescdule_tkt.setText(R.string.gReschedule_Ticket);
+
                 bus_pass.setText(R.string.gBus_Pass);
                 near_location.setText(R.string.gNear_By_Location);
                 refund_status.setText(R.string.gRefund_status);
@@ -467,6 +494,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
                 time_table.setText(R.string.package_booking);
                 iteneries.setText(R.string.gIteneries);
                 track_ticket.setText(R.string.gtrack_ticket);
+                feedback_text.setText("પ્રતિસાદ");
             }
         }
     }

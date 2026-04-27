@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -265,6 +266,12 @@
             android:name=".ui.activities.web_Linking.RefundStatus"
             android:exported="true"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activities.web_Linking.FeedBackModule"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.activities.time_table.TimeTableStatus"
             android:exported="true"

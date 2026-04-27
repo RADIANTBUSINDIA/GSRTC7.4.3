@@ -13,8 +13,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -235,34 +237,142 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
 
                 } else if (button.getText().toString().equalsIgnoreCase("Divyang")) {
 
+                    select_option = "Divyang";
+                    holder.adultCount.setText("1");
+                    holder.childrenCount.setText("0");
+                    round.setClickable(false);
+                    round.setFocusable(false);
 
-                        select_option = "Divyang";
-                        holder.adultCount.setText("1");
-                        round.setClickable(false);
-                        round.setFocusable(false);
-                        holder.adultCount.setFocusable(false);
-                        holder.adultCount.setFocusableInTouchMode(false);
-                        holder.adultCount.setClickable(false);
-                        holder.childrenCount.setFocusable(false);
-                        holder.childrenCount.setFocusableInTouchMode(false);
-                        holder.childrenCount.setClickable(false);
+                    holder.adultCount.setFocusable(true);
+                    holder.adultCount.setFocusableInTouchMode(true);
+                    holder.adultCount.setClickable(true);
 
+                    holder.childrenCount.setFocusable(true);
+                    holder.childrenCount.setFocusableInTouchMode(true);
+                    holder.childrenCount.setClickable(true);
 
                 } else if (button.getText().toString().equalsIgnoreCase("Divyang with Helper")) {
 
                     select_option = "Divyang with Helper";
                     holder.adultCount.setText("2");
-                    holder.adultCount.setFocusable(false);
-                    holder.adultCount.setFocusableInTouchMode(false);
-                    holder.adultCount.setClickable(false);
+                    holder.childrenCount.setText("0");
+                    holder.adultCount.setFocusable(true);
+                    holder.adultCount.setFocusableInTouchMode(true);
+                    holder.adultCount.setClickable(true);
+                    holder.childrenCount.setFocusable(true);
+                    holder.childrenCount.setFocusableInTouchMode(true);
+                    holder.childrenCount.setClickable(true);
                     round.setClickable(false);
                     round.setFocusable(false);
-                    holder.childrenCount.setFocusable(false);
-                    holder.childrenCount.setFocusableInTouchMode(false);
-                    holder.childrenCount.setClickable(false);
                 }
             }
         });
+
+
+        holder.adultCount.setInputType(InputType.TYPE_CLASS_NUMBER);
+        holder.childrenCount.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        holder.adultCount.addTextChangedListener(new TextWatcher() {
+            boolean isEditing;
+            @Override public void afterTextChanged(Editable s) {
+                if (isEditing) return;
+                if (!select_option.equalsIgnoreCase("Divyang")) return;
+
+                isEditing = true;
+                if (!s.toString().isEmpty() && Integer.parseInt(s.toString()) >= 1) {
+                    holder.adultCount.setText("1");
+                    holder.childrenCount.setText("0");
+                }
+                isEditing = false;
+            }
+            @Override public void beforeTextChanged(CharSequence s,int st,int c,int a){}
+            @Override public void onTextChanged(CharSequence s,int st,int b,int c){}
+        });
+
+        holder.childrenCount.addTextChangedListener(new TextWatcher() {
+            boolean isEditing;
+            @Override public void afterTextChanged(Editable s) {
+                if (isEditing) return;
+                if (!select_option.equalsIgnoreCase("Divyang")) return;
+
+                isEditing = true;
+                if (!s.toString().isEmpty() && Integer.parseInt(s.toString()) >= 1) {
+                    holder.childrenCount.setText("1");
+                    holder.adultCount.setText("0");
+                }
+                isEditing = false;
+            }
+            @Override public void beforeTextChanged(CharSequence s,int st,int c,int a){}
+            @Override public void onTextChanged(CharSequence s,int st,int b,int c){}
+        });
+
+        holder.adultCount.addTextChangedListener(new TextWatcher() {
+            boolean isEditing;
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isEditing) return;
+                if (!select_option.equalsIgnoreCase("Divyang with Helper")) return;
+
+                isEditing = true;
+
+                int adult = 0;
+                if (!s.toString().isEmpty()) {
+                    adult = Integer.parseInt(s.toString());
+                }
+
+                if (adult > 2) adult = 2;
+
+                int child = 2 - adult;
+
+                String childStr = String.valueOf(child);
+
+
+                if (!holder.childrenCount.getText().toString().equals(childStr)) {
+                    holder.childrenCount.setText(childStr);
+                }
+
+                isEditing = false;
+            }
+            public void beforeTextChanged(CharSequence s,int st,int c,int a){}
+            public void onTextChanged(CharSequence s,int st,int b,int c){}
+        });
+
+
+        holder.childrenCount.addTextChangedListener(new TextWatcher() {
+            boolean isEditing;
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isEditing) return;
+                if (!select_option.equalsIgnoreCase("Divyang with Helper")) return;
+
+                isEditing = true;
+
+                int child = 0;
+                if (!s.toString().isEmpty()) {
+                    child = Integer.parseInt(s.toString());
+                }
+
+                if (child > 2) child = 2;
+
+                int adult = 2 - child;
+
+                String adultStr = String.valueOf(adult);
+
+                // ✅ ONLY update adult
+                if (!holder.adultCount.getText().toString().equals(adultStr)) {
+                    holder.adultCount.setText(adultStr);
+                }
+
+                isEditing = false;
+            }
+
+            public void beforeTextChanged(CharSequence s,int st,int c,int a){}
+            public void onTextChanged(CharSequence s,int st,int b,int c){}
+        });
+
+
 
         holder.search_btn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -52,12 +52,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="For ticket history checking, ticket cancellation, every passenger is requested to indicate their Name, Mobile Number and Email ID correctly at the time of ticket booking.\n\nટિકિટ હિસ્ટ્રી ચેકીંગ, ટિકિટ કેનશલેશન માટે, ટિકિટ બુકીંગ સમયે દરેક મુસાફરો દ્વારા પોતાના નામ, મોબાઇલ નંબર અને ઈ-મેલ આઈડી સાચા દર્શાવવા વિનંતી છે."
+                android:text="For ticket history checking, ticket cancellation, every passenger is requested to indicate their Name, Mobile Number and Email ID correctly at the time of ticket booking.\n\nટિકિટ હિસ્ટ્રી ચેકીંગ, ટિકિટ કેનશલેશન માટે, ટિકિટ બુકીંગ સમયે દરેક મુસાફરો દ્વારા પોતાના નામ, મોબાઇલ નંબર અને ઈ-મેલ આઈડી સાચા દર્શાવવા વિનંતી છે.\n\nटिकट हिस्ट्री, टिकट कैंसलेशन के लिए, हर पैसेंजर से निवेदन है कि टिकट बुकिंग के समय अपना नाम, मोबाइल नंबर और ईमेल आईडी सही बताएं।"
                 android:textColor="#333333"
                 android:textSize="13sp"
                 android:fontFamily="@font/gotham"
                 android:lineSpacingExtra="4dp"/>
-
         </LinearLayout>
 
         <!-- Accent divider (optional but classy) -->

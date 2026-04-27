@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -31,7 +32,6 @@ import com.gsrtc.mobileweb.utils.net.BookingHistoryNetworkUtils;
 import java.util.Calendar;
 
 public class BookingHistoryActivity extends BaseNavigationDrawerActivity {
-
     private BookingHistory booking;
     private ViewHolder holder;
     private ProgressDialog progressDialog;
@@ -39,10 +39,10 @@ public class BookingHistoryActivity extends BaseNavigationDrawerActivity {
 
     private static final String FRAG_TAG_DATE_PICKER = "FRAG_TAG_DATE_PICKER";
 
-    private String sts = "S"; // S = Success, F = Failure
+    private String sts = "S";
     private String textlang;
-
-    // OTP
+    private EditText etOtp;
+    private static final int REQ_USER_CONSENT = 202;
     private String serverOtp;
 
     @Override
@@ -56,13 +56,37 @@ public class BookingHistoryActivity extends BaseNavigationDrawerActivity {
         setup();
     }
 
-    private void setup() {
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
+    @Override
+    protected void onStart() {
+        super.onStart();
 
+        IntentFilter filter = new IntentFilter(
+                com.google.android.gms.auth.api.phone.SmsRetriever.SMS_RETRIEVED_ACTION
+        );
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(smsReceiver, filter, android.content.Context.RECEIVER_EXPORTED);
+        } else {
+            registerReceiver(smsReceiver, filter);
+        }
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        try {
+            unregisterReceiver(smsReceiver);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void setup() {
         booking = new BookingHistory();
         booking.bookingHistorySearchParam = new BookingHistorySearchParam();
-
         holder = new ViewHolder(this);
-
         holder.submitBtn.setOnClickListener(v -> onSubmitBtn());
 
         holder.from_date.setOnClickListener(this::openDatePickerDialog);
@@ -172,7 +196,7 @@ public class BookingHistoryActivity extends BaseNavigationDrawerActivity {
 
                         hideProgressDialog();
 
-                        // 🔥 NO BOOKINGS → NO OTP
+
                         if (response == null || response.length == 0) {
                             ActivityUtil.showToast(
                                     BookingHistoryActivity.this,
@@ -182,7 +206,7 @@ public class BookingHistoryActivity extends BaseNavigationDrawerActivity {
 
                         booking.getViewBookingHistoryDetailsResponse = response;
 
-                        // 🔐 OTP ONLY FOR SUCCESS
+
                         if ("S".equalsIgnoreCase(sts)) {
                             sendOtp();
                         } else {
@@ -232,19 +256,102 @@ public class BookingHistoryActivity extends BaseNavigationDrawerActivity {
                 });
     }
 
+    private void startSmsUserConsent() {
+        com.google.android.gms.auth.api.phone.SmsRetrieverClient client =
+                com.google.android.gms.auth.api.phone.SmsRetriever.getClient(this);
+
+        client.startSmsUserConsent(null)
+                .addOnSuccessListener(aVoid ->
+                        android.util.Log.d("OTP_DEBUG", "Consent STARTED"))
+                .addOnFailureListener(e ->
+                        android.util.Log.e("OTP_DEBUG", "Consent FAILED"));
+    }
+    private android.content.BroadcastReceiver smsReceiver = new android.content.BroadcastReceiver() {
+        @Override
+        public void onReceive(android.content.Context context, android.content.Intent intent) {
+
+            if (com.google.android.gms.auth.api.phone.SmsRetriever.SMS_RETRIEVED_ACTION
+                    .equals(intent.getAction())) {
+
+                android.os.Bundle extras = intent.getExtras();
+                if (extras == null) return;
+
+                com.google.android.gms.common.api.Status status =
+                        (com.google.android.gms.common.api.Status)
+                                extras.get(com.google.android.gms.auth.api.phone.SmsRetriever.EXTRA_STATUS);
+
+                if (status == null) return;
+
+                if (status.getStatusCode() ==
+                        com.google.android.gms.common.api.CommonStatusCodes.SUCCESS) {
+
+                    android.content.Intent consentIntent =
+                            extras.getParcelable(
+                                    com.google.android.gms.auth.api.phone.SmsRetriever.EXTRA_CONSENT_INTENT
+                            );
+
+                    try {
+                        startActivityForResult(consentIntent, REQ_USER_CONSENT);
+                    } catch (android.content.ActivityNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQ_USER_CONSENT) {
+
+            if (resultCode == RESULT_OK && data != null) {
+
+                String message = data.getStringExtra(
+                        com.google.android.gms.auth.api.phone.SmsRetriever.EXTRA_SMS_MESSAGE
+                );
+
+                android.util.Log.d("OTP_DEBUG", "SMS: " + message);
+
+                if (message != null) {
+                    java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\d{6}");
+                    java.util.regex.Matcher matcher = pattern.matcher(message);
+
+                    if (matcher.find()) {
+                        String otp = matcher.group(0);
+
+                        android.util.Log.d("OTP_DEBUG", "OTP: " + otp);
+
+                        if (etOtp != null) {
+                            etOtp.setText(otp);
+                        }
+                    }
+                }
+            }
+
+            else if (resultCode == RESULT_CANCELED) {
+                android.util.Log.d("OTP_DEBUG", "User denied SMS consent");
+            }
+        }
+    }
+
+
+
+
     private void showOtpDialog() {
 
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_enter_otp);
         dialog.setCancelable(false);
 
-        // 🔥 CRUCIAL FOR CURVED DESIGN
+
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawableResource(
                     android.R.color.transparent);
         }
 
-        EditText etOtp = dialog.findViewById(R.id.etOtp);
+        etOtp = dialog.findViewById(R.id.etOtp);
         TextView txtErr = dialog.findViewById(R.id.txtOtpError);
         Button verify = dialog.findViewById(R.id.btnVerifyOtp);
         Button cancel = dialog.findViewById(R.id.btnCancelOtp);
@@ -265,7 +372,7 @@ public class BookingHistoryActivity extends BaseNavigationDrawerActivity {
         });
 
         cancel.setOnClickListener(v -> dialog.dismiss());
-
+        startSmsUserConsent();
         dialog.show();
 
         int w = (int) (getResources().getDisplayMetrics().widthPixels * 0.9);

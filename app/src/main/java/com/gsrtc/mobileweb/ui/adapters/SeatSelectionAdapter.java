@@ -31,19 +31,27 @@ import static com.gsrtc.mobileweb.utils.AppConstants.SEAT_ROW_COUNT;
 
 public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSelectionAdapter.ViewHolder> {
 
+
+    public interface OnSeatActionListener {
+        void onSeatSelected(int seatNo);
+        void onSeatAlreadyBooked(int seatNo);
+        void onSeatUnavailable(int seatNo);
+    }
     Context context;
     Set<Integer> reservedSeats;     //Reserved seats will be fetched from the server and passed to the adapter
     Set<Integer> selectedSeats;
     Set<Integer> ladiesSeats;
     List<SeatRow> seatRowList;
+    private OnSeatActionListener actionListener;
     Map<Integer, Seat> allSeats;
     ServiceSeatDetails serviceSeatDetails;
     SearchParams searchParams;
     String class_layout_id, srv_class_id;
 
 
-    public SeatSelectionAdapter(Context context, List<SeatRow> seatRowList, ServiceSeatDetails serviceSeatDetails, SearchParams searchParams, String layout_id, String class_id) {
-
+    public SeatSelectionAdapter(Context context, List<SeatRow> seatRowList, ServiceSeatDetails serviceSeatDetails, SearchParams searchParams, String layout_id,
+                                String class_id, OnSeatActionListener listener) {
+        this.actionListener = listener;
         this.seatRowList = new ArrayList<SeatRow>();
         this.seatRowList = seatRowList;
         this.selectedSeats = new HashSet<>();
@@ -55,11 +63,6 @@ public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSele
         this.class_layout_id = layout_id;
         this.srv_class_id = class_id;
     }
-
-
-
-
-
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -87,44 +90,70 @@ public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSele
         for (int i = 0; i < SEAT_ROW_COUNT; i++) {
             int seatPosition = i + 1;
             Seat seat = seatRow.getSeat(seatPosition);
+
             if (seat.getSeatNo() == null || seat.getSeatNo() == 0) {
                 holder.seatCheckboxes[i].setVisibility(View.GONE);
                 holder.seatNumberTexts[i].setVisibility(View.GONE);
             } else {
-                //if(!allSeats.containsKey(seat.getSeatNo())){
+
                 allSeats.put(seat.getSeatNo(), seat);
-                //}
                 holder.seatCheckboxes[i].setVisibility(View.VISIBLE);
                 holder.seatCheckboxes[i].setTag(seat);
                 holder.seatNumberTexts[i].setText("" + seat.getSeatNo() + " " + seat.getDescription());
                 setSeatImage(holder.seatCheckboxes[i], seat);
-                if (serviceSeatDetails.getAvailableSeats().contains(seat.getSeatNo()) ||
-                        serviceSeatDetails.getAvailableLadiesSeats().contains(seat.getSeatNo())) {
-                    holder.seatCheckboxes[i].setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Seat seat1 = (Seat) view.getTag();
-                            if (selectedSeats.contains(seat1.getSeatNo())) {  //The seat is unselected now
-                                setSeatImage((ImageView) view, seat1);   //Set default image
-                                selectedSeats.remove(seat1.getSeatNo());
-                            } else {      //The seat is selected
-                                if (selectedSeats.size() <= searchParams.getNumOfPassengers()) {
-                                    if (class_layout_id.equalsIgnoreCase("64") ||
-                                            class_layout_id.equalsIgnoreCase("188") ||
-                                            class_layout_id.equalsIgnoreCase("191")) {
-                                        ((ImageView) view).setImageResource(R.drawable.selected_sleeper);
-                                    } else {
-                                        ((ImageView) view).setImageResource(R.drawable.selected_seat);
-                                    }
-                                    selectedSeats.add(seat1.getSeatNo());
-                                    if (getSelectedSeats().size() == searchParams.getNumOfPassengers()) {
-                                        allSeatsSelected(getSelectedSeats());
-                                    }
+
+                holder.seatCheckboxes[i].setOnClickListener(view -> {
+
+                    Seat seat1 = (Seat) view.getTag();
+                    int seatNo = seat1.getSeatNo();
+
+                    // AVAILABLE seat
+                    if (serviceSeatDetails.getAvailableSeats().contains(seatNo) ||
+                            serviceSeatDetails.getAvailableLadiesSeats().contains(seatNo)) {
+
+                        if (selectedSeats.contains(seatNo)) {
+                            setSeatImage((ImageView) view, seat1);
+                            selectedSeats.remove(seatNo);
+                        } else {
+                            if (selectedSeats.size() <= searchParams.getNumOfPassengers()) {
+
+                                if (class_layout_id.equalsIgnoreCase("64") ||
+                                        class_layout_id.equalsIgnoreCase("188") ||
+                                        class_layout_id.equalsIgnoreCase("191")) {
+                                    ((ImageView) view).setImageResource(R.drawable.selected_sleeper);
+                                } else {
+                                    ((ImageView) view).setImageResource(R.drawable.selected_seat);
+                                }
+
+                                selectedSeats.add(seatNo);
+
+                                if (actionListener != null) {
+                                    actionListener.onSeatSelected(seatNo);
+                                }
+
+                                if (getSelectedSeats().size() == searchParams.getNumOfPassengers()) {
+                                    allSeatsSelected(getSelectedSeats());
                                 }
                             }
                         }
-                    });
-                }
+                    }
+
+                    // BOOKED seat
+                    else if (serviceSeatDetails.getBookedSeats().contains(seatNo) ||
+                            serviceSeatDetails.getBookedLadiesSeats().contains(seatNo)) {
+
+                        if (actionListener != null) {
+                            actionListener.onSeatAlreadyBooked(seatNo);
+                        }
+                    }
+
+                    // UNAVAILABLE
+                    else {
+                        if (actionListener != null) {
+                            actionListener.onSeatUnavailable(seatNo);
+                        }
+                    }
+                });
             }
         }
     }
