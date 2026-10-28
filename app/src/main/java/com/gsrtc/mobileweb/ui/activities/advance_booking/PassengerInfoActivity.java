@@ -544,6 +544,18 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
                 phone.setText(onwardBooking.getSearchParams().getDivyangMobile());
                 lockEditText(phone);
             }
+
+            if (com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(PassengerInfoActivity.this)) {
+                if ("Divyang with Helper".equalsIgnoreCase(onwardBooking.getSearchParams().getDivyangBooking())) {
+                    String dName = onwardBooking.getSearchParams().getDivyangName();
+                    String speech = "Passenger information loaded. Divyang details autofilled" + (dName != null ? " for " + dName : "") + ". Please enter Helper passenger name and age, then tap Confirm.";
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(PassengerInfoActivity.this).speak(speech);
+                } else {
+                    String dName = onwardBooking.getSearchParams().getDivyangName();
+                    String speech = "Passenger information loaded. Divyang details autofilled" + (dName != null ? " for " + dName : "") + ". Please verify details and tap Confirm.";
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(PassengerInfoActivity.this).speak(speech);
+                }
+            }
         }
 
 
@@ -595,10 +607,12 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
 
             if (TextUtils.isEmpty(passengerNameA.getText())) {
                 ActivityUtil.showToast(this, "Passenger name cannot be empty");
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak("Passenger name cannot be empty");
                 return;
             }
             if (!passengerNameA.getText().toString().matches("^[\\p{L} ]{1,50}$")) {
                 ActivityUtil.showToast(this, "Invalid passenger name");
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak("Invalid passenger name");
                 return;
             }
 
@@ -615,6 +629,7 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
 
             if (!ValidationUtil.isValidNumber(String.valueOf(ageA.getText())) || ((double) Double.parseDouble(String.valueOf(ageA.getText()))) <= 0d) {
                 ActivityUtil.showToast(this, "Please enter valid age");
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak("Please enter valid age");
                 return;
             }
 
@@ -649,39 +664,36 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
 
             if (TextUtils.isEmpty(passengerNameA.getText())) {
                 ActivityUtil.showToast(this, "Passenger name cannot be empty");
+                if (com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(PassengerInfoActivity.this)) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(PassengerInfoActivity.this).speak("Divyang passenger name cannot be empty");
+                }
                 return;
             }
 
             if (TextUtils.isEmpty(passengerNameB.getText())) {
-                ActivityUtil.showToast(this, "Passenger name cannot be empty");
+                boolean isHelper = isDivyang && "Divyang with Helper".equalsIgnoreCase(onwardBooking.getSearchParams().getDivyangBooking());
+                String msg = isHelper ? "Helper passenger name cannot be empty" : "Passenger name cannot be empty";
+                ActivityUtil.showToast(this, msg);
+                if (com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(PassengerInfoActivity.this)) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(PassengerInfoActivity.this).speak(msg);
+                }
                 return;
             }
-//            if (((double) Double.parseDouble(String.valueOf(ageA.getText()))) < 10d) {
-//                ActivityUtil.showToast(this, "Not a valid age");
-//                return;
-//            }
-//
-//            if (((double) Double.parseDouble(String.valueOf(ageA.getText()))) > 59d) {
-//                ActivityUtil.showToast(this, "Not a valid age");
-//                return;
-//            }
-//
-//            if (((double) Double.parseDouble(String.valueOf(ageB.getText()))) < 10d) {
-//                ActivityUtil.showToast(this, "Not a valid age");
-//                return;
-//            }
-//
-//            if (((double) Double.parseDouble(String.valueOf(ageB.getText()))) > 59d) {
-//                ActivityUtil.showToast(this, "Not a valid age");
-//                return;
-//            }
 
             if (!ValidationUtil.isValidNumber(String.valueOf(ageA.getText())) || ((double) Double.parseDouble(String.valueOf(ageA.getText()))) <= 0d) {
                 ActivityUtil.showToast(this, "Please enter valid age");
+                if (com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(PassengerInfoActivity.this)) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(PassengerInfoActivity.this).speak("Please enter valid age for Divyang");
+                }
                 return;
             }
             if (!ValidationUtil.isValidNumber(String.valueOf(ageB.getText())) || ((double) Double.parseDouble(String.valueOf(ageB.getText()))) <= 0d) {
-                ActivityUtil.showToast(this, "Please enter valid age");
+                boolean isHelper = isDivyang && "Divyang with Helper".equalsIgnoreCase(onwardBooking.getSearchParams().getDivyangBooking());
+                String msg = isHelper ? "Please enter valid age for Helper" : "Please enter valid age";
+                ActivityUtil.showToast(this, msg);
+                if (com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(PassengerInfoActivity.this)) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(PassengerInfoActivity.this).speak(msg);
+                }
                 return;
             }
 
@@ -1518,6 +1530,7 @@ public class PassengerInfoActivity extends BaseNavigationDrawerActivity {
 
 
     public void goNext() {
+        com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(PassengerInfoActivity.this).speak("Passenger details confirmed. Loading fare summary.");
         Bundle extras = new Bundle();
         extras.putString("textlang", textlang);
         extras.putSerializable(AppConstants.INTENT_EXTRA.BOOKING_ONWARD, onwardBooking);

@@ -24,13 +24,24 @@ public class CancellationSuccessActivity extends BaseNavigationDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentViewDrawer(R.layout.activity_cancellation_success);
         Bundle mBun = getIntent().getExtras();
-        textlang =mBun.getString("textlang");
+        if (mBun != null) {
+            textlang = mBun.getString("textlang");
+            booking = (BookingCancellation) mBun.getSerializable(com.gsrtc.mobileweb.utils.AppConstants.INTENT_EXTRA.BOOKING_CANCELLATION);
+        }
 
         textmsg =(TextView)findViewById(R.id.cancelmsg);
         title =(TextView)findViewById(R.id.header_text);
         mainmenu =(Button) findViewById(R.id.submitBtn);
 
-        if(textlang.equalsIgnoreCase("gujarati")){
+        if (com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(this)) {
+            if (booking != null && booking.isDivyangWithHelper) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak("Cancellation confirmed successfully for Divyang and Helper tickets. Your refund will be processed as per GSRTC policy.");
+            } else {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak("Cancellation confirmed successfully. Your refund will be processed as per GSRTC policy.");
+            }
+        }
+
+        if(textlang != null && textlang.equalsIgnoreCase("gujarati")){
             textmsg.setText(R.string.cnfmfnl_msg);
             title.setText(R.string.cnfmfnl_title);
             mainmenu.setText(R.string.cnfmfnl_mainmenu);

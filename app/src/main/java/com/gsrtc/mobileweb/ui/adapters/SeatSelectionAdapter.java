@@ -33,9 +33,29 @@ public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSele
 
 
     public interface OnSeatActionListener {
-        void onSeatSelected(int seatNo);
-        void onSeatAlreadyBooked(int seatNo);
-        void onSeatUnavailable(int seatNo);
+        void onSeatSelected(Seat seat);
+        void onSeatUnselected(Seat seat);
+        void onSeatAlreadyBooked(Seat seat);
+        void onSeatUnavailable(Seat seat);
+    }
+
+    public boolean isSleeperLayout() {
+        if (class_layout_id != null && (
+                class_layout_id.equalsIgnoreCase("64") ||
+                class_layout_id.equalsIgnoreCase("143") ||
+                class_layout_id.equalsIgnoreCase("188") ||
+                class_layout_id.equalsIgnoreCase("191") ||
+                class_layout_id.equalsIgnoreCase("169"))) {
+            return true;
+        }
+        if (srv_class_id != null && (
+                srv_class_id.equalsIgnoreCase("21") ||
+                srv_class_id.equalsIgnoreCase("22") ||
+                srv_class_id.equalsIgnoreCase("42") ||
+                srv_class_id.equalsIgnoreCase("45"))) {
+            return true;
+        }
+        return false;
     }
     Context context;
     Set<Integer> reservedSeats;     //Reserved seats will be fetched from the server and passed to the adapter
@@ -102,33 +122,37 @@ public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSele
                 holder.seatNumberTexts[i].setText("" + seat.getSeatNo() + " " + seat.getDescription());
                 setSeatImage(holder.seatCheckboxes[i], seat);
 
-                holder.seatCheckboxes[i].setOnClickListener(view -> {
-
-                    Seat seat1 = (Seat) view.getTag();
+                final int seatIdx = i;
+                final Seat seatObj = seat;
+                View.OnClickListener seatClickListener = view -> {
+                    Seat seat1 = seatObj;
+                    if (seat1 == null) return;
                     int seatNo = seat1.getSeatNo();
 
                     // AVAILABLE seat
-                    if (serviceSeatDetails.getAvailableSeats().contains(seatNo) ||
-                            serviceSeatDetails.getAvailableLadiesSeats().contains(seatNo)) {
+                    if (serviceSeatDetails != null && (
+                            (serviceSeatDetails.getAvailableSeats() != null && serviceSeatDetails.getAvailableSeats().contains(seatNo)) ||
+                            (serviceSeatDetails.getAvailableLadiesSeats() != null && serviceSeatDetails.getAvailableLadiesSeats().contains(seatNo)))) {
 
                         if (selectedSeats.contains(seatNo)) {
-                            setSeatImage((ImageView) view, seat1);
+                            setSeatImage(holder.seatCheckboxes[seatIdx], seat1);
                             selectedSeats.remove(seatNo);
+                            if (actionListener != null) {
+                                actionListener.onSeatUnselected(seat1);
+                            }
                         } else {
                             if (selectedSeats.size() <= searchParams.getNumOfPassengers()) {
 
-                                if (class_layout_id.equalsIgnoreCase("64") ||
-                                        class_layout_id.equalsIgnoreCase("188") ||
-                                        class_layout_id.equalsIgnoreCase("191")) {
-                                    ((ImageView) view).setImageResource(R.drawable.selected_sleeper);
+                                if (isSleeperLayout()) {
+                                    holder.seatCheckboxes[seatIdx].setImageResource(R.drawable.selected_sleeper);
                                 } else {
-                                    ((ImageView) view).setImageResource(R.drawable.selected_seat);
+                                    holder.seatCheckboxes[seatIdx].setImageResource(R.drawable.selected_seat);
                                 }
 
                                 selectedSeats.add(seatNo);
 
                                 if (actionListener != null) {
-                                    actionListener.onSeatSelected(seatNo);
+                                    actionListener.onSeatSelected(seat1);
                                 }
 
                                 if (getSelectedSeats().size() == searchParams.getNumOfPassengers()) {
@@ -139,30 +163,38 @@ public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSele
                     }
 
                     // BOOKED seat
-                    else if (serviceSeatDetails.getBookedSeats().contains(seatNo) ||
-                            serviceSeatDetails.getBookedLadiesSeats().contains(seatNo)) {
+                    else if (serviceSeatDetails != null && (
+                            (serviceSeatDetails.getBookedSeats() != null && serviceSeatDetails.getBookedSeats().contains(seatNo)) ||
+                            (serviceSeatDetails.getBookedLadiesSeats() != null && serviceSeatDetails.getBookedLadiesSeats().contains(seatNo)) ||
+                            (serviceSeatDetails.getConductorSeats() != null && serviceSeatDetails.getConductorSeats().contains(seatNo)))) {
 
                         if (actionListener != null) {
-                            actionListener.onSeatAlreadyBooked(seatNo);
+                            actionListener.onSeatAlreadyBooked(seat1);
                         }
                     }
 
                     // UNAVAILABLE
                     else {
                         if (actionListener != null) {
-                            actionListener.onSeatUnavailable(seatNo);
+                            actionListener.onSeatUnavailable(seat1);
                         }
                     }
-                });
+                };
+
+                holder.seatCheckboxes[i].setOnClickListener(seatClickListener);
+                if (holder.seatLayouts[i] != null) {
+                    holder.seatLayouts[i].setOnClickListener(seatClickListener);
+                }
+                if (holder.seatNumberTexts[i] != null) {
+                    holder.seatNumberTexts[i].setOnClickListener(seatClickListener);
+                }
             }
         }
     }
 
     public void setSeatImage(ImageView view, Seat seat) {
 
-        if (class_layout_id.equalsIgnoreCase("64") ||
-                class_layout_id.equalsIgnoreCase("188") ||
-                class_layout_id.equalsIgnoreCase("191")) {
+        if (isSleeperLayout()) {
 
             if (serviceSeatDetails.getBookedLadiesSeats().contains(seat.getSeatNo())) {
                 view.setImageResource(R.drawable.booked_ladies_sleeper);

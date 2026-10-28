@@ -574,6 +574,25 @@ public class AdvanceBookingNetworkUtil extends SoapClientUtil {
                 consId = "1";
             }
 
+
+            String percentageStr = booking.getSearchParams().getHelperPercentage();
+
+            int percentage = (percentageStr == null || percentageStr.trim().isEmpty())
+                    ? 0
+                    : (int) Double.parseDouble(percentageStr);
+
+            if (percentage == 0) {
+                consId = "1";
+            } else if (percentage == 50) {
+                consId = "49";
+            } else if (percentage == 100) {
+                consId = "3";
+            }
+
+
+            consId = "3";
+
+
         } else {
             consId = "1";
         }

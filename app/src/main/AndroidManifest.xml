@@ -11,6 +11,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
 
     <application
         android:name=".GSRTC"
@@ -67,6 +72,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.payment_gateway.NSDL_PaymentCurrentBooking"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activities.payment_gateway.SapphirePaymentGateway"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activities.payment_gateway.SapphirePaymentGatewayCurrent"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity

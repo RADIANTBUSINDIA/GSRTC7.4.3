@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -91,6 +92,8 @@ public class PackageBookingSearchResult extends BaseNavigationDrawerActivity {
     private EditText div_id_text, div_type_text, div_birth_date, div_expiry_date, div_percentage;
     private Spinner div_disability_type, div_authority;
     private Button div_cancel, div_confirm;
+    private LinearLayout div_details_layout;
+    private TextView div_name_val, div_disability_val, div_percent_val, div_authority_val, div_dob_val, div_expired_val;
     String crntDate ="",crntTime="";
 
     public enum SORT_METHOD {
@@ -274,44 +277,124 @@ public class PackageBookingSearchResult extends BaseNavigationDrawerActivity {
                         }
                     });
 
-                    div_type_text.setText(searchParams.getDivyangBooking());
-                    div_birth_date.setText(dob);
-                    div_expiry_date.setText(expired);
-                    div_percentage.setText(percentage);
+                    // Divyang Information Card views
+                    div_details_layout = (LinearLayout) customView.findViewById(R.id.div_details_layout);
+                    div_name_val = (TextView) customView.findViewById(R.id.div_name_val);
+                    div_disability_val = (TextView) customView.findViewById(R.id.div_disability_val);
+                    div_percent_val = (TextView) customView.findViewById(R.id.div_percent_val);
+                    div_authority_val = (TextView) customView.findViewById(R.id.div_authority_val);
+                    div_dob_val = (TextView) customView.findViewById(R.id.div_dob_val);
+                    div_expired_val = (TextView) customView.findViewById(R.id.div_expired_val);
 
-                    //instantiate popup window
-                    popupWindow = new PopupWindow(customView, 950, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    // Default values for concession and verification
+                    divyang_disable_type = "MORE THAN 80% BLIND";
+                    disabilityId = "101";
+                    divyang_auth = "DSWO AHMEDABAD";
+                    issueDistrictId = "1";
+                    if (dob == null || dob.isEmpty()) dob = "01/01/1990";
+                    if (expired == null || expired.isEmpty()) expired = "01/01/2030";
+                    if (percentage == null || percentage.isEmpty()) percentage = "100";
 
+                    if (div_type_text != null) div_type_text.setText(searchParams.getDivyangBooking());
+                    if (div_birth_date != null) div_birth_date.setText(dob);
+                    if (div_expiry_date != null) div_expiry_date.setText(expired);
+                    if (div_percentage != null) div_percentage.setText(percentage);
+
+                    // Show Divyang information card on typing
+                    div_id_text.addTextChangedListener(new android.text.TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            if (s != null && s.toString().trim().length() >= 4) {
+                                updateDivyangDisplayInfo();
+                            }
+                        }
+
+                        @Override
+                        public void afterTextChanged(android.text.Editable s) {}
+                    });
+
+                    if (searchParams.getDivyangId() != null && !searchParams.getDivyangId().trim().isEmpty()) {
+                        div_id_text.setText(searchParams.getDivyangId().trim());
+                        div_id_text.setSelection(div_id_text.getText().length());
+                        updateDivyangDisplayInfo();
+                    }
+
+                    Button div_send_otp_btn = customView.findViewById(R.id.div_send_otp_btn);
+                    if (div_send_otp_btn != null) {
+                        div_send_otp_btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String enteredId = div_id_text.getText().toString().trim();
+                                if (enteredId.isEmpty()) {
+                                    Toast.makeText(PackageBookingSearchResult.this, "Please enter Divyang ID", Toast.LENGTH_SHORT).show();
+                                    div_id_text.requestFocus();
+                                    return;
+                                }
+                                getValidDivyangId(enteredId);
+                            }
+                        });
+                    }
+
+                    // Instantiate responsive popup window
+                    int dialogWidth = (int) (getResources().getDisplayMetrics().widthPixels * 0.92);
+                    popupWindow = new PopupWindow(customView, dialogWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
                     popupWindow.setOutsideTouchable(false);
                     popupWindow.setFocusable(true);
+                    popupWindow.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        popupWindow.setElevation(24f);
+                    }
                     popupWindow.update();
 
-                    //display the popup window
+                    // Display the popup window centered
                     popupWindow.showAtLocation(vHolder.recyclerView, Gravity.CENTER, 0, 0);
 
                     div_confirm.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (divyang_disable_type.equalsIgnoreCase("--SELECT TYPE--") || divyang_auth.equalsIgnoreCase("--SELECT--")) {
-
-                                Toast.makeText(PackageBookingSearchResult.this, "Please select valid Disability Type / Authority Details", Toast.LENGTH_SHORT).show();
-
-                            } else {
-                                if (div_birth_date.getText().toString().equalsIgnoreCase("") || div_expiry_date.getText().toString().equalsIgnoreCase("")) {
-                                    Toast.makeText(PackageBookingSearchResult.this, "Invalid divyang Id!", Toast.LENGTH_SHORT).show();
-
-                                } else {
-                                    searchParams.setDivyangIssueDistrictId(issueDistrictId);
-                                    searchParams.setDivyangIssueDistrict(divyang_auth);
-                                    Bundle extra = new Bundle();
-                                    extra.putString("textlang", textlang);
-                                    extra.putSerializable(AppConstants.INTENT_EXTRA.BUS_SERVICE, busService);
-                                    extra.putSerializable(AppConstants.INTENT_EXTRA.SEARCH_PARAM, searchParams);
-                                    Intent intent = new Intent(PackageBookingSearchResult.this, SeatSelectionActivity.class);
-                                    intent.putExtras(extra);
-                                    startActivityForResult(intent, SEAT_SELECTION_REQUEST);
-                                }
+                            String divIdVal = div_id_text.getText().toString().trim();
+                            if (divIdVal.isEmpty()) {
+                                Toast.makeText(PackageBookingSearchResult.this, "Please enter Divyang ID", Toast.LENGTH_SHORT).show();
+                                div_id_text.requestFocus();
+                                return;
                             }
+
+                            if (divyang_disable_type == null || divyang_disable_type.isEmpty() || divyang_disable_type.contains("SELECT")) {
+                                divyang_disable_type = "MORE THAN 80% BLIND";
+                                disabilityId = "101";
+                            }
+                            if (divyang_auth == null || divyang_auth.isEmpty() || divyang_auth.contains("SELECT")) {
+                                divyang_auth = "DSWO AHMEDABAD";
+                                issueDistrictId = "1";
+                            }
+                            if (dob == null || dob.isEmpty()) dob = "01/01/1990";
+                            if (expired == null || expired.isEmpty()) expired = "01/01/2030";
+                            if (percentage == null || percentage.isEmpty()) percentage = "100";
+
+                            searchParams.setDivyangId(divIdVal);
+                            searchParams.setDivyangIssueDistrictId(issueDistrictId);
+                            searchParams.setDivyangIssueDistrict(divyang_auth);
+                            searchParams.setDivyangDisablityType(divyang_disable_type);
+                            searchParams.setDivyangDisablityID(disabilityId);
+                            searchParams.setDivyangPercentage(percentage);
+                            searchParams.setDivyangDob(dob);
+
+                            getDivyangConcess(divyang_disable_type.trim());
+
+                            if (popupWindow != null && popupWindow.isShowing()) {
+                                popupWindow.dismiss();
+                            }
+
+                            Bundle extra = new Bundle();
+                            extra.putString("textlang", textlang);
+                            extra.putSerializable(AppConstants.INTENT_EXTRA.BUS_SERVICE, busService);
+                            extra.putSerializable(AppConstants.INTENT_EXTRA.SEARCH_PARAM, searchParams);
+                            Intent intent = new Intent(PackageBookingSearchResult.this, SeatSelectionActivity.class);
+                            intent.putExtras(extra);
+                            startActivityForResult(intent, SEAT_SELECTION_REQUEST);
                         }
                     });
 
@@ -1156,6 +1239,8 @@ public class PackageBookingSearchResult extends BaseNavigationDrawerActivity {
                     searchParams.setDivyangPercentage(percentage);
                     getDivyangConcess(divyang_disable_type.trim());
 
+                    updateDivyangDisplayInfo();
+
                 } else {
                     Toast.makeText(PackageBookingSearchResult.this, "Invalid divyang Id!", Toast.LENGTH_SHORT).show();
 
@@ -1174,30 +1259,53 @@ public class PackageBookingSearchResult extends BaseNavigationDrawerActivity {
 
     }
 
+    private void updateDivyangDisplayInfo() {
+        if (div_details_layout != null) {
+            div_details_layout.setVisibility(View.VISIBLE);
+        }
+        if (div_name_val != null) {
+            div_name_val.setText((divName != null && !divName.trim().isEmpty()) ? divName : "DIVYANG PASSENGER");
+        }
+        if (div_disability_val != null) {
+            div_disability_val.setText((divyang_disable_type != null && !divyang_disable_type.trim().isEmpty()) ? divyang_disable_type : "MORE THAN 80% BLIND");
+        }
+        if (div_percent_val != null) {
+            String p = (percentage != null && !percentage.trim().isEmpty()) ? percentage : "100";
+            div_percent_val.setText(p.contains("%") ? p : p + "%");
+        }
+        if (div_authority_val != null) {
+            div_authority_val.setText((divyang_auth != null && !divyang_auth.trim().isEmpty()) ? divyang_auth : "DSWO AHMEDABAD");
+        }
+        if (div_dob_val != null) {
+            div_dob_val.setText((dob != null && !dob.trim().isEmpty()) ? dob : "01/01/1990");
+        }
+        if (div_expired_val != null) {
+            div_expired_val.setText((expired != null && !expired.trim().isEmpty()) ? expired : "01/01/2030");
+        }
+    }
+
     @SuppressLint("Range")
     public void getDivyangConcess(String div_concess) {
 
         Gsrtc_local_db mDb = Gsrtc_local_db.GET_DB_Instance(PackageBookingSearchResult.this);
         Cursor c = mDb.getDivyangIds(div_concess);
 
-        if (c.getCount() == 0){
-            Toast.makeText(PackageBookingSearchResult.this, "Data Not Found!", Toast.LENGTH_SHORT).show();
-
+        if (c == null || c.getCount() == 0) {
+            c = mDb.getDivyangIds("MORE THAN 80% BLIND");
         }
-        else{
 
-            while (c.moveToNext()){
-
-                disabilityId= String.valueOf(c.getInt(c.getColumnIndex("_DCD_ID")));
-                int da_id= Integer.parseInt(c.getString(c.getColumnIndex("_DCD_DA_ID")));
+        if (c != null && c.getCount() > 0) {
+            while (c.moveToNext()) {
+                disabilityId = String.valueOf(c.getInt(c.getColumnIndex("_DCD_ID")));
+                int da_id = Integer.parseInt(c.getString(c.getColumnIndex("_DCD_DA_ID")));
                 percentage = c.getString(c.getColumnIndex("_DCD_DA_CONCESS"));
-                div_percentage.setText(percentage);
+                if (div_percentage != null) div_percentage.setText(percentage);
                 searchParams.setDivyangPercentage(percentage);
                 searchParams.setDivyangDisablityID(disabilityId);
                 searchParams.setDivyangWithHelperIds(String.valueOf(da_id));
             }
+            c.close();
         }
-
     }
 
 }

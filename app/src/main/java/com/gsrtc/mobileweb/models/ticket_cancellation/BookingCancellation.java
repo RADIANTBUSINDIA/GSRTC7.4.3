@@ -19,4 +19,11 @@ public class BookingCancellation implements Serializable {
     public ConfirmPartialCancellationResponse confirmPartialCancellationResponse;
     public GetPartialCancellationDetailsResponse getPartialCancellationDetailsResponse;
     public GetPartialCancellationTransactionDetailsResponse getPartialCancellationTransactionDetailsResponse;
+
+    // Divyang & Helper linked PNR cancellation fields
+    public boolean isDivyangWithHelper;
+    public DivyangHelperPNRDetailsResponse divyangHelperDetails;
+    public GetFullCancellationDetailsResponse helperFullCancellationDetailsResponse;
+    public GetFullCancellationTransactionDetailsResponse helperFullCancellationTransactionDetailsResponse;
+    public ConfirmFullCancellationResponse helperConfirmFullCancellationResponse;
 }

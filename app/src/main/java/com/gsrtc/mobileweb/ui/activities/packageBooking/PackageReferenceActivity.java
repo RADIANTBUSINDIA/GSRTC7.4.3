@@ -299,18 +299,19 @@ public class PackageReferenceActivity extends BaseNavigationDrawerActivity {
             intent.putExtra("isCard", isCard);
             startActivityForResult(intent, PAYMENT_CODE);
 
-        }else if (isCard.equalsIgnoreCase("744")) {   //AXIS
-
-            Toast.makeText(this, "Axis Bank Check", Toast.LENGTH_SHORT).show();
-         /*   Intent intent = new Intent(PackageReferenceActivity.this, AggreepayGateway.class);
+        } else if (isCard.equalsIgnoreCase("758") || isCard.equalsIgnoreCase("744")) { // ICICI Orange PG / Sapphire / Axis
+            Intent intent = new Intent(PackageReferenceActivity.this, com.gsrtc.mobileweb.ui.activities.payment_gateway.SapphirePaymentGateway.class);
             intent.putExtra("textlang", textlang);
             intent.putExtra(AppConstants.INTENT_EXTRA.BOOKING_ONWARD, onwardBooking);
             if (returnBooking != null) {
                 intent.putExtra(AppConstants.INTENT_EXTRA.BOOKING_RETURN, returnBooking);
             }
+            if (divyangBooking != null) {
+                intent.putExtra(AppConstants.INTENT_EXTRA.BOOKING_DIVYANG, divyangBooking);
+            }
             intent.putExtra("totalFare", totalFare);
             intent.putExtra("isCard", isCard);
-            startActivityForResult(intent, PAYMENT_CODE);*/
+            startActivityForResult(intent, PAYMENT_CODE);
         } else {
 
 //            Intent intent = new Intent(PackageReferenceActivity.this, BillDeskGateway.class);

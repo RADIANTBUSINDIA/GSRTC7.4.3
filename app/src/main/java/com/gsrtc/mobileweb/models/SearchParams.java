@@ -35,6 +35,7 @@ public class SearchParams implements Serializable{
     String divyangGender;
     String divyangDob;
     String divyangMobile;
+    String helperPercentage;
 
     PackageBookingModel packageDetails;
 
@@ -253,5 +254,12 @@ public class SearchParams implements Serializable{
     }
 
 
+    public String getHelperPercentage() {
+        return helperPercentage;
+    }
+
+    public void setHelperPercentage(String helperPercentage) {
+        this.helperPercentage = helperPercentage;
+    }
 
 }

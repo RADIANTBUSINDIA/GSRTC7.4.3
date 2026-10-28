@@ -365,7 +365,7 @@
                     android:id="@+id/linearLayoutTrackTicket">
 
                     <ImageView
-                        android:id="@+id/imageViewE-Wallet"
+                        android:id="@+id/imageViewE_Wallet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:src="@drawable/track_ticket_icon"

@@ -22,6 +22,8 @@ public class GSRTC extends Application {
         super.onCreate();
         appContext = getApplicationContext();
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
+        com.gsrtc.mobileweb.utils.divyang.DivyangAccessibilityManager.init(this);
+        com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.init(this);
     }
 
 //    @Override

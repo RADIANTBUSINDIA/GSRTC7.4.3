@@ -1,29 +1,38 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.gms.google-services'
-//apply plugin: 'com.android.databinding'
 
 
 android {
-    compileSdkVersion 34
-    buildToolsVersion '30.0.3'
+    namespace 'com.gsrtc.mobileweb'
+    signingConfigs {
+        release {
+            storeFile file('/Users/apple/Downloads/gsrtc.jks')
+            storePassword 'gsrtcandroid'
+            keyPassword 'gsrtcandroid'
+            keyAlias 'gsrtc'
+        }
+    }
+    compileSdk 36
+    buildToolsVersion '36.0.0'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.gsrtc.mobileweb"
-        minSdkVersion 21
-        targetSdkVersion 35
-        versionCode 96
-        versionName "7.3.9"
+        minSdkVersion 24
+        targetSdk 36
+        versionCode 110
+        versionName "7.4.5"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-//multiDexEnabled true
+        multiDexEnabled true
     }
 
     lintOptions {
         abortOnError false
     }
 
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding = true
     }
     packagingOptions {
 
@@ -39,18 +48,26 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     configurations {
         all {
             exclude module: 'httpclient'
             exclude module: 'commons-logging'
+            resolutionStrategy {
+                force 'io.grpc:grpc-okhttp:1.52.1'
+            }
         }
     }
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+        freeCompilerArgs += ["-Xskip-metadata-version-check"]
     }
 }
 
@@ -68,8 +85,22 @@ dependencies {
 
     //compile files('libs/surepay_v1.0.1.aar')
     implementation files('libs/soarpayProdV1.2.aar')
+    implementation files('libs/customersdk-15July26.aar')
     implementation files('libs/pgichecksum.jar')
     implementation files('libs/commons-codec-1.10.jar')
+
+    // Sapphire / PayPhi SDK dependencies
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.7.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+  //  implementation "androidx.activity:activity-ktx:1.9.3"
+    implementation "androidx.activity:activity-ktx:1.9.3"
 
 
     //aggrepay payment gateway
@@ -101,7 +132,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:18.0.3'
     implementation 'com.google.firebase:firebase-messaging:21.1.0'
     implementation 'com.google.firebase:firebase-core:18.0.3'
-    implementation 'com.google.firebase:firebase-inappmessaging-display:19.1.5'
+    // implementation 'com.google.firebase:firebase-inappmessaging-display:19.1.5' // Disabled: incompatible gRPC reflection crash on TargetSdk 35
 
     implementation 'com.paytm.appinvokesdk:appinvokesdk:1.6.8'
 

@@ -10,8 +10,7 @@ public class AppConstants {
 
 
     //prod
-    public static String live_url = "http://172.31.99.234:8080/GSRTCWSAnd";
-
+    public static String live_url = "https://gsrtc.in/GSRTCWSAnd";
 
 
     //public static String live_url = "http://192.168.222.173:8082/GSRTCWSAnd";

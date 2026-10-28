@@ -99,10 +99,13 @@ public class GetCurrentSummaryActivity extends BaseNavigationDrawerActivity{
 
                             isCard = "724";
 
-                        }else if(button.getText().toString().equalsIgnoreCase("AggrePay")) {
+                        } else if (button.getText().toString().equalsIgnoreCase("AggrePay")) {
 
                             isCard = "721";
-                        }else{
+                        } else if (button.getText().toString().equalsIgnoreCase("AXIS") || button.getText().toString().equalsIgnoreCase("Sapphire") || button.getText().toString().equalsIgnoreCase("ICICI ORANGE PG")) {
+
+                            isCard = "758";
+                        } else {
 
                             isCard = "722";
 

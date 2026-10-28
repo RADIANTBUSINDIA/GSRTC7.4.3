@@ -12,6 +12,7 @@ import com.gsrtc.mobileweb.models.Fault;
 import com.gsrtc.mobileweb.models.ticket_cancellation.BookingCancellation;
 import com.gsrtc.mobileweb.models.ticket_cancellation.ConfirmFullCancellationResponse;
 import com.gsrtc.mobileweb.models.ticket_cancellation.ConfirmPartialCancellationResponse;
+import com.gsrtc.mobileweb.models.ticket_cancellation.DivyangHelperPNRDetailsResponse;
 import com.gsrtc.mobileweb.models.ticket_cancellation.GetAllPassengerDetailsByPnrNoResponse;
 import com.gsrtc.mobileweb.models.ticket_cancellation.GetFullCancellationDetailsResponse;
 import com.gsrtc.mobileweb.models.ticket_cancellation.GetFullCancellationTransactionDetailsResponse;
@@ -96,18 +97,17 @@ public class TicketCancelNetworkUtil extends SoapClientUtil {
         void onError(Exception e);
     }
 
-    public static void GetFullCancellationDetails(BookingCancellation booking, final GetFullCancellationDetailsCallback mCallback){
+    public static void GetFullCancellationDetails(String pnrNumber, String emailId, String phoneNumber, String guestUserPassword, final GetFullCancellationDetailsCallback mCallback){
         String arg0 = "<arg0> \n" +
                 "                <cancellationType>F</cancellationType> \n" +
                 "                <counterCode>"+ AppConstants.CREDENTIALS.COUNTER_CODE+"</counterCode> \n" +
                 "                <createdBy>"+AppConstants.CREDENTIALS.COUNTER_CODE+"</createdBy> \n" +
                 "                <franchiseeUser>true</franchiseeUser> \n" +
-                "                <pnrNumber>"+booking.cancellationSearchParams.pnr+"</pnrNumber> \n" +
+                "                <pnrNumber>"+pnrNumber+"</pnrNumber> \n" +
                 "                <userName>"+AppConstants.CREDENTIALS.USER_NAME+"</userName> \n" +
-                //"                <WSRefNo>"+booking.cancellationSearchParams.WSRefNo+"</WSRefNo> \n" +//TODO
-                "                <guestUserPassword>"+booking.cancellationSearchParams.txtPassword+"</guestUserPassword> \n" +
-                "                <emailId>"+booking.cancellationSearchParams.email+"</emailId> \n" +
-                "                <phoneNumber>"+booking.cancellationSearchParams.mobile+"</phoneNumber> \n" +
+                "                <guestUserPassword>"+(guestUserPassword != null ? guestUserPassword : "")+"</guestUserPassword> \n" +
+                "                <emailId>"+(emailId != null ? emailId : "")+"</emailId> \n" +
+                "                <phoneNumber>"+(phoneNumber != null ? phoneNumber : "")+"</phoneNumber> \n" +
                 "            </arg0>";
         String arg1 = "";
 
@@ -127,7 +127,7 @@ public class TicketCancelNetworkUtil extends SoapClientUtil {
                         JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
                         JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
                         JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "Fault");
-                        Object jsonOb = requiredResponse.get("Fault");
+                        Object jsonOb = requiredResponse != null ? requiredResponse.opt("Fault") : null;
                         String jsonString = "";
                         if(jsonOb instanceof JSONObject){
                             jsonString = ((JSONObject)jsonOb).toString();
@@ -135,15 +135,19 @@ public class TicketCancelNetworkUtil extends SoapClientUtil {
                         else if(jsonOb instanceof JSONArray){
                             jsonString = ((JSONArray)jsonOb).toString();
                         }
-                        faults = JacksonUtil.getMapper().readValue(jsonString, new TypeReference<Fault[]>() {});
+                        if (!jsonString.isEmpty()) {
+                            faults = JacksonUtil.getMapper().readValue(jsonString, new TypeReference<Fault[]>() {});
+                        }
                         mCallback.onSuccess(faults);
                     } else {
                         JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
                         JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
                         JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetFullCancellationDetailsNew");
-                        JSONObject json = requiredResponse.getJSONObject("GetFullCancellationDetailsNew");
-                        responseModel = JacksonUtil.getMapper().readValue(json.toString(), new TypeReference<GetFullCancellationDetailsResponse>() {
-                        });
+                        if (requiredResponse != null && requiredResponse.has("GetFullCancellationDetailsNew")) {
+                            JSONObject json = requiredResponse.getJSONObject("GetFullCancellationDetailsNew");
+                            responseModel = JacksonUtil.getMapper().readValue(json.toString(), new TypeReference<GetFullCancellationDetailsResponse>() {
+                            });
+                        }
                         mCallback.onSuccess(responseModel);
                     }
 
@@ -158,28 +162,36 @@ public class TicketCancelNetworkUtil extends SoapClientUtil {
         });
     }
 
+    public static void GetFullCancellationDetails(BookingCancellation booking, final GetFullCancellationDetailsCallback mCallback){
+        GetFullCancellationDetails(booking.cancellationSearchParams.pnr, booking.cancellationSearchParams.email, booking.cancellationSearchParams.mobile, booking.cancellationSearchParams.txtPassword, mCallback);
+    }
+
     public interface GetFullCancellationDetailsCallback{
         void onSuccess(GetFullCancellationDetailsResponse response);
         void onSuccess(Fault[] faults);
         void onError(Exception e);
     }
 
-    public static void GetFullCancellationTransactionDetails (BookingCancellation booking, final GetFullCancellationTransactionDetailsCallback mCallback){
+    public static void GetFullCancellationTransactionDetails (GetFullCancellationDetailsResponse fullCancellationDetails, final GetFullCancellationTransactionDetailsCallback mCallback){
+        if (fullCancellationDetails == null) {
+            mCallback.onError(new IllegalArgumentException("fullCancellationDetails is null"));
+            return;
+        }
         String arg0 = " <arg0> \n" +
                 "                <cancellationType>F</cancellationType> \n" +
-                "                <concessionTypeId>"+booking.getFullCancellationDetailsResponse.getConcessionTypeId()+"</concessionTypeId> \n" +
+                "                <concessionTypeId>"+fullCancellationDetails.getConcessionTypeId()+"</concessionTypeId> \n" +
                 "                <counterCode>"+ AppConstants.CREDENTIALS.COUNTER_CODE+"</counterCode> \n" +
                 "                <createdBy>"+AppConstants.CREDENTIALS.USER_ID+"</createdBy> \n" +
-                "                <endPlaceID>"+booking.getFullCancellationDetailsResponse.getEndPlaceID()+"</endPlaceID> \n" +
+                "                <endPlaceID>"+fullCancellationDetails.getEndPlaceID()+"</endPlaceID> \n" +
                 "                <franchiseeUser>true</franchiseeUser> \n" +
                 "                <fullCancellationType>NFC</fullCancellationType> \n" +
-                "                <journeyDate>"+booking.getFullCancellationDetailsResponse.getJourneyDate()+"</journeyDate> \n" +
-                "                <pnrMasterID>"+booking.getFullCancellationDetailsResponse.getPnrMasterID()+"</pnrMasterID> \n" +
-                "                <pnrNumber>"+booking.getFullCancellationDetailsResponse.getPnrNumber()+"</pnrNumber> \n" +
-                "                <serviceID>"+booking.getFullCancellationDetailsResponse.getServiceID()+"</serviceID> \n" +
-                "                <startPlaceID>"+booking.getFullCancellationDetailsResponse.getStartPlaceID()+"</startPlaceID> \n" +
+                "                <journeyDate>"+fullCancellationDetails.getJourneyDate()+"</journeyDate> \n" +
+                "                <pnrMasterID>"+fullCancellationDetails.getPnrMasterID()+"</pnrMasterID> \n" +
+                "                <pnrNumber>"+fullCancellationDetails.getPnrNumber()+"</pnrNumber> \n" +
+                "                <serviceID>"+fullCancellationDetails.getServiceID()+"</serviceID> \n" +
+                "                <startPlaceID>"+fullCancellationDetails.getStartPlaceID()+"</startPlaceID> \n" +
                 "                <userName>"+AppConstants.CREDENTIALS.USER_NAME+"</userName> \n" +
-                "                <WSRefNo>"+booking.getFullCancellationDetailsResponse.getWSRefNo()+"</WSRefNo> \n" +
+                "                <WSRefNo>"+fullCancellationDetails.getWSRefNo()+"</WSRefNo> \n" +
                 "            </arg0>";
         String arg1 = "";
 
@@ -197,9 +209,10 @@ public class TicketCancelNetworkUtil extends SoapClientUtil {
                     JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
                     JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
                     JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetFullCancellationTransactionDetails");
-                    JSONObject json = requiredResponse.getJSONObject("GetFullCancellationTransactionDetails");
-                    responseModel = JacksonUtil.getMapper().readValue(json.toString(), new TypeReference<GetFullCancellationTransactionDetailsResponse>() {});
-
+                    if (requiredResponse != null && requiredResponse.has("GetFullCancellationTransactionDetails")) {
+                        JSONObject json = requiredResponse.getJSONObject("GetFullCancellationTransactionDetails");
+                        responseModel = JacksonUtil.getMapper().readValue(json.toString(), new TypeReference<GetFullCancellationTransactionDetailsResponse>() {});
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -211,58 +224,64 @@ public class TicketCancelNetworkUtil extends SoapClientUtil {
         });
     }
 
+    public static void GetFullCancellationTransactionDetails (BookingCancellation booking, final GetFullCancellationTransactionDetailsCallback mCallback){
+        GetFullCancellationTransactionDetails(booking.getFullCancellationDetailsResponse, mCallback);
+    }
+
     public interface GetFullCancellationTransactionDetailsCallback{
         void onSuccess(GetFullCancellationTransactionDetailsResponse response);
         void onError(Exception e);
-        //
     }
 
-    public static void ConfirmFullCancellation (BookingCancellation booking, final ConfirmFullCancellationCallback mCallback){
-
+    public static void ConfirmFullCancellation (GetFullCancellationDetailsResponse detailsResponse, GetFullCancellationTransactionDetailsResponse txnDetailsResponse, final ConfirmFullCancellationCallback mCallback){
+        if (detailsResponse == null || txnDetailsResponse == null) {
+            mCallback.onError(new IllegalArgumentException("detailsResponse or txnDetailsResponse is null"));
+            return;
+        }
         String arg0 = "<arg0> \n" +
-                "                <accidentReliefFund>"+booking.getFullCancellationTransactionDetailsResponse.getAccidentReliefFund()+"</accidentReliefFund> \n" +
-                "                <basicFare>"+booking.getFullCancellationTransactionDetailsResponse.getBasicFare()+"</basicFare> \n" +
-                "                <bookingTicketID>"+booking.getFullCancellationDetailsResponse.getBookingTicketID()+"</bookingTicketID> \n" +
-                "                <bridgeFee>"+booking.getFullCancellationTransactionDetailsResponse.getBridgeFee()+"</bridgeFee> \n" +
-                "                <cancelOtherDiscount>"+booking.getFullCancellationTransactionDetailsResponse.getCancelOtherDiscount()+"</cancelOtherDiscount> \n" +
-                "                <cancellationFee>"+booking.getFullCancellationTransactionDetailsResponse.getCancellationFee()+"</cancellationFee> \n" +
-                "                <canclAccidentReliefFund>"+booking.getFullCancellationTransactionDetailsResponse.getCanclAccidentReliefFund()+"</canclAccidentReliefFund> \n" +
-                "                <canclBasicFare>"+booking.getFullCancellationTransactionDetailsResponse.getCanclBasicFare()+"</canclBasicFare> \n" +
-                "                <canclBridgeFee>"+booking.getFullCancellationTransactionDetailsResponse.getCanclBridgeFee()+"</canclBridgeFee> \n" +
-                "                <canclEntryFee>"+booking.getFullCancellationTransactionDetailsResponse.getCanclEntryFee()+"</canclEntryFee> \n" +
-                "                <canclOtherLevies>"+booking.getFullCancellationTransactionDetailsResponse.getCanclOtherLevies()+"</canclOtherLevies> \n" +
-                "                <canclRefundAmount>"+booking.getFullCancellationTransactionDetailsResponse.getNetRefundAmount()+"</canclRefundAmount> \n" +    //TODO - doubt
-                "                <canclReservationFee>"+booking.getFullCancellationTransactionDetailsResponse.getCanclReservationFee()+"</canclReservationFee> \n" +
-                "                <canclTollFee>"+booking.getFullCancellationTransactionDetailsResponse.getCanclTollFee()+"</canclTollFee> \n" +
-                "                <canclUserFee>"+booking.getFullCancellationTransactionDetailsResponse.getCanclUserFee()+"</canclUserFee> \n" +
-                "                <concessionTypeId>"+booking.getFullCancellationTransactionDetailsResponse.getConcessionTypeId()+"</concessionTypeId> \n" +
+                "                <accidentReliefFund>"+txnDetailsResponse.getAccidentReliefFund()+"</accidentReliefFund> \n" +
+                "                <basicFare>"+txnDetailsResponse.getBasicFare()+"</basicFare> \n" +
+                "                <bookingTicketID>"+detailsResponse.getBookingTicketID()+"</bookingTicketID> \n" +
+                "                <bridgeFee>"+txnDetailsResponse.getBridgeFee()+"</bridgeFee> \n" +
+                "                <cancelOtherDiscount>"+txnDetailsResponse.getCancelOtherDiscount()+"</cancelOtherDiscount> \n" +
+                "                <cancellationFee>"+txnDetailsResponse.getCancellationFee()+"</cancellationFee> \n" +
+                "                <canclAccidentReliefFund>"+txnDetailsResponse.getCanclAccidentReliefFund()+"</canclAccidentReliefFund> \n" +
+                "                <canclBasicFare>"+txnDetailsResponse.getCanclBasicFare()+"</canclBasicFare> \n" +
+                "                <canclBridgeFee>"+txnDetailsResponse.getCanclBridgeFee()+"</canclBridgeFee> \n" +
+                "                <canclEntryFee>"+txnDetailsResponse.getCanclEntryFee()+"</canclEntryFee> \n" +
+                "                <canclOtherLevies>"+txnDetailsResponse.getCanclOtherLevies()+"</canclOtherLevies> \n" +
+                "                <canclRefundAmount>"+txnDetailsResponse.getNetRefundAmount()+"</canclRefundAmount> \n" +    //TODO - doubt
+                "                <canclReservationFee>"+txnDetailsResponse.getCanclReservationFee()+"</canclReservationFee> \n" +
+                "                <canclTollFee>"+txnDetailsResponse.getCanclTollFee()+"</canclTollFee> \n" +
+                "                <canclUserFee>"+txnDetailsResponse.getCanclUserFee()+"</canclUserFee> \n" +
+                "                <concessionTypeId>"+txnDetailsResponse.getConcessionTypeId()+"</concessionTypeId> \n" +
                 "                <counterCode>"+ AppConstants.CREDENTIALS.COUNTER_CODE+"</counterCode> \n" +
                 "                <createdBy>"+ AppConstants.CREDENTIALS.USER_ID+"</createdBy> \n" +
-                "                <endPlaceID>"+booking.getFullCancellationDetailsResponse.getEndPlaceID()+"</endPlaceID> \n" +
-                "                <entryFee>"+booking.getFullCancellationTransactionDetailsResponse.getEntryFee()+"</entryFee> \n" +
+                "                <endPlaceID>"+detailsResponse.getEndPlaceID()+"</endPlaceID> \n" +
+                "                <entryFee>"+txnDetailsResponse.getEntryFee()+"</entryFee> \n" +
                 "                <franchiseeUser>true</franchiseeUser> \n" +
-                "                <journeyDate>"+booking.getFullCancellationDetailsResponse.getJourneyDate()+"</journeyDate> \n" +
+                "                <journeyDate>"+detailsResponse.getJourneyDate()+"</journeyDate> \n" +
                 "                <modeOfPayment>74</modeOfPayment> \n" +
-                "                <netRefundAmount>"+booking.getFullCancellationTransactionDetailsResponse.getNetRefundAmount()+"</netRefundAmount> \n" +
-                "                <otherConcession>"+booking.getFullCancellationTransactionDetailsResponse.getOtherConcession()+"</otherConcession> \n" +
-                "                <otherLevies>"+booking.getFullCancellationTransactionDetailsResponse.getOtherLevies()+"</otherLevies> \n" +
-                "                <pnrMasterID>"+booking.getFullCancellationDetailsResponse.getPnrMasterID()+"</pnrMasterID> \n" +
-                "                <pnrNumber>"+booking.getFullCancellationDetailsResponse.getPnrNumber()+"</pnrNumber> \n" +
-                "                <refundPrcntOrLumpsum>"+booking.getFullCancellationTransactionDetailsResponse.getRefundPrcntOrLumpsum()+"</refundPrcntOrLumpsum> \n" +
-                "                <refundPrcntOrLumpsumValue>"+booking.getFullCancellationTransactionDetailsResponse.getRefundPrcntOrLumpsumValue()+"</refundPrcntOrLumpsumValue> \n" +
-                "                <reservationFee>"+booking.getFullCancellationTransactionDetailsResponse.getReservationFee()+"</reservationFee> \n" +
-                "                <resvOtherConcession>"+booking.getFullCancellationTransactionDetailsResponse.getResvOtherConcession()+"</resvOtherConcession> \n" +
-                "                <resvOtherDiscount>"+booking.getFullCancellationTransactionDetailsResponse.getResvOtherDiscount()+"</resvOtherDiscount> \n" +
-                "                <seatNosToInActive>"+booking.getFullCancellationDetailsResponse.getSeatNosToInActive()+"</seatNosToInActive> \n" +
-                "                <serviceID>"+booking.getFullCancellationDetailsResponse.getServiceID()+"</serviceID> \n" + //doubt
-                "                <startPlaceID>"+booking.getFullCancellationDetailsResponse.getStartPlaceID()+"</startPlaceID> \n" +
-                "                <tollFee>"+booking.getFullCancellationTransactionDetailsResponse.getTollFee()+"</tollFee> \n" +
-                //"                <totalFare>"+booking.getFullCancellationTransactionDetailsResponse.getTotalFare()+"</totalFare> \n" +
-                "                <totalFare>"+booking.getFullCancellationTransactionDetailsResponse.getNetRefundAmount()+"</totalFare> \n" +
-                "                <totalNumberOfSeats>"+booking.getFullCancellationDetailsResponse.getTotalNumberOfSeats()+"</totalNumberOfSeats> \n" +
-                "                <userFee>"+booking.getFullCancellationTransactionDetailsResponse.getUserFee()+"</userFee> \n" +
+                "                <netRefundAmount>"+txnDetailsResponse.getNetRefundAmount()+"</netRefundAmount> \n" +
+                "                <otherConcession>"+txnDetailsResponse.getOtherConcession()+"</otherConcession> \n" +
+                "                <otherLevies>"+txnDetailsResponse.getOtherLevies()+"</otherLevies> \n" +
+                "                <pnrMasterID>"+detailsResponse.getPnrMasterID()+"</pnrMasterID> \n" +
+                "                <pnrNumber>"+detailsResponse.getPnrNumber()+"</pnrNumber> \n" +
+                "                <refundPrcntOrLumpsum>"+txnDetailsResponse.getRefundPrcntOrLumpsum()+"</refundPrcntOrLumpsum> \n" +
+                "                <refundPrcntOrLumpsumValue>"+txnDetailsResponse.getRefundPrcntOrLumpsumValue()+"</refundPrcntOrLumpsumValue> \n" +
+                "                <reservationFee>"+txnDetailsResponse.getReservationFee()+"</reservationFee> \n" +
+                "                <resvOtherConcession>"+txnDetailsResponse.getResvOtherConcession()+"</resvOtherConcession> \n" +
+                "                <resvOtherDiscount>"+txnDetailsResponse.getResvOtherDiscount()+"</resvOtherDiscount> \n" +
+                "                <seatNosToInActive>"+detailsResponse.getSeatNosToInActive()+"</seatNosToInActive> \n" +
+                "                <serviceID>"+detailsResponse.getServiceID()+"</serviceID> \n" + //doubt
+                "                <startPlaceID>"+detailsResponse.getStartPlaceID()+"</startPlaceID> \n" +
+                "                <tollFee>"+txnDetailsResponse.getTollFee()+"</tollFee> \n" +
+                //"                <totalFare>"+txnDetailsResponse.getTotalFare()+"</totalFare> \n" +
+                "                <totalFare>"+txnDetailsResponse.getNetRefundAmount()+"</totalFare> \n" +
+                "                <totalNumberOfSeats>"+detailsResponse.getTotalNumberOfSeats()+"</totalNumberOfSeats> \n" +
+                "                <userFee>"+txnDetailsResponse.getUserFee()+"</userFee> \n" +
                 "                <userName>"+AppConstants.CREDENTIALS.USER_NAME+"</userName>"+
-                "                <WSRefNo>"+booking.getFullCancellationDetailsResponse.getWSRefNo()+"</WSRefNo>"+
+                "                <WSRefNo>"+detailsResponse.getWSRefNo()+"</WSRefNo>"+
                 "            </arg0>";
         String arg1 = "";
 
@@ -280,9 +299,10 @@ public class TicketCancelNetworkUtil extends SoapClientUtil {
                     JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
                     JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
                     JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "ConfirmFullCancellation");
-                    JSONObject json = requiredResponse.getJSONObject("ConfirmFullCancellation");
-                    responseModel = JacksonUtil.getMapper().readValue(json.toString(), new TypeReference<ConfirmFullCancellationResponse>() {});
-
+                    if (requiredResponse != null && requiredResponse.has("ConfirmFullCancellation")) {
+                        JSONObject json = requiredResponse.getJSONObject("ConfirmFullCancellation");
+                        responseModel = JacksonUtil.getMapper().readValue(json.toString(), new TypeReference<ConfirmFullCancellationResponse>() {});
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -294,9 +314,72 @@ public class TicketCancelNetworkUtil extends SoapClientUtil {
         });
     }
 
+    public static void ConfirmFullCancellation (BookingCancellation booking, final ConfirmFullCancellationCallback mCallback){
+        ConfirmFullCancellation(booking.getFullCancellationDetailsResponse, booking.getFullCancellationTransactionDetailsResponse, mCallback);
+    }
+
     public interface ConfirmFullCancellationCallback{
         void onSuccess(ConfirmFullCancellationResponse response);
         void onError(Exception e);
+    }
+
+    public interface GetDivyangHelperPNRDetailsCallback {
+        void onSuccess(DivyangHelperPNRDetailsResponse response);
+        void onSuccess(Fault[] faults);
+        void onError(Exception e);
+    }
+
+    public static void GetDivyangHelperPNRDetails(String pnrNo, final GetDivyangHelperPNRDetailsCallback mCallback) {
+        String arg0 = "<arg0>\n" +
+                "   <i_PNRNO>" + pnrNo + "</i_PNRNO>\n" +
+                "</arg0>";
+        String arg1 = "";
+
+        fetchResponseString("GetDivyangHelperPNRDetails", arg0, arg1, new BaseDefaultHttpCallback() {
+            @Override
+            public void onError(Exception e) {
+                mCallback.onError(e);
+            }
+
+            @Override
+            public void onSuccess(String response) {
+                System.out.println("GetDivyangHelperPNRDetails Response: " + response);
+                DivyangHelperPNRDetailsResponse responseModel = null;
+                Fault[] faults = null;
+                try {
+                    if (response != null && response.contains("<faultstring>")) {
+                        JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+                        JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
+                        JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "Fault");
+                        Object jsonOb = requiredResponse != null ? requiredResponse.opt("Fault") : null;
+                        String jsonString = "";
+                        if (jsonOb instanceof JSONObject) {
+                            jsonString = ((JSONObject) jsonOb).toString();
+                        } else if (jsonOb instanceof JSONArray) {
+                            jsonString = ((JSONArray) jsonOb).toString();
+                        }
+                        if (!jsonString.isEmpty()) {
+                            faults = JacksonUtil.getMapper().readValue(jsonString, new TypeReference<Fault[]>() {});
+                        }
+                        mCallback.onSuccess(faults);
+                    } else if (response != null) {
+                        JSONObject responseJson = XMLtoJSONResponseParser.getJsonResponseFromXml(response);
+                        JSONObject responseBody = XMLtoJSONResponseParser.getResponseBody(responseJson);
+                        JSONObject requiredResponse = XMLtoJSONResponseParser.getRequiredResponse(responseBody, "GetDivyangHelperPNRDetails");
+                        if (requiredResponse != null && requiredResponse.has("GetDivyangHelperPNRDetails")) {
+                            JSONObject json = requiredResponse.getJSONObject("GetDivyangHelperPNRDetails");
+                            responseModel = JacksonUtil.getMapper().readValue(json.toString(), DivyangHelperPNRDetailsResponse.class);
+                        }
+                        mCallback.onSuccess(responseModel);
+                    } else {
+                        mCallback.onSuccess((DivyangHelperPNRDetailsResponse) null);
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    mCallback.onError(ex);
+                }
+            }
+        });
     }
 
     public static void GetPartialCancellationDetails(BookingCancellation booking, final GetPartialCancellationDetailsCallback mCallback){

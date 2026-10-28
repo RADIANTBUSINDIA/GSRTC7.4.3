@@ -20,5 +20,6 @@
     <color name="light_blue">#008aff</color>
     <color name="hint"> #adadad</color>
     <color name="greenLight"> #39c672</color>
+    <color name="bpRed">#db4437</color>
 
 </resources>

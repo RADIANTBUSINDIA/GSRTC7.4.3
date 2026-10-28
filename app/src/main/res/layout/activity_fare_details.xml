@@ -1156,6 +1156,37 @@
                             android:checked="false"/>
 
                         <TextView
+                            android:id="@+id/sapphire_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Credit/Debit Card, UPI and NetBanking - Orange PG"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:visibility="visible"
+                            android:textSize="12dp"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+                        <RadioButton
+                            android:id="@+id/sapphirePay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:drawableStart="@drawable/icici"
+                            android:text="ICICI"
+                            android:textStyle="bold"
+                            android:drawablePadding="10dp"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            android:visibility="visible"
+                            android:clickable="true"
+                            android:buttonTint="@color/white"
+                            android:checked="false"/>
+
+
+
+                        <TextView
                             android:id="@+id/phonepe_txt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

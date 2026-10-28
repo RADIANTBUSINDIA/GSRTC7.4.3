@@ -17,6 +17,7 @@ import com.gsrtc.mobileweb.R;
 import com.gsrtc.mobileweb.models.Fault;
 import com.gsrtc.mobileweb.models.ticket_cancellation.BookingCancellation;
 import com.gsrtc.mobileweb.models.ticket_cancellation.CancellationSearchParams;
+import com.gsrtc.mobileweb.models.ticket_cancellation.DivyangHelperPNRDetailsResponse;
 import com.gsrtc.mobileweb.models.ticket_cancellation.GetAllPassengerDetailsByPnrNoResponse;
 import com.gsrtc.mobileweb.models.ticket_cancellation.GetFullCancellationDetailsResponse;
 import com.gsrtc.mobileweb.ui.activities.HomeActivity;
@@ -26,6 +27,10 @@ import com.gsrtc.mobileweb.utils.AppConstants;
 import com.gsrtc.mobileweb.utils.ValidationUtil;
 import com.gsrtc.mobileweb.utils.customdialog.CustomisedProgressDialog;
 import com.gsrtc.mobileweb.utils.net.TicketCancelNetworkUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TicketCancellationActivity extends BaseNavigationDrawerActivity {
 
@@ -221,6 +226,132 @@ public class TicketCancellationActivity extends BaseNavigationDrawerActivity {
                 });
     }
 
+    private void checkDivyangHelperAndProceed() {
+        showProgressDialog();
+        final String pnr = booking.cancellationSearchParams != null ? booking.cancellationSearchParams.pnr : "";
+        TicketCancelNetworkUtil.GetDivyangHelperPNRDetails(pnr, new TicketCancelNetworkUtil.GetDivyangHelperPNRDetailsCallback() {
+            @Override
+            public void onSuccess(DivyangHelperPNRDetailsResponse response) {
+                if (response != null && response.hasHelperPnr(pnr)) {
+                    booking.isDivyangWithHelper = true;
+                    booking.divyangHelperDetails = response;
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(TicketCancellationActivity.this).speak("Divyang with Helper booking found for PNR " + pnr + ". Loading passenger selection.");
+                    String linkedPnr = response.getLinkedPnr(pnr);
+                    fetchBothCancellationDetails(linkedPnr, response);
+                } else {
+                    booking.isDivyangWithHelper = false;
+                    booking.divyangHelperDetails = null;
+                    getCancellationDetails();
+                }
+            }
+
+            @Override
+            public void onSuccess(Fault[] faults) {
+                booking.isDivyangWithHelper = false;
+                booking.divyangHelperDetails = null;
+                getCancellationDetails();
+            }
+
+            @Override
+            public void onError(Exception e) {
+                booking.isDivyangWithHelper = false;
+                booking.divyangHelperDetails = null;
+                getCancellationDetails();
+            }
+        });
+    }
+
+    private void fetchBothCancellationDetails(final String helperPnr, final DivyangHelperPNRDetailsResponse divyangHelperResponse) {
+        TicketCancelNetworkUtil.GetFullCancellationDetails(
+                booking,
+                new TicketCancelNetworkUtil.GetFullCancellationDetailsCallback() {
+                    @Override
+                    public void onSuccess(GetFullCancellationDetailsResponse primaryResponse) {
+                        if (primaryResponse == null) {
+                            hideProgressDialog();
+                            ActivityUtil.showToast(TicketCancellationActivity.this, "Invalid PNR or details");
+                            return;
+                        }
+                        booking.getFullCancellationDetailsResponse = primaryResponse;
+                        booking.getPartialCancellationDetailsResponse = primaryResponse.toPartialCancellationDetails();
+
+                        fetchHelperCancellationDetails(helperPnr, divyangHelperResponse);
+                    }
+
+                    @Override
+                    public void onSuccess(Fault[] faults) {
+                        hideProgressDialog();
+                        ActivityUtil.showToast(TicketCancellationActivity.this, "Invalid parameters or data");
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        hideProgressDialog();
+                        ActivityUtil.showToast(TicketCancellationActivity.this, "Invalid parameters or data");
+                    }
+                }
+        );
+    }
+
+    private void fetchHelperCancellationDetails(final String helperPnr, final DivyangHelperPNRDetailsResponse divyangHelperResponse) {
+        String email = booking.cancellationSearchParams.email;
+        String mobile = booking.cancellationSearchParams.mobile;
+        String pwd = booking.cancellationSearchParams.txtPassword;
+
+        TicketCancelNetworkUtil.GetFullCancellationDetails(
+                helperPnr, email, mobile, pwd,
+                new TicketCancelNetworkUtil.GetFullCancellationDetailsCallback() {
+                    @Override
+                    public void onSuccess(GetFullCancellationDetailsResponse helperDetails) {
+                        hideProgressDialog();
+                        if (helperDetails == null) {
+                            ActivityUtil.showToast(TicketCancellationActivity.this, "Unable to load linked helper ticket details.");
+                            return;
+                        }
+                        booking.helperFullCancellationDetailsResponse = helperDetails;
+
+                        GetAllPassengerDetailsByPnrNoResponse helperPassenger = new GetAllPassengerDetailsByPnrNoResponse();
+                        String hName = helperDetails.getPassengerName();
+                        if (TextUtils.isEmpty(hName)) {
+                            hName = "Helper Passenger (" + helperPnr + ")";
+                        }
+                        helperPassenger.setPassengerName(hName);
+
+                        String hSeat = helperDetails.getSeatNosToDisplay();
+                        if (TextUtils.isEmpty(hSeat)) {
+                            hSeat = helperDetails.getSeatNosToInActive();
+                        }
+                        if (TextUtils.isEmpty(hSeat) && divyangHelperResponse != null) {
+                            hSeat = divyangHelperResponse.getHelperSeatNo();
+                        }
+                        if (hSeat == null) hSeat = "";
+                        helperPassenger.setSeatNo(hSeat);
+
+                        List<GetAllPassengerDetailsByPnrNoResponse> combinedList = new ArrayList<>();
+                        if (booking.getAllPassengerDetailsByPnrNoResponse != null) {
+                            combinedList.addAll(Arrays.asList(booking.getAllPassengerDetailsByPnrNoResponse));
+                        }
+                        combinedList.add(helperPassenger);
+                        booking.getAllPassengerDetailsByPnrNoResponse = combinedList.toArray(new GetAllPassengerDetailsByPnrNoResponse[0]);
+
+                        navigateNext();
+                    }
+
+                    @Override
+                    public void onSuccess(Fault[] faults) {
+                        hideProgressDialog();
+                        ActivityUtil.showToast(TicketCancellationActivity.this, "Unable to load linked helper ticket details.");
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        hideProgressDialog();
+                        ActivityUtil.showToast(TicketCancellationActivity.this, "Unable to load linked helper ticket details.");
+                    }
+                }
+        );
+    }
+
     /* ================= OTP ================= */
     private void sendOtp() {
         CustomisedProgressDialog.SHOW_CUST_DIA(this, "Sending OTP...");
@@ -352,8 +483,8 @@ public class TicketCancellationActivity extends BaseNavigationDrawerActivity {
                 return;
             }
             dialog.dismiss();
-            // Fetch cancellation details after OTP verification
-            getCancellationDetails();
+            // Check Divyang helper PNR details and proceed after OTP verification
+            checkDivyangHelperAndProceed();
         });
 
         cancel.setOnClickListener(v -> dialog.dismiss());

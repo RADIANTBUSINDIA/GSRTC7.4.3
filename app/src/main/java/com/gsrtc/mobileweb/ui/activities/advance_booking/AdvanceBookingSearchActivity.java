@@ -36,6 +36,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.app.DatePickerDialog;
+import android.graphics.drawable.Drawable;
+import android.view.MotionEvent;
+import android.widget.DatePicker;
 import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.codetroopers.betterpickers.calendardatepicker.MonthAdapter;
 
@@ -135,8 +139,7 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
                 selectType="Onward";
                 radio.getChildAt(1).setEnabled(true);
                 radio.getChildAt(2).setEnabled(true);
-
-
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Single trip selected.");
             }
         });
 
@@ -151,7 +154,7 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
                 selectType="Return";
                 radio.getChildAt(1).setEnabled(false);
                 radio.getChildAt(2).setEnabled(false);
-                
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Round trip selected. Note: Divyang concession is available for single trip only.");
             }
         });
     }
@@ -191,6 +194,42 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
             }
         });
 
+        // Setup Place Search Clear logic for From and To fields
+        setupPlaceSearchClear(holder.from_location);
+        setupPlaceSearchClear(holder.to_location);
+
+        holder.from_location.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedPlace = (String) parent.getItemAtPosition(position);
+                holder.from_location.setText(selectedPlace);
+                for (Place place : locationList) {
+                    if (place.getPlaceName().equalsIgnoreCase(selectedPlace)) {
+                        searchParams.setFromLocation(place);
+                        break;
+                    }
+                }
+                holder.from_location.clearFocus();
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Starting place selected: " + selectedPlace);
+            }
+        });
+
+        holder.to_location.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedPlace = (String) parent.getItemAtPosition(position);
+                holder.to_location.setText(selectedPlace);
+                for (Place place : locationList) {
+                    if (place.getPlaceName().equalsIgnoreCase(selectedPlace)) {
+                        searchParams.setToLocation(place);
+                        break;
+                    }
+                }
+                holder.to_location.clearFocus();
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Destination place selected: " + selectedPlace);
+            }
+        });
+
         /**getting currennt date and Time **/
 
         Calendar c = Calendar.getInstance();
@@ -203,6 +242,8 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
         crntDate = cur_day + "/" + cur_month + "/" + cur_year;
         holder.onward_date.setText(cur_day + "/" + cur_month + "/" + cur_year);
         searchParams.setOnWardDate(cur_day + "/" + cur_month + "/" + cur_year);
+        startDate = new MonthAdapter.CalendarDay();
+        startDate.setDay(cur_year, Integer.parseInt(cur_month) - 1, Integer.parseInt(cur_day));
 
         holder.onward_date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,6 +263,7 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 RadioButton button = (RadioButton) group.findViewById(checkedId);
+                if (button == null) return;
                 if (button.getText().toString().equalsIgnoreCase("Single Lady")) {
 
                     select_option = "Single Lady";
@@ -234,6 +276,8 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
                     holder.childrenCount.setClickable(false);
                     round.setClickable(true);
                     round.setFocusable(true);
+
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Single Lady category selected.");
 
                 } else if (button.getText().toString().equalsIgnoreCase("Divyang")) {
 
@@ -251,6 +295,8 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
                     holder.childrenCount.setFocusableInTouchMode(true);
                     holder.childrenCount.setClickable(true);
 
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Divyang category selected. 1 Divyang passenger allowed.");
+
                 } else if (button.getText().toString().equalsIgnoreCase("Divyang with Helper")) {
 
                     select_option = "Divyang with Helper";
@@ -264,6 +310,11 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
                     holder.childrenCount.setClickable(true);
                     round.setClickable(false);
                     round.setFocusable(false);
+
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Divyang with Helper category selected. 2 passengers required: 1 Divyang and 1 Helper.");
+                } else {
+                    select_option = "General";
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("General category selected.");
                 }
             }
         });
@@ -395,8 +446,8 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
                 String fromvalue = holder.from_location.getText().toString();
                 String tovalue = holder.to_location.getText().toString();
                 if ((fromvalue.matches("")) || tovalue.matches("")) {
-
                     Toast.makeText(AdvanceBookingSearchActivity.this, "Please Enter valid place", Toast.LENGTH_SHORT).show();
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Please enter valid places to swap.");
                     return;
                 }
 
@@ -404,7 +455,7 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
                 holder.to_location.setText(fromvalue);
                 holder.to_location.clearFocus();
                 holder.from_location.clearFocus();
-
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Places swapped. From " + tovalue + " to " + fromvalue);
             }
         });
 
@@ -429,11 +480,13 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
     public void goToResultActivity() {
         if (TextUtils.isEmpty(holder.adultCount.getText().toString()) && TextUtils.isEmpty(holder.childrenCount.getText().toString())) {
             ActivityUtil.showSnackBar(holder.container, "No. of passengers can not be zero");
+            com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Number of passengers cannot be zero.");
             return;
         }
 
         if (TextUtils.isEmpty(holder.adultCount.getText().toString())) {
             ActivityUtil.showSnackBar(holder.container, "No. of Adult passengers can not be zero");
+            com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Number of adult passengers cannot be zero.");
             return;
         }
 
@@ -441,6 +494,7 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
         Place endPlace = null;
         if (TextUtils.isEmpty(holder.from_location.getText().toString()) || TextUtils.isEmpty(holder.to_location.getText().toString())) {
             ActivityUtil.showSnackBar(holder.container, "Please select a location");
+            com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Please select starting place and destination.");
             return;
         } else {
             for (Place place : locationList) {
@@ -454,14 +508,17 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
         }
         if (startPlace == null) {
             ActivityUtil.showSnackBar(holder.container, "Please select a valid start place");
+            com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Please select a valid start place.");
             return;
         }
         if (endPlace == null) {
             ActivityUtil.showSnackBar(holder.container, "Please select a valid end place");
+            com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Please select a valid destination place.");
             return;
         }
         if (TextUtils.isEmpty(holder.onward_date.getText().toString())) {
             ActivityUtil.showSnackBar(holder.container, "Please select valid start date");
+            com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Please select a valid start date.");
             return;
         }
 
@@ -491,6 +548,7 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
         if (select_option.equalsIgnoreCase("Divyang")) {
             if (searchParams.getNumOfPassengers() > 1 || searchParams.getNumOfPassengers() < 1) {
                 Toast.makeText(AdvanceBookingSearchActivity.this, "No.of Divyang passengers can not be greater than 1 ", Toast.LENGTH_SHORT).show();
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Number of Divyang passengers cannot be greater than 1.");
                 return;
             } else {
                 searchParams.setDivyangBooking("Divyang");
@@ -501,6 +559,9 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
 
             if (searchParams.getNumOfPassengers() > 2 || searchParams.getNumOfPassengers() < 2) {
                 Toast.makeText(AdvanceBookingSearchActivity.this, "No.of Divyang with Helper passengers can not be greater/ Lesser than 2 ", Toast.LENGTH_SHORT).show();
+                if (com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(AdvanceBookingSearchActivity.this)) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Number of passengers for Divyang with Helper must be 2. One Divyang and one Helper.");
+                }
                 return;
             } else {
                 searchParams.setDivyangBooking("Divyang with Helper");
@@ -509,19 +570,34 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
 
         if (searchParams.getNumOfPassengers() == 0) {
             ActivityUtil.showSnackBar(holder.container, "No. of passengers can not be zero");
+            com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Number of passengers cannot be zero.");
             return;
         }
         if (searchParams.getNumOfPassengers() > 6) {
             ActivityUtil.showSnackBar(holder.container, "No. of passengers can not be greater than 6");
+            com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Number of passengers cannot be greater than 6.");
             return;
         }
 
         if (searchParams.getAdultCount() < 1 && select_option.equalsIgnoreCase("General")) {
             ActivityUtil.showSnackBar(holder.container, "No. of Adult passengers can not be zero");
+            com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Number of adult passengers cannot be zero.");
             return;
         }
 
         saveLastSearch();
+
+        if (com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(AdvanceBookingSearchActivity.this)) {
+            String from = holder.from_location != null ? holder.from_location.getText().toString() : "";
+            String to = holder.to_location != null ? holder.to_location.getText().toString() : "";
+            if (select_option.equalsIgnoreCase("Divyang with Helper")) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Searching buses for Divyang with Helper from " + from + " to " + to);
+            } else if (select_option.equalsIgnoreCase("Divyang")) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Searching buses for Divyang from " + from + " to " + to);
+            } else {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Searching buses from " + from + " to " + to);
+            }
+        }
 
         Bundle extra = new Bundle();
         extra.putString("textlang", textlang);
@@ -534,35 +610,97 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
      */
 
 
-    /**
-     * datre pickerDialog
-     **/
+    private void setupPlaceSearchClear(final AutoCompleteTextView autoCompleteTextView) {
+        // Clear on click
+        autoCompleteTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                autoCompleteTextView.setText("");
+            }
+        });
 
-    @SuppressLint("WrongConstant")
+        // Clear on focus
+        autoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    autoCompleteTextView.setText("");
+                }
+            }
+        });
+
+        // Clear icon on the right
+        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s != null && s.length() > 0) {
+                    autoCompleteTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.location_img, 0, R.drawable.ic_clear_white, 0);
+                } else {
+                    autoCompleteTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.location_img, 0, 0, 0);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        autoCompleteTextView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    Drawable endDrawable = autoCompleteTextView.getCompoundDrawables()[2];
+                    if (endDrawable != null) {
+                        int clearButtonStart = autoCompleteTextView.getWidth() - autoCompleteTextView.getPaddingRight() - endDrawable.getIntrinsicWidth() - 20;
+                        if (event.getX() >= clearButtonStart) {
+                            autoCompleteTextView.setText("");
+                            String fieldName = (autoCompleteTextView == holder.from_location) ? "Starting place" : "Destination place";
+                            com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak(fieldName + " cleared");
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Modern date picker dialog preserving all existing booking logic
+     */
     public void openDatePickerDialog(final View view) {
-        if (calendarDialog != null && calendarDialog.isVisible()) {
-            return;
-        }
-        Date currentDate = new Date(System.currentTimeMillis());
         MonthAdapter.CalendarDay currentCalendarDay = new MonthAdapter.CalendarDay();
         MonthAdapter.CalendarDay startDay = ((view.getId() == R.id.onward_date) ? (currentCalendarDay) : ((startDate == null) ? currentCalendarDay : startDate));
         MonthAdapter.CalendarDay endDay = ((view.getId() == R.id.onward_date) ? ((endDate == null) ? maxDateForAdvResvBooking : endDate) : (maxDateForAdvResvBooking));
+
         Calendar preselectedDate = Calendar.getInstance();
         preselectedDate.setTimeInMillis(startDay.getDateInMillis());
-        calendarDialog = new CalendarDatePickerDialogFragment()
-                .setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
+
+        long minDateInMillis = startDay.getDateInMillis();
+        long maxDateInMillis = (endDay != null) ? endDay.getDateInMillis() : -1;
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                AdvanceBookingSearchActivity.this,
+                R.style.CustomDatePickerDialogTheme,
+                new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
+                    public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
                         onDatePicked(view, year, monthOfYear, dayOfMonth);
                     }
-                })
-                .setFirstDayOfWeek(Calendar.SUNDAY)
-                .setPreselectedDate(preselectedDate.get(Calendar.YEAR), preselectedDate.get(Calendar.MONTH), preselectedDate.get(Calendar.DAY_OF_MONTH))
-                .setDateRange(startDay, endDay)
-                .setDoneText("Select")
-                .setCancelText("Cancel")
-                .setThemeDark();
-        calendarDialog.show(getSupportFragmentManager(), FRAG_TAG_DATE_PICKER);
+                },
+                preselectedDate.get(Calendar.YEAR),
+                preselectedDate.get(Calendar.MONTH),
+                preselectedDate.get(Calendar.DAY_OF_MONTH)
+        );
+
+        datePickerDialog.getDatePicker().setMinDate(minDateInMillis);
+        if (maxDateInMillis > minDateInMillis) {
+            datePickerDialog.getDatePicker().setMaxDate(maxDateInMillis);
+        }
+
+        datePickerDialog.show();
     }
 
     public void onDatePicked(View view, int year, int month, int day) {
@@ -572,17 +710,24 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
         String monthString = (((month + 1) < 10) ? "0" : "") + (month + 1);
         switch (view.getId()) {
             case R.id.onward_date:
-
                 holder.onward_date.setText(dayString + "/" + monthString + "/" + year);
                 searchParams.setOnWardDate(dayString + "/" + monthString + "/" + year);
                 startDate = new MonthAdapter.CalendarDay();
                 startDate.setDay(year, month, day);
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Journey date selected: " + dayString + "/" + monthString + "/" + year);
+                if (endDate != null && endDate.getDateInMillis() < startDate.getDateInMillis()) {
+                    holder.return_date.setText(dayString + "/" + monthString + "/" + year);
+                    searchParams.setReturnDate(dayString + "/" + monthString + "/" + year);
+                    endDate = new MonthAdapter.CalendarDay();
+                    endDate.setDay(year, month, day);
+                }
                 break;
             case R.id.return_date:
                 holder.return_date.setText(dayString + "/" + monthString + "/" + year);
                 searchParams.setReturnDate(dayString + "/" + monthString + "/" + year);
                 endDate = new MonthAdapter.CalendarDay();
                 endDate.setDay(year, month, day);
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Return date selected: " + dayString + "/" + monthString + "/" + year);
                 break;
         }
     }

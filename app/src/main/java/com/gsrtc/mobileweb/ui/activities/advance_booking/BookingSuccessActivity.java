@@ -181,6 +181,46 @@ public class BookingSuccessActivity extends BaseNavigationDrawerActivity {
 
             holder.total_fare.setText("INR " + (onwardPrice + returnPrice));
         }
+
+        if (com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(this)) {
+            if (divyangBooking != null || (onwardBooking != null && onwardBooking.getSearchParams() != null && "Divyang with Helper".equalsIgnoreCase(onwardBooking.getSearchParams().getDivyangBooking()))) {
+                String dPnr = "";
+                String hPnr = "";
+                if (divyangBooking != null && divyangBooking.getSaveReturnBookingDetailsTemporary() != null) {
+                    dPnr = divyangBooking.getSaveReturnBookingDetailsTemporary().getPnrNumber();
+                    hPnr = divyangBooking.getSaveReturnBookingDetailsTemporary().getReturnPnrNumber();
+                } else if (onwardBooking != null && onwardBooking.getSaveBookingDetailsTemporary() != null) {
+                    dPnr = onwardBooking.getSaveBookingDetailsTemporary().getPnrNumber();
+                }
+                String dSeat = listToStringDivyang(onwardBooking.getSelectedSeats());
+                String hSeat = listToStringDivyangHelper(onwardBooking.getSelectedSeats());
+                double oPrice = 0d;
+                double rPrice = 0d;
+                try {
+                    if (onwardBooking != null && onwardBooking.getTotalFareDetailsOfTicketResponse() != null) {
+                        oPrice = Double.parseDouble(onwardBooking.getTotalFareDetailsOfTicketResponse().getTotalFare());
+                    }
+                    if (divyangBooking != null && divyangBooking.getTotalFareDetailsOfTicketResponse() != null) {
+                        rPrice = Double.parseDouble(divyangBooking.getTotalFareDetailsOfTicketResponse().getTotalFare());
+                    }
+                } catch (Exception ignored) {}
+                double tot = oPrice + rPrice;
+                String speech = "Booking confirmed successfully for Divyang and Helper! Divyang seat " + dSeat + ", PNR " + dPnr + ". Helper seat " + hSeat + ", PNR " + hPnr + ". Total fare paid is " + String.format(java.util.Locale.US, "%.2f", tot) + " Rupees. Have a safe journey!";
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak(speech);
+            } else if (onwardBooking != null) {
+                String pnr = onwardBooking.getSaveBookingDetailsTemporary() != null ? onwardBooking.getSaveBookingDetailsTemporary().getPnrNumber() : "";
+                String seats = listToString(onwardBooking.getSelectedSeats());
+                double oPrice = 0d;
+                try {
+                    if (onwardBooking.getTotalFareDetailsOfTicketResponse() != null) {
+                        oPrice = Double.parseDouble(onwardBooking.getTotalFareDetailsOfTicketResponse().getTotalFare());
+                    }
+                } catch (Exception ignored) {}
+                String speech = "Booking confirmed successfully for Divyang! Seat " + seats + ", PNR " + pnr + ". Total fare paid is " + String.format(java.util.Locale.US, "%.2f", oPrice) + " Rupees. Have a safe journey!";
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak(speech);
+            }
+        }
+
         showRateApp();
     }
 

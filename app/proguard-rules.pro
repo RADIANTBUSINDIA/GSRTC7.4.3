@@ -33,4 +33,60 @@
  -keepattributes JavascriptInterface
  -keepattributes *Annotation*
 
+# ==============================================================================
+# PayPhi / ICICI Orange PG / Sapphire Customer SDK Rules
+# (From Android Customer SDK Integration.pdf - Section 3: Proguard rules for release builds)
+# ==============================================================================
+
+# 1. SDK Core Rules
+-keep class com.payphi.** { *; }
+-dontwarn com.payphi.**
+-keep class com.gsrtc.mobileweb.ui.activities.payment_gateway.** { *; }
+
+# 2. Don't warn attributes needed (Security Providers, OkHttp, Kotlin, Annotations)
+-dontwarn org.bouncycastle.jsse.BCSSLParameters
+-dontwarn org.bouncycastle.jsse.BCSSLSocket
+-dontwarn org.bouncycastle.jsse.provider.BouncyCastleJsseProvider
+-dontwarn org.conscrypt.Conscrypt$Version
+-dontwarn org.conscrypt.Conscrypt
+-dontwarn org.conscrypt.ConscryptHostnameVerifier
+-dontwarn org.openjsse.javax.net.ssl.SSLParameters
+-dontwarn org.openjsse.javax.net.ssl.SSLSocket
+-dontwarn org.openjsse.net.ssl.OpenJSSE
+-dontwarn kotlinx.parcelize.Parcelize
+-dontwarn kotlin.Unit
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+
+# 3. Keep class attributes (Coroutines, Retrofit Response)
+-keep,allowoptimization,allowshrinking,allowobfuscation class kotlin.coroutines.Continuation
+-keep,allowoptimization,allowshrinking,allowobfuscation class retrofit2.Response
+
+# 4. Global metadata & reflection attributes
+-keepattributes Signature, InnerClasses, EnclosingMethod
+-keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
+-keepattributes AnnotationDefault
+-keepattributes EnclosingMethod,InnerClasses,Signature,SourceFile,LineNumberTable
+
+# 5. Retrofit (Network interfaces)
+-keepclassmembers,allowshrinking,allowobfuscation interface * {
+    @retrofit2.http.* <methods>;
+}
+-if interface * { @retrofit2.http.* <methods>; }
+-keep,allowobfuscation interface <1>
+-if interface * { @retrofit2.http.* <methods>; }
+-keep,allowobfuscation interface * extends <1>
+-if interface * { @retrofit2.http.* public *** *(...); }
+-keep,allowoptimization,allowshrinking,allowobfuscation class <3>
+-dontwarn retrofit2.KotlinExtensions
+-dontwarn retrofit2.KotlinExtensions$*
+
+# 6. GSON (JSON parsing)
+-keepclassmembers class * {
+    @com.google.gson.annotations.SerializedName <fields>;
+}
+
+
 

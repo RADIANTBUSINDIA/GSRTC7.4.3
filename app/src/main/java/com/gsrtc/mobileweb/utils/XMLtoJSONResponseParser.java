@@ -2,7 +2,6 @@ package com.gsrtc.mobileweb.utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.XML;
 
 /**
  * Created by Ajith on 4/19/2017.
@@ -19,8 +18,20 @@ public class XMLtoJSONResponseParser {
     }
 
     public static JSONObject getResponseBody(JSONObject xmlResponseAsJson){
+        if (xmlResponseAsJson == null) return null;
         try {
-            return (xmlResponseAsJson.getJSONObject("soap:Envelope")).getJSONObject("soap:Body");
+            if (xmlResponseAsJson.has("soap:Envelope")) {
+                JSONObject env = xmlResponseAsJson.getJSONObject("soap:Envelope");
+                if (env.has("soap:Body")) return env.getJSONObject("soap:Body");
+                if (env.has("Body")) return env.getJSONObject("Body");
+            } else if (xmlResponseAsJson.has("soapenv:Envelope")) {
+                JSONObject env = xmlResponseAsJson.getJSONObject("soapenv:Envelope");
+                if (env.has("soapenv:Body")) return env.getJSONObject("soapenv:Body");
+                if (env.has("Body")) return env.getJSONObject("Body");
+            } else if (xmlResponseAsJson.has("Envelope")) {
+                JSONObject env = xmlResponseAsJson.getJSONObject("Envelope");
+                if (env.has("Body")) return env.getJSONObject("Body");
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -28,8 +39,13 @@ public class XMLtoJSONResponseParser {
     }
 
     public static JSONObject getRequiredResponse(JSONObject responseBody, String methodName){
+        if (responseBody == null) return null;
         try {
-            return (responseBody.getJSONObject("ns2:"+methodName+"Response"));
+            if (responseBody.has("ns2:"+methodName+"Response")) {
+                return responseBody.getJSONObject("ns2:"+methodName+"Response");
+            } else if (responseBody.has(methodName+"Response")) {
+                return responseBody.getJSONObject(methodName+"Response");
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

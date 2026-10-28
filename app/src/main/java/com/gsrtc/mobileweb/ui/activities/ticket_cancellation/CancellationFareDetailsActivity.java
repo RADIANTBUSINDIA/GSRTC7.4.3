@@ -88,7 +88,35 @@ public class CancellationFareDetailsActivity extends BaseNavigationDrawerActivit
         holder.fullCancellation.tripCode2.setText(booking.getFullCancellationDetailsResponse.getTripCode());
         holder.fullCancellation.serviceClass2.setText(booking.getFullCancellationDetailsResponse.getClassID());//TODO doubt
         holder.fullCancellation.cancellation_percentage2R.setText(booking.getFullCancellationTransactionDetailsResponse.getRefundPrcntOrLumpsumValue());
-        holder.fullCancellation.refund_amount2R.setText(booking.getFullCancellationTransactionDetailsResponse.getNetRefundAmount());
+
+        if (booking.isDivyangWithHelper && booking.helperFullCancellationTransactionDetailsResponse != null) {
+            try {
+                double mainRefund = Double.parseDouble(booking.getFullCancellationTransactionDetailsResponse.getNetRefundAmount());
+                double helperRefund = Double.parseDouble(booking.helperFullCancellationTransactionDetailsResponse.getNetRefundAmount());
+                double totalRefund = mainRefund + helperRefund;
+                holder.fullCancellation.refund_amount2R.setText(String.format(java.util.Locale.US, "%.2f", totalRefund));
+            } catch (Exception e) {
+                holder.fullCancellation.refund_amount2R.setText(booking.getFullCancellationTransactionDetailsResponse.getNetRefundAmount());
+            }
+        } else {
+            holder.fullCancellation.refund_amount2R.setText(booking.getFullCancellationTransactionDetailsResponse.getNetRefundAmount());
+        }
+
+        if (com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(this)) {
+            String from = booking.getFullCancellationDetailsResponse != null ? booking.getFullCancellationDetailsResponse.getStartPlaceName() : "";
+            String to = booking.getFullCancellationDetailsResponse != null ? booking.getFullCancellationDetailsResponse.getEndPlaceName() : "";
+            String refund = holder.fullCancellation.refund_amount2R.getText().toString();
+            String pnr = booking.getFullCancellationDetailsResponse != null ? booking.getFullCancellationDetailsResponse.getPnrNumber() : "";
+            if (booking.isDivyangWithHelper) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak(
+                        "Cancellation refund details loaded for Divyang with Helper. PNR " + pnr + ", journey from " + from + " to " + to + ". Total refund amount for Divyang and Helper is " + refund + " Rupees. Please enter email and phone number and tap Cancel Ticket to proceed."
+                );
+            } else {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak(
+                        "Cancellation refund details loaded. PNR " + pnr + ", journey from " + from + " to " + to + ". Refund amount is " + refund + " Rupees. Please enter email and phone number and tap Cancel Ticket to proceed."
+                );
+            }
+        }
     }
 
     public void populatePartialCancellationViews(){
@@ -168,6 +196,13 @@ public class CancellationFareDetailsActivity extends BaseNavigationDrawerActivit
 
     public void confirmCancellation(){
         showProgressDialog();
+        if (com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(this)) {
+            if (booking.isDivyangWithHelper) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak("Processing cancellation for Divyang and Helper tickets.");
+            } else {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak("Processing ticket cancellation.");
+            }
+        }
         if(booking.isPartialCancellation){
             TicketCancelNetworkUtil.ConfirmPartialCancellation(booking, new TicketCancelNetworkUtil.ConfirmPartialCancellationCallback() {
                 @Override
@@ -195,12 +230,35 @@ public class CancellationFareDetailsActivity extends BaseNavigationDrawerActivit
                 public void onSuccess(ConfirmFullCancellationResponse response) {
                     if(response!=null){
                         booking.confirmFullCancellationResponse = response;
-                        goNext();
+                        if (booking.isDivyangWithHelper && booking.helperFullCancellationDetailsResponse != null && booking.helperFullCancellationTransactionDetailsResponse != null) {
+                            // Cancel helper ticket
+                            TicketCancelNetworkUtil.ConfirmFullCancellation(booking.helperFullCancellationDetailsResponse, booking.helperFullCancellationTransactionDetailsResponse, new TicketCancelNetworkUtil.ConfirmFullCancellationCallback() {
+                                @Override
+                                public void onSuccess(ConfirmFullCancellationResponse helperResponse) {
+                                    hideProgressDialog();
+                                    if (helperResponse != null) {
+                                        booking.helperConfirmFullCancellationResponse = helperResponse;
+                                        goNext();
+                                    } else {
+                                        ActivityUtil.showErrorToast(CancellationFareDetailsActivity.this, new Exception("Failed to confirm helper cancellation"));
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    hideProgressDialog();
+                                    ActivityUtil.showErrorToast(CancellationFareDetailsActivity.this, e);
+                                }
+                            });
+                        } else {
+                            hideProgressDialog();
+                            goNext();
+                        }
                     }
                     else{
+                        hideProgressDialog();
                         ActivityUtil.showErrorToast(CancellationFareDetailsActivity.this, new Exception());
                     }
-                    hideProgressDialog();
                 }
 
                 @Override
@@ -231,7 +289,7 @@ public class CancellationFareDetailsActivity extends BaseNavigationDrawerActivit
             }
         }
         else{
-            if(booking.confirmFullCancellationResponse == null){
+            if(booking.confirmFullCancellationResponse == null || (booking.isDivyangWithHelper && booking.helperConfirmFullCancellationResponse == null)){
                 confirmCancellation();
                 return;
             }

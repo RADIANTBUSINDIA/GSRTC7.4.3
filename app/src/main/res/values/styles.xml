@@ -118,6 +118,12 @@
         <item name="listPreferredItemPaddingLeft">10dp</item>
     </style>
 
+    <style name="CustomDatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/naviy</item>
+        <item name="colorPrimary">@color/naviy</item>
+        <item name="colorPrimaryDark">@color/naviy</item>
+    </style>
+
     <style name="CustomDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/blue</item>
         <item name="android:textColorPrimary">@android:color/black</item>

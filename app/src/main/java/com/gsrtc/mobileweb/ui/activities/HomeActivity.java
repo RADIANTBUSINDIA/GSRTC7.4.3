@@ -45,7 +45,7 @@ import com.gsrtc.mobileweb.ui.activities.track_mybus_native.Neraby_location;
 import com.gsrtc.mobileweb.ui.activities.track_mybus_native.TrackMyBusSearchActivity;
 import com.gsrtc.mobileweb.ui.activities.view_booking.TrackTicketHistory;
 import com.gsrtc.mobileweb.ui.activities.web_Linking.BusPassLink;
-import com.gsrtc.mobileweb.ui.activities.web_Linking.FeedBackModule;
+
 import com.gsrtc.mobileweb.ui.activities.web_Linking.HireBusLink;
 import com.gsrtc.mobileweb.ui.activities.web_Linking.RefundStatus;
 import com.gsrtc.mobileweb.ui.activities.web_Linking.TrackRunningService;
@@ -183,7 +183,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
         vHolder.mLinearLayoutAdvanceBooking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Advance Booking");
                 Intent i = new Intent(HomeActivity.this, AdvanceBookingSearchActivity.class);
                 Bundle data = new Bundle();
                 data.putString("textlang", textlang);
@@ -194,6 +194,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
         vHolder.mLinearLayoutCancelTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Cancel Ticket");
                 Intent i = new Intent(HomeActivity.this, TicketCancellationActivity.class);
                 Bundle data = new Bundle();
                 data.putString("textlang", textlang);
@@ -204,6 +205,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
         vHolder.mLinearLayoutCurrentBooking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Current Booking");
                 Intent i = new Intent(HomeActivity.this, CurrentBookingHomeActivity.class);
                 Bundle data = new Bundle();
                 data.putString("textlang", textlang);
@@ -215,6 +217,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
         vHolder.mLinearLayoutTrackMyBus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Track My Bus");
                 Intent i = new Intent(HomeActivity.this, TrackMyBusSearchActivity.class);
                 Bundle data = new Bundle();
                 data.putString("textlang", textlang);
@@ -225,6 +228,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
         vHolder.mLinearLayoutIteneries.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Booking History");
                 Intent i = new Intent(HomeActivity.this, BookingHistoryActivity.class);
                 Bundle data = new Bundle();
                 data.putString("textlang", textlang);
@@ -235,6 +239,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
         vHolder.mLinearLayoutTimeTable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Packages and Tours");
                 Intent i = new Intent(HomeActivity.this, PackageBookingHome.class);
                 Bundle data = new Bundle();
                 data.putString("textlang", textlang);
@@ -245,6 +250,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
         vHolder.mLinearLayoutResheduleTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Reschedule Ticket");
                 Intent i = new Intent(HomeActivity.this, Weblink.class);
                 Bundle data = new Bundle();
                 data.putString("textlang", textlang);
@@ -255,6 +261,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
         vHolder.mLinearLayoutRefundStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Refund Status");
                 Intent i = new Intent(HomeActivity.this, RefundStatus.class);
                 Bundle data = new Bundle();
                 data.putString("textlang", textlang);
@@ -285,6 +292,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
         vHolder.mLinearLayoutTrackTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Track Ticket History");
                 Intent i = new Intent(HomeActivity.this, TrackTicketHistory.class);
                 Bundle data = new Bundle();
                 data.putString("textlang", textlang);
@@ -295,6 +303,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
         vHolder.mLinearLayoutBusPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Commuter Bus Pass options");
 
                 View popupView = getLayoutInflater().inflate(R.layout.buspass_popup, null);
 
@@ -347,23 +356,11 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
         vHolder.mLinearLayoutHireBus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Hire a Bus");
                 Intent i = new Intent(HomeActivity.this, BookingHistoryActivity.class);
                 Bundle data = new Bundle();
                 data.putString("textlang", textlang);
                 i.putExtras(data);
-                startActivity(i);
-            }
-        });
-        vHolder.mlinearLayoutFeedback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent i = new Intent(HomeActivity.this, FeedBackModule.class);
-
-                Bundle data = new Bundle();
-                data.putString("textlang", textlang);
-                i.putExtras(data);
-
                 startActivity(i);
             }
         });
@@ -373,6 +370,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
         vHolder.runningStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Track Running Service");
                 Intent i = new Intent(HomeActivity.this, TrackRunningService.class);
                 Bundle data = new Bundle();
                 data.putString("textlang", textlang);
@@ -457,7 +455,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
             mLinearLayoutBusPass = (LinearLayout)findViewById(R.id.linearLayoutBusPass);
             mLinearLayoutHireBus = (LinearLayout)findViewById(R.id.linearLayoutHireBus);
             runningStatus = (LinearLayout)findViewById(R.id.linearLayoutTrackRunning);
-            mlinearLayoutFeedback =(LinearLayout)findViewById(R.id.linearLayoutFeedback);
+
 
             ad_booking = (TextView)findViewById(R.id.textViewBusIcon);
             cr_booking = (TextView)findViewById(R.id.textViewCurrentBooking);
@@ -476,7 +474,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
             time_table = (TextView)findViewById(R.id.textViewTimeTable);
             iteneries = (TextView)findViewById(R.id.textViewItineries);
             track_ticket = (TextView)findViewById(R.id.textViewTrack_ticket);
-            feedback_text = (TextView)findViewById(R.id.textViewFeedback);
+
 
             if(textlang.equalsIgnoreCase("gujarati"))
             {

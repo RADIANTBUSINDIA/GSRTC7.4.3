@@ -108,18 +108,29 @@ public class CurrentReferenceNumberActivity extends BaseNavigationDrawerActivity
             intent.putExtras(extra);
             CustomisedProgressDialog.STOP_CUST_DIA();
             startActivityForResult(intent, PAYMENT_CODE);
-        }else if(isCard.equals("721")){
+        } else if (isCard.equals("721")) {
             Intent intent = new Intent(CurrentReferenceNumberActivity.this, AggreepayGatewayCurrent.class);
             Bundle extra = new Bundle();
             extra.putString("textlang", textlang);
-             extra.putString("mail",mail);
-             extra.putString("name",name);
-             extra.putString("number",Number);
+            extra.putString("mail", mail);
+            extra.putString("name", name);
+            extra.putString("number", Number);
             extra.putSerializable(AppConstants.INTENT_EXTRA.SEARCH_PARAM, searchParams);
             intent.putExtras(extra);
             CustomisedProgressDialog.STOP_CUST_DIA();
             startActivityForResult(intent, PAYMENT_CODE);
-        }else{
+        } else if (isCard.equals("758") || isCard.equals("744")) {
+            Intent intent = new Intent(CurrentReferenceNumberActivity.this, com.gsrtc.mobileweb.ui.activities.payment_gateway.SapphirePaymentGatewayCurrent.class);
+            Bundle extra = new Bundle();
+            extra.putString("textlang", textlang);
+            extra.putString("mail", mail);
+            extra.putString("name", name);
+            extra.putString("number", Number);
+            extra.putSerializable(AppConstants.INTENT_EXTRA.SEARCH_PARAM, searchParams);
+            intent.putExtras(extra);
+            CustomisedProgressDialog.STOP_CUST_DIA();
+            startActivityForResult(intent, PAYMENT_CODE);
+        } else {
 //            Intent intent = new Intent(CurrentReferenceNumberActivity.this, CCAvenueCurrentBooking.class);
 //            Bundle extra = new Bundle();
 //            extra.putString("textlang", textlang);

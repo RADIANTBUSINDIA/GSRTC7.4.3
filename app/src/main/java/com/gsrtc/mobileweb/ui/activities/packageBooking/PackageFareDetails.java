@@ -675,9 +675,9 @@ public class PackageFareDetails  extends BaseNavigationDrawerActivity {
 
                     isCard = "721";
 
-                }else if(button.getText().toString().equalsIgnoreCase("AXIS")) {
+                } else if (button.getText().toString().equalsIgnoreCase("AXIS") || button.getText().toString().equalsIgnoreCase("Sapphire") || button.getText().toString().equalsIgnoreCase("ICICI ORANGE PG")) {
 
-                    isCard = "744";
+                    isCard = "758";
 
                 } else{
 
@@ -789,6 +789,28 @@ public class PackageFareDetails  extends BaseNavigationDrawerActivity {
                 holder.travel_details_content_return.setVisibility(View.VISIBLE);
             }else {
                 holder.travel_details_content_return.setVisibility(View.GONE);
+            }
+        }
+
+        if (com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(PackageFareDetails.this)) {
+            String fromCity = onwardBooking.getStartPlace() != null ? onwardBooking.getStartPlace().getPlaceName() : "";
+            String toCity = onwardBooking.getEndPlace() != null ? onwardBooking.getEndPlace().getPlaceName() : "";
+            if (divyangBooking != null && divyangBooking.getTotalFareDetailsOfTicketResponse() != null) {
+                String dFare = onwardBooking.getTotalFareDetailsOfTicketResponse() != null ? onwardBooking.getTotalFareDetailsOfTicketResponse().getTotalFare() : "0";
+                String hFare = divyangBooking.getTotalFareDetailsOfTicketResponse().getTotalFare();
+                String conc = onwardBooking.getTotalFareDetailsOfTicketResponse() != null ? onwardBooking.getTotalFareDetailsOfTicketResponse().getWeekdayConcession() : "0";
+                double totalPayable = 0;
+                try {
+                    totalPayable = Double.parseDouble(dFare) + Double.parseDouble(hFare);
+                } catch (Exception ignored) {
+                }
+                String speech = "Package Fare Details loaded for Divyang and Helper. Journey from " + fromCity + " to " + toCity + ". Divyang fare is " + dFare + " Rupees with concession " + conc + " Rupees. Helper fare is " + hFare + " Rupees. Total payable fare is " + String.format(java.util.Locale.US, "%.2f", totalPayable) + " Rupees. Tap Make Payment to proceed.";
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(PackageFareDetails.this).speak(speech);
+            } else {
+                String tFare = onwardBooking.getTotalFareDetailsOfTicketResponse() != null ? onwardBooking.getTotalFareDetailsOfTicketResponse().getTotalFare() : "0";
+                String conc = onwardBooking.getTotalFareDetailsOfTicketResponse() != null ? onwardBooking.getTotalFareDetailsOfTicketResponse().getWeekdayConcession() : "0";
+                String speech = "Package Fare Details loaded. Journey from " + fromCity + " to " + toCity + ". Total fare is " + tFare + " Rupees. Concession: " + conc + " Rupees. Tap Make Payment to proceed.";
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(PackageFareDetails.this).speak(speech);
             }
         }
     }

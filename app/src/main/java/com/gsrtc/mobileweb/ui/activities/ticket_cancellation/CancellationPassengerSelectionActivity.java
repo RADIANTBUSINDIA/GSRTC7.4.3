@@ -58,7 +58,7 @@ public class CancellationPassengerSelectionActivity extends BaseNavigationDrawer
                 goNext();
             }
         });
-        passengerListAdapter = new PassengerListAdapter(this, Arrays.asList(booking.getAllPassengerDetailsByPnrNoResponse));
+        passengerListAdapter = new PassengerListAdapter(this, Arrays.asList(booking.getAllPassengerDetailsByPnrNoResponse), booking.isDivyangWithHelper);
         holder.recycler_view.setAdapter(passengerListAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(holder.recycler_view.getContext(),
@@ -73,6 +73,12 @@ public class CancellationPassengerSelectionActivity extends BaseNavigationDrawer
         holder.journeyDate2.setText(booking.getFullCancellationDetailsResponse.getJourneyDate());
         holder.tripCode2.setText(booking.getFullCancellationDetailsResponse.getTripCode());
         holder.serviceClass2.setText(booking.getFullCancellationDetailsResponse.getClassID());
+
+        if (booking != null && booking.isDivyangWithHelper) {
+            String from = booking.getFullCancellationDetailsResponse != null ? booking.getFullCancellationDetailsResponse.getStartPlaceName() : "";
+            String to = booking.getFullCancellationDetailsResponse != null ? booking.getFullCancellationDetailsResponse.getEndPlaceName() : "";
+            com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak("Cancellation Passenger Selection. Divyang and Helper tickets are linked and must be cancelled together. Journey from " + from + " to " + to + ". Tap Confirm to review refund details.");
+        }
     }
 
     public void goNext(){
@@ -84,8 +90,16 @@ public class CancellationPassengerSelectionActivity extends BaseNavigationDrawer
 
         booking.selectedPassengers = selectedPassengers;
         showProgressDialog();
-        booking.isPartialCancellation = (booking.selectedPassengers.size() != booking.getAllPassengerDetailsByPnrNoResponse.length);
-//partial cancellation
+        if (booking.isDivyangWithHelper) {
+            booking.isPartialCancellation = false;
+            if (com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(this)) {
+                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak("Fetching refund details for Divyang and Helper tickets.");
+            }
+        } else {
+            booking.isPartialCancellation = (booking.selectedPassengers.size() != booking.getAllPassengerDetailsByPnrNoResponse.length);
+        }
+
+        //partial cancellation
         if(booking.isPartialCancellation){
             TicketCancelNetworkUtil.GetPartialCancellationTransactionDetails(booking, new TicketCancelNetworkUtil.GetPartialCancellationTransactionDetailsCallback() {
                 @Override
@@ -117,15 +131,41 @@ public class CancellationPassengerSelectionActivity extends BaseNavigationDrawer
                 public void onSuccess(GetFullCancellationTransactionDetailsResponse response) {
                     if(response !=null){
                         booking.getFullCancellationTransactionDetailsResponse = response;
-                        Bundle bundle = new Bundle();
-                        bundle.putString("textlang",textlang);
-                        bundle.putSerializable(AppConstants.INTENT_EXTRA.BOOKING_CANCELLATION, booking);
-                        ActivityUtil.openNewActivity(CancellationPassengerSelectionActivity.this, CancellationFareDetailsActivity.class, bundle);
+
+                        if (booking.isDivyangWithHelper && booking.helperFullCancellationDetailsResponse != null) {
+                            TicketCancelNetworkUtil.GetFullCancellationTransactionDetails(booking.helperFullCancellationDetailsResponse, new TicketCancelNetworkUtil.GetFullCancellationTransactionDetailsCallback() {
+                                @Override
+                                public void onSuccess(GetFullCancellationTransactionDetailsResponse helperResponse) {
+                                    hideProgressDialog();
+                                    if (helperResponse != null) {
+                                        booking.helperFullCancellationTransactionDetailsResponse = helperResponse;
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("textlang",textlang);
+                                        bundle.putSerializable(AppConstants.INTENT_EXTRA.BOOKING_CANCELLATION, booking);
+                                        ActivityUtil.openNewActivity(CancellationPassengerSelectionActivity.this, CancellationFareDetailsActivity.class, bundle);
+                                    } else {
+                                        ActivityUtil.showErrorToast(CancellationPassengerSelectionActivity.this, new Exception("Failed to load helper transaction details"));
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    hideProgressDialog();
+                                    ActivityUtil.showErrorToast(CancellationPassengerSelectionActivity.this, e);
+                                }
+                            });
+                        } else {
+                            hideProgressDialog();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("textlang",textlang);
+                            bundle.putSerializable(AppConstants.INTENT_EXTRA.BOOKING_CANCELLATION, booking);
+                            ActivityUtil.openNewActivity(CancellationPassengerSelectionActivity.this, CancellationFareDetailsActivity.class, bundle);
+                        }
                     }
                     else{
+                        hideProgressDialog();
                         ActivityUtil.showErrorToast(CancellationPassengerSelectionActivity.this, new Exception());
                     }
-                    hideProgressDialog();
                 }
 
                 @Override
@@ -196,10 +236,16 @@ public class CancellationPassengerSelectionActivity extends BaseNavigationDrawer
         Context context;
         Map<Integer, PassengerListAdapter.ViewHolder> viewMap;
         List<GetAllPassengerDetailsByPnrNoResponse> passengers;
+        boolean isDivyangWithHelper;
 
         PassengerListAdapter(Context context, List<GetAllPassengerDetailsByPnrNoResponse> list){
+            this(context, list, false);
+        }
+
+        PassengerListAdapter(Context context, List<GetAllPassengerDetailsByPnrNoResponse> list, boolean isDivyangWithHelper){
             this.context = context;
             this.passengers = list;
+            this.isDivyangWithHelper = isDivyangWithHelper;
             viewMap = new LinkedHashMap<>();
         }
 
@@ -217,10 +263,14 @@ public class CancellationPassengerSelectionActivity extends BaseNavigationDrawer
             GetAllPassengerDetailsByPnrNoResponse passenger = passengers.get(position);
             holder.passengerName.setText(passenger.getPassengerName());
             holder.seatNo.setText("Seat No: "+passenger.getSeatNo());
+            if (isDivyangWithHelper) {
+                holder.isSelected.setChecked(true);
+                holder.isSelected.setEnabled(false);
+            }
         }
 
         public List<GetAllPassengerDetailsByPnrNoResponse> getPassengerDetails(){
-            List<GetAllPassengerDetailsByPnrNoResponse> passengers = new ArrayList<>();
+            List<GetAllPassengerDetailsByPnrNoResponse> selectedList = new ArrayList<>();
             String[] genderrray = context.getResources().getStringArray(R.array.gender_array);
             for (Map.Entry<Integer, PassengerListAdapter.ViewHolder> entry : viewMap.entrySet())
             {
@@ -232,14 +282,19 @@ public class CancellationPassengerSelectionActivity extends BaseNavigationDrawer
                 String strSeatNo = "";
                 if(viewHolder.seatNo.getText() != null){
                     strSeatNo = viewHolder.seatNo.getText().toString();
-                    strSeatNo = strSeatNo.split(":")[1].trim();
+                    if (strSeatNo.contains(":")) {
+                        strSeatNo = strSeatNo.split(":")[1].trim();
+                    }
                 }
 
                 passenger.setSeatNo(strSeatNo);
-                if(viewHolder.isSelected.isChecked())
-                    passengers.add(passenger);
+                if(isDivyangWithHelper || viewHolder.isSelected.isChecked())
+                    selectedList.add(passenger);
             }
-            return passengers;
+            if (isDivyangWithHelper && selectedList.isEmpty() && passengers != null) {
+                selectedList.addAll(passengers);
+            }
+            return selectedList;
         }
 
         public PassengerListAdapter.ViewHolder getViewHolder(int position){
