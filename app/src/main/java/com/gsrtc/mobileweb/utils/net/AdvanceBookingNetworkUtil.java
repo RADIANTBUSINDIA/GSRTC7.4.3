@@ -590,9 +590,6 @@ public class AdvanceBookingNetworkUtil extends SoapClientUtil {
             }
 
 
-            consId = "3";
-
-
         } else {
             consId = "1";
         }

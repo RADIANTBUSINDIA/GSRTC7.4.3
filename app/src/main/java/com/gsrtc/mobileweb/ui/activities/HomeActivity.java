@@ -180,204 +180,283 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
 //        mLinLayHome.setBackgroundResource(mTheame);
 
         vHolder = new ViewHolder(contentFrame);
-        vHolder.mLinearLayoutAdvanceBooking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Advance Booking");
-                Intent i = new Intent(HomeActivity.this, AdvanceBookingSearchActivity.class);
-                Bundle data = new Bundle();
-                data.putString("textlang", textlang);
-                i.putExtras(data);
-                startActivity(i);
-            }
-        });
-        vHolder.mLinearLayoutCancelTicket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Cancel Ticket");
-                Intent i = new Intent(HomeActivity.this, TicketCancellationActivity.class);
-                Bundle data = new Bundle();
-                data.putString("textlang", textlang);
-                i.putExtras(data);
-                startActivity(i);
-            }
-        });
-        vHolder.mLinearLayoutCurrentBooking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Current Booking");
-                Intent i = new Intent(HomeActivity.this, CurrentBookingHomeActivity.class);
-                Bundle data = new Bundle();
-                data.putString("textlang", textlang);
-                i.putExtras(data);
-                startActivity(i);
-            }
-        });
 
-        vHolder.mLinearLayoutTrackMyBus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Track My Bus");
-                Intent i = new Intent(HomeActivity.this, TrackMyBusSearchActivity.class);
-                Bundle data = new Bundle();
-                data.putString("textlang", textlang);
-                i.putExtras(data);
-                startActivity(i);
-            }
-        });
-        vHolder.mLinearLayoutIteneries.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Booking History");
-                Intent i = new Intent(HomeActivity.this, BookingHistoryActivity.class);
-                Bundle data = new Bundle();
-                data.putString("textlang", textlang);
-                i.putExtras(data);
-                startActivity(i);
-            }
-        });
-        vHolder.mLinearLayoutTimeTable.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Packages and Tours");
-                Intent i = new Intent(HomeActivity.this, PackageBookingHome.class);
-                Bundle data = new Bundle();
-                data.putString("textlang", textlang);
-                i.putExtras(data);
-                startActivity(i);
-            }
-        });
-        vHolder.mLinearLayoutResheduleTicket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Reschedule Ticket");
-                Intent i = new Intent(HomeActivity.this, Weblink.class);
-                Bundle data = new Bundle();
-                data.putString("textlang", textlang);
-                i.putExtras(data);
-                startActivity(i);
-            }
-        });
-        vHolder.mLinearLayoutRefundStatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Refund Status");
-                Intent i = new Intent(HomeActivity.this, RefundStatus.class);
-                Bundle data = new Bundle();
-                data.putString("textlang", textlang);
-                i.putExtras(data);
-                startActivity(i);
-            }
-        });
+        if (vHolder.mLinearLayoutAdvanceBooking != null) {
+            vHolder.mLinearLayoutAdvanceBooking.setContentDescription("Advance Booking. Search and book GSRTC bus tickets.");
+            vHolder.mLinearLayoutAdvanceBooking.setFocusable(true);
+            vHolder.mLinearLayoutAdvanceBooking.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
 
+        if (vHolder.mLinearLayoutCancelTicket != null) {
+            vHolder.mLinearLayoutCancelTicket.setContentDescription("Cancel Ticket. Search and cancel your booked tickets.");
+            vHolder.mLinearLayoutCancelTicket.setFocusable(true);
+            vHolder.mLinearLayoutCancelTicket.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
 
-//        vHolder.mLinearLayoutLinkBooking.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(HomeActivity.this, Neraby_location.class);
-//                Bundle data = new Bundle();
-//                data.putString("textlang", textlang);
-//                i.putExtras(data);
-//                startActivity(i);
-//            }
-//        });
+        if (vHolder.mLinearLayoutCurrentBooking != null) {
+            vHolder.mLinearLayoutCurrentBooking.setContentDescription("Current Booking. Book tickets for today's running buses.");
+            vHolder.mLinearLayoutCurrentBooking.setFocusable(true);
+            vHolder.mLinearLayoutCurrentBooking.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
+
+        if (vHolder.mLinearLayoutTrackMyBus != null) {
+            vHolder.mLinearLayoutTrackMyBus.setContentDescription("Track My Bus. Live tracking of your bus.");
+            vHolder.mLinearLayoutTrackMyBus.setFocusable(true);
+            vHolder.mLinearLayoutTrackMyBus.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
+
+        if (vHolder.mLinearLayoutIteneries != null) {
+            vHolder.mLinearLayoutIteneries.setContentDescription("Booking History. View your past and upcoming bookings.");
+            vHolder.mLinearLayoutIteneries.setFocusable(true);
+            vHolder.mLinearLayoutIteneries.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
+
+        if (vHolder.mLinearLayoutTimeTable != null) {
+            vHolder.mLinearLayoutTimeTable.setContentDescription("Packages and Tours. Explore package bookings.");
+            vHolder.mLinearLayoutTimeTable.setFocusable(true);
+            vHolder.mLinearLayoutTimeTable.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
+
+        if (vHolder.mLinearLayoutResheduleTicket != null) {
+            vHolder.mLinearLayoutResheduleTicket.setContentDescription("Reschedule Ticket.");
+            vHolder.mLinearLayoutResheduleTicket.setFocusable(true);
+            vHolder.mLinearLayoutResheduleTicket.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
+
+        if (vHolder.mLinearLayoutRefundStatus != null) {
+            vHolder.mLinearLayoutRefundStatus.setContentDescription("Refund Status.");
+            vHolder.mLinearLayoutRefundStatus.setFocusable(true);
+            vHolder.mLinearLayoutRefundStatus.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
+
+        if (vHolder.mLinearLayoutTrackTicket != null) {
+            vHolder.mLinearLayoutTrackTicket.setContentDescription("Track Ticket.");
+            vHolder.mLinearLayoutTrackTicket.setFocusable(true);
+            vHolder.mLinearLayoutTrackTicket.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
+
+        if (vHolder.mLinearLayoutHireBus != null) {
+            vHolder.mLinearLayoutHireBus.setContentDescription("Hire a Bus. Book an entire bus.");
+            vHolder.mLinearLayoutHireBus.setFocusable(true);
+            vHolder.mLinearLayoutHireBus.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
+
+        if (vHolder.mLinearLayoutBusPass != null) {
+            vHolder.mLinearLayoutBusPass.setContentDescription("Bus Pass Services. Apply or renew commuter pass.");
+            vHolder.mLinearLayoutBusPass.setFocusable(true);
+            vHolder.mLinearLayoutBusPass.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
+
+        if (vHolder.runningStatus != null) {
+            vHolder.runningStatus.setContentDescription("Track Running Bus Service.");
+            vHolder.runningStatus.setFocusable(true);
+            vHolder.runningStatus.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
+
+        if (vHolder.mLinearLayoutAdvanceBooking != null) {
+            vHolder.mLinearLayoutAdvanceBooking.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Advance Booking");
+                    Intent i = new Intent(HomeActivity.this, AdvanceBookingSearchActivity.class);
+                    Bundle data = new Bundle();
+                    data.putString("textlang", textlang);
+                    i.putExtras(data);
+                    startActivity(i);
+                }
+            });
+        }
+        if (vHolder.mLinearLayoutCancelTicket != null) {
+            vHolder.mLinearLayoutCancelTicket.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Cancel Ticket");
+                    Intent i = new Intent(HomeActivity.this, TicketCancellationActivity.class);
+                    Bundle data = new Bundle();
+                    data.putString("textlang", textlang);
+                    i.putExtras(data);
+                    startActivity(i);
+                }
+            });
+        }
+        if (vHolder.mLinearLayoutCurrentBooking != null) {
+            vHolder.mLinearLayoutCurrentBooking.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Current Booking");
+                    Intent i = new Intent(HomeActivity.this, CurrentBookingHomeActivity.class);
+                    Bundle data = new Bundle();
+                    data.putString("textlang", textlang);
+                    i.putExtras(data);
+                    startActivity(i);
+                }
+            });
+        }
+
+        if (vHolder.mLinearLayoutTrackMyBus != null) {
+            vHolder.mLinearLayoutTrackMyBus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Track My Bus");
+                    Intent i = new Intent(HomeActivity.this, TrackMyBusSearchActivity.class);
+                    Bundle data = new Bundle();
+                    data.putString("textlang", textlang);
+                    i.putExtras(data);
+                    startActivity(i);
+                }
+            });
+        }
+        if (vHolder.mLinearLayoutIteneries != null) {
+            vHolder.mLinearLayoutIteneries.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Booking History");
+                    Intent i = new Intent(HomeActivity.this, BookingHistoryActivity.class);
+                    Bundle data = new Bundle();
+                    data.putString("textlang", textlang);
+                    i.putExtras(data);
+                    startActivity(i);
+                }
+            });
+        }
+        if (vHolder.mLinearLayoutTimeTable != null) {
+            vHolder.mLinearLayoutTimeTable.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Packages and Tours");
+                    Intent i = new Intent(HomeActivity.this, PackageBookingHome.class);
+                    Bundle data = new Bundle();
+                    data.putString("textlang", textlang);
+                    i.putExtras(data);
+                    startActivity(i);
+                }
+            });
+        }
+        if (vHolder.mLinearLayoutResheduleTicket != null) {
+            vHolder.mLinearLayoutResheduleTicket.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Reschedule Ticket");
+                    Intent i = new Intent(HomeActivity.this, Weblink.class);
+                    Bundle data = new Bundle();
+                    data.putString("textlang", textlang);
+                    i.putExtras(data);
+                    startActivity(i);
+                }
+            });
+        }
+        if (vHolder.mLinearLayoutRefundStatus != null) {
+            vHolder.mLinearLayoutRefundStatus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Refund Status");
+                    Intent i = new Intent(HomeActivity.this, RefundStatus.class);
+                    Bundle data = new Bundle();
+                    data.putString("textlang", textlang);
+                    i.putExtras(data);
+                    startActivity(i);
+                }
+            });
+        }
 
         // Disable Near Location click & redirect
-        vHolder.mLinearLayoutLinkBooking.setOnClickListener(null);
-        vHolder.mLinearLayoutLinkBooking.setClickable(false);
-        vHolder.mLinearLayoutLinkBooking.setEnabled(false);
+        if (vHolder.mLinearLayoutLinkBooking != null) {
+            vHolder.mLinearLayoutLinkBooking.setOnClickListener(null);
+            vHolder.mLinearLayoutLinkBooking.setClickable(false);
+            vHolder.mLinearLayoutLinkBooking.setEnabled(false);
+        }
 
+        if (vHolder.mLinearLayoutTrackTicket != null) {
+            vHolder.mLinearLayoutTrackTicket.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Track Ticket History");
+                    Intent i = new Intent(HomeActivity.this, TrackTicketHistory.class);
+                    Bundle data = new Bundle();
+                    data.putString("textlang", textlang);
+                    i.putExtras(data);
+                    startActivity(i);
+                }
+            });
+        }
+        if (vHolder.mLinearLayoutBusPass != null) {
+            vHolder.mLinearLayoutBusPass.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Commuter Bus Pass options");
 
+                    View popupView = getLayoutInflater().inflate(R.layout.buspass_popup, null);
 
-        vHolder.mLinearLayoutTrackTicket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Track Ticket History");
-                Intent i = new Intent(HomeActivity.this, TrackTicketHistory.class);
-                Bundle data = new Bundle();
-                data.putString("textlang", textlang);
-                i.putExtras(data);
-                startActivity(i);
-            }
-        });
-        vHolder.mLinearLayoutBusPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Commuter Bus Pass options");
+                    // Get phone list view.
+                    ListView phoneListView = (ListView) popupView.findViewById(R.id.popupWindowPhoneList);
 
-                View popupView = getLayoutInflater().inflate(R.layout.buspass_popup, null);
+                    // Set header text in list view.
+                    TextView headerTextView = new TextView(HomeActivity.this);
+                    headerTextView.setText("Buss Pass");
+                    headerTextView.setTextColor(Color.WHITE);
+                    headerTextView.setTextSize(15);
+                    headerTextView.setBackgroundColor(Color.BLUE);
+                    phoneListView.addHeaderView(headerTextView);
 
-                // Get phone list view.
-                ListView phoneListView = (ListView) popupView.findViewById(R.id.popupWindowPhoneList);
+                    // Create phone data adapter.
+                    ArrayAdapter<String> phoneCmdAdapter = new ArrayAdapter<String>(HomeActivity.this, android.R.layout.simple_list_item_1, bus_pass_opt);
 
-                // Set header text in list view.
-                TextView headerTextView = new TextView(HomeActivity.this);
-                headerTextView.setText("Buss Pass");
-                headerTextView.setTextColor(Color.WHITE);
-                headerTextView.setTextSize(15);
-                headerTextView.setBackgroundColor(Color.BLUE);
-                phoneListView.addHeaderView(headerTextView);
+                    phoneListView.setAdapter(phoneCmdAdapter);
+                    phoneListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int itemIndex, long l) {
+                            if (itemIndex != 0) {
+                                Intent i = new Intent(HomeActivity.this, BusPassLink.class);
+                                Bundle data = new Bundle();
+                                data.putString("textlang", textlang);
+                                data.putString("pass_opt", bus_pass_opt[itemIndex - 1]);
+                                i.putExtras(data);
+                                startActivity(i);
+                            }
+                        }
+                    });
 
-                // Create phone data adapter.
-                ArrayAdapter<String> phoneCmdAdapter = new ArrayAdapter<String>(HomeActivity.this, android.R.layout.simple_list_item_1, bus_pass_opt);
+                    // Create popup window.
+                    PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    // Set popup window animation style.
+                    popupWindow.setAnimationStyle(R.style.popup_window_animation_pass);
+                    popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+                    popupWindow.setFocusable(true);
+                    popupWindow.setOutsideTouchable(true);
+                    popupWindow.update();
+                    // Show popup window offset 1,1 to phoneBtton at the screen center.
+                    popupWindow.showAtLocation(vHolder.mLinearLayoutBusPass, Gravity.CENTER, 0, 0);
+                }
+            });
+        }
 
-                phoneListView.setAdapter(phoneCmdAdapter);
-                phoneListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int itemIndex, long l) {
+        if (vHolder.mLinearLayoutHireBus != null) {
+            vHolder.mLinearLayoutHireBus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Hire a Bus");
+                    Intent i = new Intent(HomeActivity.this, BookingHistoryActivity.class);
+                    Bundle data = new Bundle();
+                    data.putString("textlang", textlang);
+                    i.putExtras(data);
+                    startActivity(i);
+                }
+            });
+        }
 
-                 if(itemIndex !=0) {
-
-                        Intent i = new Intent(HomeActivity.this, BusPassLink.class);
-                        Bundle data = new Bundle();
-                        data.putString("textlang", textlang);
-                        data.putString("pass_opt", bus_pass_opt[itemIndex - 1]);
-                        i.putExtras(data);
-                        startActivity(i);
-                    }else{
-
-                     }
-                    }
-                });
-
-                // Create popup window.
-                PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                // Set popup window animation style.
-                popupWindow.setAnimationStyle(R.style.popup_window_animation_pass);
-                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-                popupWindow.setFocusable(true);
-                popupWindow.setOutsideTouchable(true);
-                popupWindow.update();
-                // Show popup window offset 1,1 to phoneBtton at the screen center.
-                popupWindow.showAtLocation(vHolder.mLinearLayoutBusPass, Gravity.CENTER, 0, 0);
-            }
-        });
-
-        vHolder.mLinearLayoutHireBus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Hire a Bus");
-                Intent i = new Intent(HomeActivity.this, BookingHistoryActivity.class);
-                Bundle data = new Bundle();
-                data.putString("textlang", textlang);
-                i.putExtras(data);
-                startActivity(i);
-            }
-        });
-
-
-
-        vHolder.runningStatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Track Running Service");
-                Intent i = new Intent(HomeActivity.this, TrackRunningService.class);
-                Bundle data = new Bundle();
-                data.putString("textlang", textlang);
-                i.putExtras(data);
-                startActivity(i);
-            }
-        });
+        if (vHolder.runningStatus != null) {
+            vHolder.runningStatus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(HomeActivity.this).speak("Opening Track Running Service");
+                    Intent i = new Intent(HomeActivity.this, TrackRunningService.class);
+                    Bundle data = new Bundle();
+                    data.putString("textlang", textlang);
+                    i.putExtras(data);
+                    startActivity(i);
+                }
+            });
+        }
 }
         //pop up one added by abhi tarun on 30-01-2026
 
@@ -478,21 +557,20 @@ public class HomeActivity extends BaseNavigationDrawerActivity  {
 
             if(textlang.equalsIgnoreCase("gujarati"))
             {
-                ad_booking.setText(R.string.hm_advance_booking);
-                cr_booking.setText(R.string.hm_current_ticket);
-                can_ticket.setText(R.string.hm_cancel_ticket);
-                trackbus.setText(R.string.hm_track_my_bus);
-                rescdule_tkt.setText(R.string.gReschedule_Ticket);
+                if (ad_booking != null) ad_booking.setText(R.string.hm_advance_booking);
+                if (cr_booking != null) cr_booking.setText(R.string.hm_current_ticket);
+                if (can_ticket != null) can_ticket.setText(R.string.hm_cancel_ticket);
+                if (trackbus != null) trackbus.setText(R.string.hm_track_my_bus);
+                if (rescdule_tkt != null) rescdule_tkt.setText(R.string.gReschedule_Ticket);
 
-                bus_pass.setText(R.string.gBus_Pass);
-                near_location.setText(R.string.gNear_By_Location);
-                refund_status.setText(R.string.gRefund_status);
-                hire_bus.setText(R.string.gHire_A_Bus);
-               // show_more.setText(R.string.gShow_More);
-                time_table.setText(R.string.package_booking);
-                iteneries.setText(R.string.gIteneries);
-                track_ticket.setText(R.string.gtrack_ticket);
-                feedback_text.setText("પ્રતિસાદ");
+                if (bus_pass != null) bus_pass.setText(R.string.gBus_Pass);
+                if (near_location != null) near_location.setText(R.string.gNear_By_Location);
+                if (refund_status != null) refund_status.setText(R.string.gRefund_status);
+                if (hire_bus != null) hire_bus.setText(R.string.gHire_A_Bus);
+                if (time_table != null) time_table.setText(R.string.package_booking);
+                if (iteneries != null) iteneries.setText(R.string.gIteneries);
+                if (track_ticket != null) track_ticket.setText(R.string.gtrack_ticket);
+                if (feedback_text != null) feedback_text.setText("પ્રતિસાદ");
             }
         }
     }

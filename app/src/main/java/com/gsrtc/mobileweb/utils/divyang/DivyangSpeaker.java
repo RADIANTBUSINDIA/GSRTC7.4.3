@@ -1,5 +1,6 @@
 package com.gsrtc.mobileweb.utils.divyang;
 
+import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Build;
@@ -154,18 +155,40 @@ public class DivyangSpeaker {
         vibrateFeedback();
         lastSpeakTime = android.os.SystemClock.uptimeMillis();
 
-        if (tts == null) {
-            initTts();
-        }
+        // 1. Announce to TalkBack via Android Accessibility framework
+        announceForAccessibility(text);
 
-        if (!isReady) {
-            Log.d(TAG, "TTS not ready yet, queuing text: " + text);
-            pendingQueue.clear();
-            pendingQueue.add(text);
-            return;
-        }
+        // 2. If TalkBack is not running (e.g. testing or forced), speak via internal TTS
+        if (!DivyangHelper.isTalkBackEnabled(context)) {
+            if (tts == null) {
+                initTts();
+            }
 
-        speakInternal(text);
+            if (!isReady) {
+                Log.d(TAG, "TTS not ready yet, queuing text: " + text);
+                pendingQueue.clear();
+                pendingQueue.add(text);
+                return;
+            }
+
+            speakInternal(text);
+        }
+    }
+
+    public void announceForAccessibility(String text) {
+        try {
+            Activity current = DivyangAccessibilityManager.getCurrentActivity();
+            if (current != null && !current.isFinishing() && current.getWindow() != null && current.getWindow().getDecorView() != null) {
+                current.getWindow().getDecorView().announceForAccessibility(text);
+            } else if (context instanceof Activity) {
+                Activity a = (Activity) context;
+                if (!a.isFinishing() && a.getWindow() != null && a.getWindow().getDecorView() != null) {
+                    a.getWindow().getDecorView().announceForAccessibility(text);
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error announcing for accessibility", e);
+        }
     }
 
     private void speakInternal(String text) {

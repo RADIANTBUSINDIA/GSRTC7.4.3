@@ -898,6 +898,26 @@ public class AdvanceBookingSearchResultActivity extends BaseNavigationDrawerActi
             }
             //holder.seat_avail.setText(busService.getNoOfSeats()+" seats");
 
+            StringBuilder cardDesc = new StringBuilder();
+            cardDesc.append(busService.getServiceClass()).append(" bus. ");
+            cardDesc.append("Route from ").append(busService.getOrigin()).append(" to ").append(busService.getDestination()).append(". ");
+            cardDesc.append("Departure ").append(busService.getDepartureTime()).append(", Arrival ").append(busService.getArrivalTime()).append(". ");
+            cardDesc.append("Duration ").append(busService.getJourneyHours()).append(" hours. ");
+            cardDesc.append("Fare ").append(busService.getAdultFare()).append(" rupees. ");
+            if (busService.getNoOfSeats().equalsIgnoreCase("0")) {
+                cardDesc.append("Bus is full. ");
+            } else {
+                cardDesc.append(busService.getNoOfSeats()).append(" seats available. ");
+            }
+            if (busService.getViaPlaces() != null && !busService.getViaPlaces().trim().isEmpty()) {
+                cardDesc.append("Via ").append(busService.getViaPlaces()).append(". ");
+            }
+            cardDesc.append("Double tap to select seats.");
+
+            String cleanSummary = com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.cleanText(cardDesc.toString());
+            holder.container.setContentDescription(cleanSummary);
+            holder.container.setFocusable(true);
+            holder.container.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
         }
 
         // Clean all elements of the recycler

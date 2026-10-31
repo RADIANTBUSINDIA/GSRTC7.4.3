@@ -57,12 +57,5 @@
             android:icon="@drawable/menu_share"
             android:title="શેર એપ્લિકેશન"
             android:visible="false"/>
-
-        <item
-            android:id="@+id/nav_divyang_mode"
-            android:icon="@drawable/ic_divyang_voice"
-            android:title="દિવ્યાંગ મોડ (વોઇસ આસિસ્ટન્સ)"
-            app:actionViewClass="androidx.appcompat.widget.SwitchCompat"
-            app:showAsAction="always" />
     </group>
 </menu>

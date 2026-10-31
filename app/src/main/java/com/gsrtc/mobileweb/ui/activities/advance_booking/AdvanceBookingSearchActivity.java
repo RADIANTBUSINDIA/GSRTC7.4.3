@@ -139,6 +139,7 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
                 selectType="Onward";
                 radio.getChildAt(1).setEnabled(true);
                 radio.getChildAt(2).setEnabled(true);
+                updateAccessibilityDescriptions();
                 com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Single trip selected.");
             }
         });
@@ -154,6 +155,7 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
                 selectType="Return";
                 radio.getChildAt(1).setEnabled(false);
                 radio.getChildAt(2).setEnabled(false);
+                updateAccessibilityDescriptions();
                 com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Round trip selected. Note: Divyang concession is available for single trip only.");
             }
         });
@@ -210,6 +212,7 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
                     }
                 }
                 holder.from_location.clearFocus();
+                updateAccessibilityDescriptions();
                 com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Starting place selected: " + selectedPlace);
             }
         });
@@ -226,6 +229,7 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
                     }
                 }
                 holder.to_location.clearFocus();
+                updateAccessibilityDescriptions();
                 com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Destination place selected: " + selectedPlace);
             }
         });
@@ -455,6 +459,7 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
                 holder.to_location.setText(fromvalue);
                 holder.to_location.clearFocus();
                 holder.from_location.clearFocus();
+                updateAccessibilityDescriptions();
                 com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(AdvanceBookingSearchActivity.this).speak("Places swapped. From " + tovalue + " to " + fromvalue);
             }
         });
@@ -474,6 +479,40 @@ public class AdvanceBookingSearchActivity extends BaseNavigationDrawerActivity {
         });
 
         fetchServerData();
+        updateAccessibilityDescriptions();
+    }
+
+    public void updateAccessibilityDescriptions() {
+        if (single != null) {
+            single.setContentDescription("One Way Trip" + ("Onward".equalsIgnoreCase(selectType) ? ", Selected" : ""));
+        }
+        if (round != null) {
+            round.setContentDescription("Round Trip" + ("Return".equalsIgnoreCase(selectType) ? ", Selected" : ""));
+        }
+        if (holder != null) {
+            if (holder.from_location != null) {
+                String from = holder.from_location.getText() != null ? holder.from_location.getText().toString().trim() : "";
+                holder.from_location.setContentDescription("From Departure Place. " + (from.isEmpty() ? "Empty. Double tap to enter departure place." : from));
+            }
+            if (holder.to_location != null) {
+                String to = holder.to_location.getText() != null ? holder.to_location.getText().toString().trim() : "";
+                holder.to_location.setContentDescription("To Arrival Place. " + (to.isEmpty() ? "Empty. Double tap to enter arrival place." : to));
+            }
+            if (holder.swap != null) {
+                holder.swap.setContentDescription("Swap departure and arrival places");
+            }
+            if (holder.onward_date != null) {
+                String date = holder.onward_date.getText() != null ? holder.onward_date.getText().toString().trim() : "";
+                holder.onward_date.setContentDescription("Onward Journey Date: " + date + ". Double tap to change date.");
+            }
+            if (holder.return_date != null) {
+                String date = holder.return_date.getText() != null ? holder.return_date.getText().toString().trim() : "";
+                holder.return_date.setContentDescription("Return Journey Date: " + date + ". Double tap to change date.");
+            }
+            if (holder.search_btn != null) {
+                holder.search_btn.setContentDescription("Search Buses");
+            }
+        }
     }
 
 

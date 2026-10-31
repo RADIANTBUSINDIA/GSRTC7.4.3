@@ -57,6 +57,35 @@ public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSele
         }
         return false;
     }
+
+    public String getSeatAccessibilityDescription(Seat seat) {
+        if (seat == null) return "";
+        boolean isSleeper = isSleeperLayout();
+        String seatLabel = com.gsrtc.mobileweb.ui.activities.advance_booking.SeatSelectionActivity.getSeatLabel(seat, isSleeper);
+        int seatNo = seat.getSeatNo() != null ? seat.getSeatNo() : 0;
+
+        if (selectedSeats != null && selectedSeats.contains(seatNo)) {
+            return seatLabel + ", Selected. Double tap to unselect";
+        }
+        if (serviceSeatDetails != null) {
+            if (serviceSeatDetails.getBookedLadiesSeats() != null && serviceSeatDetails.getBookedLadiesSeats().contains(seatNo)) {
+                return seatLabel + ", Already booked for ladies";
+            }
+            if (serviceSeatDetails.getBookedSeats() != null && serviceSeatDetails.getBookedSeats().contains(seatNo)) {
+                return seatLabel + ", Already booked";
+            }
+            if (serviceSeatDetails.getConductorSeats() != null && serviceSeatDetails.getConductorSeats().contains(seatNo)) {
+                return seatLabel + ", Conductor seat, Unavailable";
+            }
+            if (serviceSeatDetails.getAvailableLadiesSeats() != null && serviceSeatDetails.getAvailableLadiesSeats().contains(seatNo)) {
+                return seatLabel + ", Available for ladies. Double tap to select";
+            }
+            if (serviceSeatDetails.getAvailableSeats() != null && serviceSeatDetails.getAvailableSeats().contains(seatNo)) {
+                return seatLabel + ", Available. Double tap to select";
+            }
+        }
+        return seatLabel + ", Unavailable";
+    }
     Context context;
     Set<Integer> reservedSeats;     //Reserved seats will be fetched from the server and passed to the adapter
     Set<Integer> selectedSeats;
@@ -122,6 +151,20 @@ public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSele
                 holder.seatNumberTexts[i].setText("" + seat.getSeatNo() + " " + seat.getDescription());
                 setSeatImage(holder.seatCheckboxes[i], seat);
 
+                String seatDesc = getSeatAccessibilityDescription(seat);
+                holder.seatCheckboxes[i].setContentDescription(seatDesc);
+                holder.seatCheckboxes[i].setFocusable(true);
+                holder.seatCheckboxes[i].setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+
+                if (holder.seatLayouts[i] != null) {
+                    holder.seatLayouts[i].setContentDescription(seatDesc);
+                    holder.seatLayouts[i].setFocusable(true);
+                    holder.seatLayouts[i].setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+                }
+                if (holder.seatNumberTexts[i] != null) {
+                    holder.seatNumberTexts[i].setContentDescription(seatDesc);
+                }
+
                 final int seatIdx = i;
                 final Seat seatObj = seat;
                 View.OnClickListener seatClickListener = view -> {
@@ -137,6 +180,11 @@ public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSele
                         if (selectedSeats.contains(seatNo)) {
                             setSeatImage(holder.seatCheckboxes[seatIdx], seat1);
                             selectedSeats.remove(seatNo);
+                            String updatedDesc = getSeatAccessibilityDescription(seat1);
+                            holder.seatCheckboxes[seatIdx].setContentDescription(updatedDesc);
+                            if (holder.seatLayouts[seatIdx] != null) {
+                                holder.seatLayouts[seatIdx].setContentDescription(updatedDesc);
+                            }
                             if (actionListener != null) {
                                 actionListener.onSeatUnselected(seat1);
                             }
@@ -150,6 +198,11 @@ public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSele
                                 }
 
                                 selectedSeats.add(seatNo);
+                                String updatedDesc = getSeatAccessibilityDescription(seat1);
+                                holder.seatCheckboxes[seatIdx].setContentDescription(updatedDesc);
+                                if (holder.seatLayouts[seatIdx] != null) {
+                                    holder.seatLayouts[seatIdx].setContentDescription(updatedDesc);
+                                }
 
                                 if (actionListener != null) {
                                     actionListener.onSeatSelected(seat1);

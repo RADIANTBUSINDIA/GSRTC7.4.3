@@ -587,9 +587,24 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
         if (availableCount > 0) {
             sb.append(availableCount).append(" ").append(isSleeper ? "berths" : "seats").append(" available. ");
         }
-        sb.append("Tap any ").append(isSleeper ? "sleeper berth" : "seater seat").append(" to select.");
+        sb.append("Double tap any ").append(isSleeper ? "sleeper berth" : "seater seat").append(" to select.");
 
-        com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak(sb.toString());
+        String description = sb.toString();
+        if (seatcls != null && seatcls.getParent() instanceof View) {
+            View parent = (View) seatcls.getParent();
+            parent.setContentDescription(description);
+            parent.setFocusable(true);
+            parent.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
+        View categories = findViewById(R.id.seat_categories);
+        if (categories != null) {
+            categories.setContentDescription(isSleeper ? "Seat layout legend: Sleeper berths are arranged in lower and upper deck."
+                    : "Seat layout legend: Available seats are in white, booked seats in grey, and ladies seats in pink.");
+            categories.setFocusable(true);
+            categories.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
+
+        com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak(description);
     }
 
     private void trySpeakSeats() {

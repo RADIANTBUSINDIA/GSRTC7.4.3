@@ -5,23 +5,34 @@ import android.app.Application;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.accessibility.AccessibilityNodeInfo;
+
+import java.lang.ref.WeakReference;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
- * Automatically attaches DivyangWindowCallback to every Activity across the entire application lifecycle,
- * and announces screen context when a screen opens in Divyang mode.
+ * Automatically manages TalkBack accessibility integration and screen announcements.
+ * When TalkBack is enabled from Android Settings, provides rich content descriptions
+ * and announcements matching native TalkBack navigation flow.
  */
 public class DivyangAccessibilityManager implements Application.ActivityLifecycleCallbacks {
 
     private static final String TAG = "DivyangAccessManager";
+    private static WeakReference<Activity> currentActivityRef;
 
     public static void init(Application application) {
         if (application != null) {
             application.registerActivityLifecycleCallbacks(new DivyangAccessibilityManager());
         }
+    }
+
+    public static Activity getCurrentActivity() {
+        return currentActivityRef != null ? currentActivityRef.get() : null;
     }
 
     private void attachCallback(Activity activity) {
@@ -40,27 +51,67 @@ public class DivyangAccessibilityManager implements Application.ActivityLifecycl
 
     @Override
     public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
+        currentActivityRef = new WeakReference<>(activity);
         attachCallback(activity);
     }
 
     @Override
     public void onActivityStarted(@NonNull Activity activity) {
+        currentActivityRef = new WeakReference<>(activity);
         attachCallback(activity);
     }
 
     @Override
     public void onActivityResumed(@NonNull Activity activity) {
+        currentActivityRef = new WeakReference<>(activity);
         attachCallback(activity);
 
-        // Announce screen entrance after short delay for layouts to finish inflating
+        // Announce screen entrance and attach rich accessibility descriptions after layout settles
         try {
             if (activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
-                activity.getWindow().getDecorView().postDelayed(() -> {
+                View decor = activity.getWindow().getDecorView();
+                decor.postDelayed(() -> {
                     if (activity.isFinishing()) return;
                     if (DivyangHelper.isDivyangModeEnabled(activity)) {
                         announceActivityScreen(activity);
+                        attachAccessibilityDescriptionsToTree(decor, activity);
                     }
-                }, 600);
+                }, 500);
+            }
+        } catch (Exception ignored) {
+        }
+    }
+
+    /**
+     * Traverses view tree and attaches dynamic accessibility delegates to views
+     * without content descriptions, providing rich TalkBack descriptions.
+     */
+    public static void attachAccessibilityDescriptionsToTree(View root, Activity activity) {
+        if (root == null || activity == null || activity.isFinishing()) return;
+
+        try {
+            if (TextUtils.isEmpty(root.getContentDescription())) {
+                if (root.isClickable() || root.isFocusable() || root instanceof android.widget.TextView || root instanceof android.widget.ImageView) {
+                    root.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+                        @Override
+                        public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                            super.onInitializeAccessibilityNodeInfo(host, info);
+                            if (TextUtils.isEmpty(host.getContentDescription())) {
+                                String details = DivyangViewInspector.extractComprehensiveDetails(host, activity);
+                                if (!TextUtils.isEmpty(details)) {
+                                    info.setContentDescription(DivyangSpeaker.cleanText(details));
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+
+            if (root instanceof ViewGroup) {
+                ViewGroup group = (ViewGroup) root;
+                for (int i = 0; i < group.getChildCount(); i++) {
+                    attachAccessibilityDescriptionsToTree(group.getChildAt(i), activity);
+                }
             }
         } catch (Exception ignored) {
         }
@@ -78,13 +129,13 @@ public class DivyangAccessibilityManager implements Application.ActivityLifecycl
                 announcement = "Home screen. Select Advance Booking, Current Booking, or open menu.";
                 break;
             case "AdvanceBookingSearchActivity":
-                announcement = "Advance Booking Search screen. Select from place, to place, journey date, and passenger category.";
+                announcement = "Advance Booking Search screen. Select departure place, arrival place, journey date, and passenger category.";
                 break;
             case "AdvanceBookingSearchResultActivity":
-                announcement = "Bus Search Results. Tap any bus card to hear full details and select seats.";
+                announcement = "Bus Search Results. Explore buses and double tap to select seats.";
                 break;
             case "SeatSelectionActivity":
-                // Spoken directly by SeatSelectionActivity with complete bus description (Seater/Sleeper, class, trip code)
+                // Handled directly by SeatSelectionActivity with full bus service description
                 break;
             case "PassengerInfoActivity":
                 announcement = "Passenger Information screen. Enter passenger details and Divyang card information.";
@@ -119,7 +170,7 @@ public class DivyangAccessibilityManager implements Application.ActivityLifecycl
                 announcement = "My Bookings screen.";
                 break;
             case "PackageBookingSearchResult":
-                announcement = "Package Bus Search Results screen. Tap any bus to select seats.";
+                announcement = "Package Bus Search Results screen. Double tap any bus to select seats.";
                 break;
             case "PackageFareDetails":
                 announcement = "Package Fare Details screen. Review your journey and fare summary.";
@@ -151,5 +202,8 @@ public class DivyangAccessibilityManager implements Application.ActivityLifecycl
 
     @Override
     public void onActivityDestroyed(@NonNull Activity activity) {
+        if (currentActivityRef != null && currentActivityRef.get() == activity) {
+            currentActivityRef.clear();
+        }
     }
 }

@@ -104,7 +104,6 @@ public class BaseNavigationDrawerActivity extends AppCompatActivity
             navigationView.setNavigationItemSelectedListener(this);
         }
 
-        setupDivyangModeSwitch();
         setupToolbar();
     }
 
@@ -144,7 +143,6 @@ public class BaseNavigationDrawerActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         checkSecurity(this);
-        setupDivyangModeSwitch();
     }
 
     @Override
@@ -170,11 +168,6 @@ public class BaseNavigationDrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_divyang_mode) {
-            boolean isEnabled = !com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(this);
-            toggleDivyangMode(item, isEnabled);
-            return true;
-        }
 
         if (com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(this) && item != null && item.getTitle() != null) {
             com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak(item.getTitle().toString().trim());
@@ -342,6 +335,7 @@ public class BaseNavigationDrawerActivity extends AppCompatActivity
 
 
         toolbarView = new ToolbarViewHolder(this);
+        toolbarView.ham.setContentDescription("Open navigation menu");
         toolbarView.ham.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("RtlHardcoded")
             @Override
@@ -351,6 +345,7 @@ public class BaseNavigationDrawerActivity extends AppCompatActivity
                     drawer.openDrawer(Gravity.LEFT);
             }
         });
+        toolbarView.share.setContentDescription("Share application");
         toolbarView.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -367,46 +362,6 @@ public class BaseNavigationDrawerActivity extends AppCompatActivity
             }
         });
 //        }
-    }
-
-    private void setupDivyangModeSwitch() {
-        NavigationView navigationView = (NavigationView) findViewById(textlang != null && textlang.equalsIgnoreCase("gujarati") ? R.id.nav_view2 : R.id.nav_view);
-        if (navigationView != null && navigationView.getMenu() != null) {
-            MenuItem item = navigationView.getMenu().findItem(R.id.nav_divyang_mode);
-            if (item != null) {
-                boolean isEnabled = com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(this);
-                item.setChecked(isEnabled);
-                View actionView = item.getActionView();
-                if (actionView instanceof androidx.appcompat.widget.SwitchCompat) {
-                    androidx.appcompat.widget.SwitchCompat switchCompat = (androidx.appcompat.widget.SwitchCompat) actionView;
-                    switchCompat.setOnCheckedChangeListener(null);
-                    switchCompat.setChecked(isEnabled);
-                    switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                        if (isChecked != com.gsrtc.mobileweb.utils.divyang.DivyangHelper.isDivyangModeEnabled(BaseNavigationDrawerActivity.this)) {
-                            toggleDivyangMode(item, isChecked);
-                        }
-                    });
-                }
-            }
-        }
-    }
-
-    private void toggleDivyangMode(MenuItem item, boolean isEnabled) {
-        com.gsrtc.mobileweb.utils.divyang.DivyangHelper.setDivyangModeEnabled(this, isEnabled);
-        if (item != null) {
-            View actionView = item.getActionView();
-            if (actionView instanceof androidx.appcompat.widget.SwitchCompat) {
-                ((androidx.appcompat.widget.SwitchCompat) actionView).setChecked(isEnabled);
-            }
-            item.setChecked(isEnabled);
-        }
-        if (isEnabled) {
-            com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak("Divyang mode enabled", true);
-            android.widget.Toast.makeText(this, "Divyang Mode Enabled", android.widget.Toast.LENGTH_SHORT).show();
-        } else {
-            com.gsrtc.mobileweb.utils.divyang.DivyangSpeaker.getInstance(this).speak("Divyang mode disabled", true);
-            android.widget.Toast.makeText(this, "Divyang Mode Disabled", android.widget.Toast.LENGTH_SHORT).show();
-        }
     }
 
     protected static class ToolbarViewHolder{

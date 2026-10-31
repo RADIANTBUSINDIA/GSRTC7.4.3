@@ -66,12 +66,5 @@
             android:title="Share App"
             android:visible="false"/>
 
-        <item
-            android:id="@+id/nav_divyang_mode"
-            android:icon="@drawable/ic_divyang_voice"
-            android:title="Divyang Mode (Voice Assistance)"
-            app:actionViewClass="androidx.appcompat.widget.SwitchCompat"
-            app:showAsAction="always" />
-
     </group>
 </menu>
