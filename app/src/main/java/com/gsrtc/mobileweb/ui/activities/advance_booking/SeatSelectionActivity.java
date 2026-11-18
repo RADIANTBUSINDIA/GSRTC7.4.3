@@ -304,7 +304,6 @@ public class SeatSelectionActivity extends BaseNavigationDrawerActivity {
             return true;
         }
         if (class_id != null && (
-                class_id.equalsIgnoreCase("21") ||
                 class_id.equalsIgnoreCase("22") ||
                 class_id.equalsIgnoreCase("42") ||
                 class_id.equalsIgnoreCase("45"))) {

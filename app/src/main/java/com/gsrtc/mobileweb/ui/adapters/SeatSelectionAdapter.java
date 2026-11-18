@@ -40,22 +40,11 @@ public abstract class SeatSelectionAdapter extends RecyclerView.Adapter<SeatSele
     }
 
     public boolean isSleeperLayout() {
-        if (class_layout_id != null && (
+        return class_layout_id != null && (
                 class_layout_id.equalsIgnoreCase("64") ||
-                class_layout_id.equalsIgnoreCase("143") ||
-                class_layout_id.equalsIgnoreCase("188") ||
-                class_layout_id.equalsIgnoreCase("191") ||
-                class_layout_id.equalsIgnoreCase("169"))) {
-            return true;
-        }
-        if (srv_class_id != null && (
-                srv_class_id.equalsIgnoreCase("21") ||
-                srv_class_id.equalsIgnoreCase("22") ||
-                srv_class_id.equalsIgnoreCase("42") ||
-                srv_class_id.equalsIgnoreCase("45"))) {
-            return true;
-        }
-        return false;
+                        class_layout_id.equalsIgnoreCase("188") ||
+                        class_layout_id.equalsIgnoreCase("191")
+        );
     }
 
     public String getSeatAccessibilityDescription(Seat seat) {
