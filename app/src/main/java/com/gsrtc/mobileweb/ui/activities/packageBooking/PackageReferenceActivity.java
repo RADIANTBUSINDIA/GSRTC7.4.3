@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -311,6 +312,41 @@ public class PackageReferenceActivity extends BaseNavigationDrawerActivity {
             }
             intent.putExtra("totalFare", totalFare);
             intent.putExtra("isCard", isCard);
+            startActivityForResult(intent, PAYMENT_CODE);
+        } else if (isCard.equalsIgnoreCase(com.gsrtc.mobileweb.ui.activities.payment_gateway.EasebuzzConstants.GATEWAY_CODE)
+                || isCard.equalsIgnoreCase("766")
+                || isCard.equalsIgnoreCase("760")) {
+            Intent intent = new Intent(PackageReferenceActivity.this, com.gsrtc.mobileweb.ui.activities.payment_gateway.EasebuzzPaymentGateway.class);
+            intent.putExtra("textlang", textlang);
+            intent.putExtra(AppConstants.INTENT_EXTRA.BOOKING_ONWARD, onwardBooking);
+            if (returnBooking != null) {
+                intent.putExtra(AppConstants.INTENT_EXTRA.BOOKING_RETURN, returnBooking);
+            }
+            if (divyangBooking != null) {
+                intent.putExtra(AppConstants.INTENT_EXTRA.BOOKING_DIVYANG, divyangBooking);
+            }
+            intent.putExtra("totalFare", totalFare);
+            intent.putExtra("isCard", isCard);
+
+            String passName = "";
+            String passEmail = "";
+            String passPhone = "";
+            if (onwardBooking != null) {
+                if (onwardBooking.getPassengers() != null && !onwardBooking.getPassengers().isEmpty()) {
+                    passName = onwardBooking.getPassengers().get(0).getPassengerNameA();
+                    if (TextUtils.isEmpty(passName)) {
+                        passName = onwardBooking.getPassengers().get(0).getPassengerName();
+                    }
+                }
+                if (onwardBooking.getPassengerInfo() != null) {
+                    passEmail = onwardBooking.getPassengerInfo().getEmail();
+                    passPhone = onwardBooking.getPassengerInfo().getPhone();
+                }
+            }
+            intent.putExtra("passengerName", passName);
+            intent.putExtra("passengerEmail", passEmail);
+            intent.putExtra("passengerPhone", passPhone);
+
             startActivityForResult(intent, PAYMENT_CODE);
         } else {
 

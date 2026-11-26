@@ -508,6 +508,10 @@ public class FareDetailsActivity extends BaseNavigationDrawerActivity {
 
                     isCard = "758";
 
+                } else if (button.getId() == R.id.easebuzzPay || button.getText().toString().equalsIgnoreCase("Easebuzz") || button.getText().toString().equalsIgnoreCase("Union Bank") || button.getText().toString().contains("Union Bank")) {
+
+                    isCard = com.gsrtc.mobileweb.ui.activities.payment_gateway.EasebuzzConstants.GATEWAY_CODE;
+
                 } else if (button.getText().toString().equalsIgnoreCase("ICICI")) {
 
                     isCard = "733";
@@ -738,6 +742,7 @@ public class FareDetailsActivity extends BaseNavigationDrawerActivity {
         RadioButton aggrepay;
         RadioButton paytm;
         RadioButton sapphirePay;
+        RadioButton easebuzzPay;
         RadioButton axis;
 
         View loadingLayout;
@@ -753,6 +758,7 @@ public class FareDetailsActivity extends BaseNavigationDrawerActivity {
             aggrepay = (RadioButton) activity.findViewById(R.id.aggrepay);
             paytm = (RadioButton) activity.findViewById(R.id.paytm);
             sapphirePay = (RadioButton) activity.findViewById(R.id.sapphirePay);
+            easebuzzPay = (RadioButton) activity.findViewById(R.id.easebuzzPay);
             axis = (RadioButton) activity.findViewById(R.id.axisPay);
 
             from1 = (TextView) activity.findViewById(R.id.from1);

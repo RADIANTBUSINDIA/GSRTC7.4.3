@@ -102,6 +102,9 @@ public class GetCurrentSummaryActivity extends BaseNavigationDrawerActivity{
                         } else if (button.getText().toString().equalsIgnoreCase("AggrePay")) {
 
                             isCard = "721";
+                        } else if (button.getId() == R.id.easebuzzPay || button.getText().toString().equalsIgnoreCase("Easebuzz") || button.getText().toString().equalsIgnoreCase("Union Bank") || button.getText().toString().contains("Union Bank")) {
+
+                            isCard = com.gsrtc.mobileweb.ui.activities.payment_gateway.EasebuzzConstants.GATEWAY_CODE;
                         } else if (button.getText().toString().equalsIgnoreCase("AXIS") || button.getText().toString().equalsIgnoreCase("Sapphire") || button.getText().toString().equalsIgnoreCase("ICICI ORANGE PG")) {
 
                             isCard = "758";
@@ -287,6 +290,7 @@ public class GetCurrentSummaryActivity extends BaseNavigationDrawerActivity{
         RadioButton phonepe;
         RadioButton aggrepay;
         RadioButton paytm;
+        RadioButton easebuzzPay;
 
         ActivityViewHolder(Activity activity){
             rootView = activity.findViewById(R.id.rootView);
@@ -305,6 +309,7 @@ public class GetCurrentSummaryActivity extends BaseNavigationDrawerActivity{
             phonepe = (RadioButton) activity.findViewById(R.id.phonepe);
             aggrepay = (RadioButton) activity.findViewById(R.id.aggrepay);
             paytm = (RadioButton) activity.findViewById(R.id.paytm);
+            easebuzzPay = (RadioButton) activity.findViewById(R.id.easebuzzPay);
             btnSaveTempButton = (Button) activity.findViewById(R.id.btnConfirmSummary);
 
             txtdate = (TextView) activity.findViewById(R.id.tvSummaryDateHeading);

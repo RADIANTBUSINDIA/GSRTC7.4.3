@@ -115,6 +115,9 @@ public class CurrentReferenceNumberActivity extends BaseNavigationDrawerActivity
             extra.putString("mail", mail);
             extra.putString("name", name);
             extra.putString("number", Number);
+            extra.putString("passengerName", name);
+            extra.putString("passengerEmail", mail);
+            extra.putString("passengerPhone", Number);
             extra.putSerializable(AppConstants.INTENT_EXTRA.SEARCH_PARAM, searchParams);
             intent.putExtras(extra);
             CustomisedProgressDialog.STOP_CUST_DIA();
@@ -126,6 +129,25 @@ public class CurrentReferenceNumberActivity extends BaseNavigationDrawerActivity
             extra.putString("mail", mail);
             extra.putString("name", name);
             extra.putString("number", Number);
+            extra.putString("passengerName", name);
+            extra.putString("passengerEmail", mail);
+            extra.putString("passengerPhone", Number);
+            extra.putSerializable(AppConstants.INTENT_EXTRA.SEARCH_PARAM, searchParams);
+            intent.putExtras(extra);
+            CustomisedProgressDialog.STOP_CUST_DIA();
+            startActivityForResult(intent, PAYMENT_CODE);
+        } else if (isCard.equals(com.gsrtc.mobileweb.ui.activities.payment_gateway.EasebuzzConstants.GATEWAY_CODE)
+                || isCard.equals("766")
+                || isCard.equals("760")) {
+            Intent intent = new Intent(CurrentReferenceNumberActivity.this, com.gsrtc.mobileweb.ui.activities.payment_gateway.EasebuzzPaymentGateway.class);
+            Bundle extra = new Bundle();
+            extra.putString("textlang", textlang);
+            extra.putString("mail", mail);
+            extra.putString("name", name);
+            extra.putString("number", Number);
+            extra.putString("passengerName", name);
+            extra.putString("passengerEmail", mail);
+            extra.putString("passengerPhone", Number);
             extra.putSerializable(AppConstants.INTENT_EXTRA.SEARCH_PARAM, searchParams);
             intent.putExtras(extra);
             CustomisedProgressDialog.STOP_CUST_DIA();

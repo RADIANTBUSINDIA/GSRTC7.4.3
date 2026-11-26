@@ -675,6 +675,10 @@ public class PackageFareDetails  extends BaseNavigationDrawerActivity {
 
                     isCard = "721";
 
+                } else if (button.getId() == R.id.easebuzzPay || button.getText().toString().equalsIgnoreCase("Easebuzz") || button.getText().toString().equalsIgnoreCase("Union Bank") || button.getText().toString().contains("Union Bank")) {
+
+                    isCard = com.gsrtc.mobileweb.ui.activities.payment_gateway.EasebuzzConstants.GATEWAY_CODE;
+
                 } else if (button.getText().toString().equalsIgnoreCase("AXIS") || button.getText().toString().equalsIgnoreCase("Sapphire") || button.getText().toString().equalsIgnoreCase("ICICI ORANGE PG")) {
 
                     isCard = "758";
@@ -903,6 +907,7 @@ public class PackageFareDetails  extends BaseNavigationDrawerActivity {
         RadioButton phonepe;
         RadioButton aggrepay;
         RadioButton paytm;
+        RadioButton easebuzzPay;
         RadioButton axis;
 
         View loadingLayout;
@@ -917,6 +922,7 @@ public class PackageFareDetails  extends BaseNavigationDrawerActivity {
             phonepe = (RadioButton) activity.findViewById(R.id.phonepe);
             aggrepay = (RadioButton) activity.findViewById(R.id.aggrepay);
             paytm = (RadioButton) activity.findViewById(R.id.paytm);
+            easebuzzPay = (RadioButton) activity.findViewById(R.id.easebuzzPay);
             axis = (RadioButton) activity.findViewById(R.id.axisPay);
 
             from1 = (TextView) activity.findViewById(R.id.from1);

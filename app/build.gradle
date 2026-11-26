@@ -89,6 +89,9 @@ dependencies {
     implementation files('libs/pgichecksum.jar')
     implementation files('libs/commons-codec-1.10.jar')
 
+    // PaywithEasebuzz Android SDK v2
+    implementation 'in.easebuzz:android-v2:1.0.9'
+
     // Sapphire / PayPhi SDK dependencies
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'

@@ -296,6 +296,35 @@
                     android:checked="false"/>
 
                 <TextView
+                    android:id="@+id/easebuzz_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Credit/Debit Card, UPI and NetBanking - Union Bank"
+                    android:layout_marginLeft="10dp"
+                    android:textAllCaps="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:visibility="visible"
+                    android:textSize="12dp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+                <RadioButton
+                    android:id="@+id/easebuzzPay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:drawableStart="@drawable/easebuzz"
+                    android:text="Union Bank"
+                    android:textStyle="bold"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:visibility="visible"
+                    android:clickable="true"
+                    android:buttonTint="@color/white"
+                    android:checked="false"/>
+
+                <TextView
                     android:id="@+id/phonepe_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

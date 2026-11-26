@@ -15,6 +15,12 @@
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE" />
         </intent>
+        <package android:name="com.google.android.apps.nbu.paisa.user" />
+        <package android:name="net.one97.paytm" />
+        <package android:name="com.phonepe.app" />
+        <package android:name="in.org.npci.upiapp" />
+        <package android:name="in.amazon.mShop.android.shopping" />
+        <package android:name="com.whatsapp" />
     </queries>
 
     <application
@@ -80,6 +86,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.payment_gateway.SapphirePaymentGatewayCurrent"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activities.payment_gateway.EasebuzzPaymentGateway"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
